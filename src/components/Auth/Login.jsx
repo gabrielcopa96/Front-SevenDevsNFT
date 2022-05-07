@@ -11,6 +11,7 @@ import Button from "../shared/Button.jsx";
 
 import Input from "../shared/Input.jsx";
 import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.css'
 
 
 const ContainerLogin = styled.form`

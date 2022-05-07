@@ -155,7 +155,7 @@ export const postNft = (tokenuser, item) => async dispatch => {
     try {
         const dataPost = await axios.post(`http://localhost:4000/nft`, item, {
             headers: {
-                Authorization: JSON.parse(tokenuser)
+                Authorization: JSON.parse(tokenuser) // usuarios registrados puedan hacer creeacion de nfts
             }
         })
         const responsePost = await dispatch({

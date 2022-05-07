@@ -11,6 +11,8 @@ import Logo from "../../assets/logo.png";
 
 import Swal from "sweetalert2";
 
+import 'sweetalert2/dist/sweetalert2.css'
+
 import styles from './Header.module.css';
 
 const StyledNav = styled.nav`

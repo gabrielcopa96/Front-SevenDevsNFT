@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
 import GoogleLogin from "react-google-login";
 import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.css'
 
 
 import React, { useState, useEffect } from "react";

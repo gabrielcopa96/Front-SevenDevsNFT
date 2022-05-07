@@ -13,6 +13,8 @@ import {
 
 import { modificacionUser } from "../../redux/actions/index";
 import Swal from "sweetalert2";
+
+import 'sweetalert2/dist/sweetalert2.css'
 import Input from "../shared/Input.jsx";
 import Button from "../shared/Button.jsx";
 import { Navigate, useNavigate, useParams } from "react-router-dom";

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import Swal from "sweetalert2";
+
+import 'sweetalert2/dist/sweetalert2.css'
 import { putLikesNft } from "../../../../redux/actions";
 
 import imagenaudio from "../../../../assets/nft-audio.jpg";
