@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Kanit", sans-serif;
+}
+
+:root {
+  --mainFontColor: #171717;
+  --secondFontColor: #dfdfdf;
+  --mainBackGroundColor: #0f3942;
+  --mainBackGroundButtonColor: #22a4a7;
+  --backgroundInput: #c7d1d3;
+  --mainContainersColor: #002e39;
+  --loginBackGroundButtonColor: #006466;
+  --colorError: #b54545;
+  --colorInfo: #aeaeae;
+  --large: 18px;
+  --medium: 16px;
+  --small: 14px;
+}
+
+body {
+  background: rgb(71, 17, 137);
+  background: linear-gradient(
+    45deg,
+    rgba(71, 17, 137, 0.9752275910364145) 0%,
+    rgba(69, 16, 132, 1) 5%,
+    rgba(69, 17, 135, 0.989233193277311) 9%,
+    rgba(53, 7, 93, 0.989233193277311) 47%,
+    rgba(19, 5, 78, 0.969625350140056) 90%
+  );
+
+  /* background: rgb(71, 17, 137);
+  background: linear-gradient(
+    45deg,
+    rgba(71, 17, 137, 1) 0%,
+    rgba(53, 7, 93, 1) 49%,
+    rgba(19, 5, 78, 1) 100%
+  ); */
+}
