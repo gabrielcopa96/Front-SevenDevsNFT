@@ -1,33 +1,33 @@
-.loading-1{
+.loading1{
     margin-left: 1rem;
     position: relative;
 }
-.loading-1 i {
+.loading1 i {
     position: absolute;
     bottom: 0;
     display: block;
     width: 9px;
     height: 5px;
     background: #9b59b6;
-    animation: loading-1 1.5s  infinite ease-in-out;
+    animation: loading1 1.5s  infinite ease-in-out;
 }
-.loading-1 i:nth-child(2){
+.loading1 i:nth-child(2){
   left: 11px;
   animation-delay: .2s;
 }
-.loading-1 i:nth-child(3){
+.loading1 i:nth-child(3){
   left:22px;
   animation-delay: .4s;
 }
-.loading-1 i:nth-child(4){
+.loading1 i:nth-child(4){
   left:33px;
   animation-delay: .6s;
 }
-.loading-1 i:nth-child(5){
+.loading1 i:nth-child(5){
   left:44px;
   animation-delay: .8s;
 }
-@keyframes loading-1 {
+@keyframes loading1 {
   0% {
   height:5px;transform:translateY(0px);background:#9b59b6;
   }

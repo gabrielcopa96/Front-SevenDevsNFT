@@ -9,14 +9,14 @@
 			box-sizing: border-box;
 			position: relative;
 		}
-		.card-img {
+		.cardImg {
 			height: 55%;
 			border-radius: 10px;
 			overflow: hidden;
 			position: relative;
 			cursor: pointer;
 		}
-		.card-img::after {
+		.cardImg::after {
 			content: url(https://rvs-nft-preview-card.netlify.app/images/icon-view.svg);
 			position: absolute;
 			top: 50%;
@@ -31,50 +31,50 @@
 			border-radius: 10px;
 			z-index: -1;
 		}
-		.card-img:hover::after {
+		.cardImg:hover::after {
 			z-index: 1;
 		}
-		.card-img img {
+		.cardImg img {
 			width: 100%;
 			height: 100%;
 		}
-		.card-body {
+		.cardBody {
 			height: 27%;
 			color: hsl(215, 51%, 70%);
 			font-size: 14px;
 			padding-bottom: 10px;
 			border-bottom: 1px solid hsl(215, 32%, 27%);
 		}
-		.card-body h4 {
+		.cardBody h4 {
 			color: hsl(0, 0%, 100%);
 			margin-bottom: 0;
 			font-size: 18px;
 			cursor: pointer;
 			font-weight: 400;
 		}
-		.card-body p {
+		.cardBody p {
 			font-weight: 300;
 		}
-		.card-body h4:hover {
+		.cardBody h4:hover {
 			color:hsl(178, 100%, 50%)
 		}
-		.card-body-footer {
+		.cardBodyFooter {
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
 			font-size: 12px;
 		}
-		.card-body-footer div {
+		.cardBodyFooter div {
 			position: relative;
 			padding-left: 18px;
 		}
-		.card-body-footer div:nth-child(1) {
+		.cardBodyFooter div:nth-child(1) {
 			color: hsl(178, 100%, 50%);
 		}
-		.card-body-footer div:nth-child(2) {
+		.cardBodyFooter div:nth-child(2) {
 			padding-left: 22px;
 		}
-		.card-body-footer div::before {
+		.cardBodyFooter div::before {
 			content: url(https://rvs-nft-preview-card.netlify.app/images/icon-ethereum.svg);
 			position:absolute;
 			top: 50%;
@@ -82,31 +82,31 @@
 			transform: translate(0%, -50%);
 			line-height: 0px;
 		}
-		.card-body-footer div:nth-child(2):before {
+		.cardBodyFooter div:nth-child(2):before {
 			content: url(https://rvs-nft-preview-card.netlify.app/images/icon-clock.svg);
 		}
-		.card-footer {
+		.cardFooter {
 			height: 12%;
 			display: flex;
 			align-items: center;
 			column-gap: 15px;
 		}
-		.card-footer img {
+		.cardFooter img {
 			width: 25px;
 			height: 25px;
 			border: 1px solid hsl(0, 0%, 100%);
 			border-radius: 50%;
 		}
-		.card-footer p {
+		.cardFooter p {
 			font-size: 14px;
 			color: hsl(215, 51%, 70%);
 			font-weight: 300;
 		}
-		.card-footer span {
+		.cardFooter span {
 			margin-left: 5px;
 			color: hsl(0, 0%, 100%);
 			cursor: pointer;
 		}
-		.card-footer span:hover {
+		.cardFooter span:hover {
 			color:hsl(178, 100%, 50%)
 		}

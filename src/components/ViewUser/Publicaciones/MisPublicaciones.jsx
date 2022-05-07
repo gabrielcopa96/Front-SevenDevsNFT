@@ -1,6 +1,7 @@
 import React from "react";
 
-import "./publicaciones.css";
+
+import styles from "./publicaciones.module.css"
 
 import styled from "styled-components";
 
