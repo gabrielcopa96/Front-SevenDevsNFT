@@ -25,7 +25,7 @@
     transition-delay: 0s, 0.75s;
   }
   
-  .navigation .user-box {
+  .navigation .userBox {
     /* position: relative; */
     width: 60px;
     height: 55px;
@@ -37,14 +37,14 @@
     transition-delay: 0.5s;
   }
   
-  .navigation .user-box .username {
+  .navigation .userBox .username {
     font-size: 1.1rem;
     font-weight: bold;
     white-space: nowrap;
     color: var(--secondFontColor);
   }
   
-  .navigation .user-box .image-box {
+  .navigation .userBox .imageBox {
     position: relative;
     min-width: 60px;
     height: 60px;
@@ -54,7 +54,7 @@
   
   }
   
-  .navigation .user-box .image-box img {
+  .navigation .userBox .imageBox img {
     position: absolute;
     top: 0;
     left: 0;
@@ -63,7 +63,7 @@
     object-fit: cover;
   }
   
-  .navigation .menu-toggle {
+  .navigation .menuToggle {
     position: relative;
     width: 60px;
     background: transparent;
@@ -74,7 +74,7 @@
     cursor: pointer;
   }
   
-  .navigation .menu-toggle::before {
+  .navigation .menuToggle::before {
     content: "";
     position: absolute;
     width: 32px;
@@ -85,7 +85,7 @@
     transition: 0.5s;
   }
   
-  .navigation .menu-toggle::after {
+  .navigation .menuToggle::after {
     content: "";
     position: absolute;
     width: 32px;
@@ -126,12 +126,12 @@
     text-decoration: underline
   }
   
-  .navigation.active .menu-toggle::before {
+  .navigation.active .menuToggle::before {
     transform: translateY(0px) rotate(45deg);
     box-shadow: none;
   }
   
-  .navigation.active .menu-toggle::after {
+  .navigation.active .menuToggle::after {
     transform: translateY(0px) rotate(-45deg);
   }
   
@@ -143,7 +143,7 @@
     transition-delay: 0s, 0.75s;
   }
   
-  .navigation.active .user-box {
+  .navigation.active .userBox {
     width: calc(100% - 80px);
     transition-delay: 0s;
   }

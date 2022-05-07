@@ -11,7 +11,7 @@ import Logo from "../../assets/logo.png";
 
 import Swal from "sweetalert2";
 
-import "./header.css";
+import styles from './Header.module.css';
 
 const StyledNav = styled.nav`
   display: flex;
@@ -114,15 +114,15 @@ function Header() {
       </LogoContainer>
       {jwt ? (
         <>
-          <div className={`navigation ${isActive ? "active" : ""}`}>
-            <div className="user-box">
-              <div className="image-box">
+          <div className={`${styles.navigation} ${isActive ? `${styles.active}` : ""}`}>
+            <div className={styles.userBox}>
+              <div className={styles.imageBox}>
                 <img src={userData.image} alt="foto-1" />
               </div>
-              <p className="username">{userData.username}</p>
+              <p className={styles.username}>{userData.username}</p>
             </div>
-            <div className="menu-toggle" onClick={(e) => handleClick(e)}>
-              <ul className="menu">
+            <div className={styles.menuToggle} onClick={(e) => handleClick(e)}>
+              <ul className={styles.menu}>
                 <li>
                   <ContainerItemsMenu>
                     <FaUserCircle style={{ width: "22px", height: "42px" }} />
