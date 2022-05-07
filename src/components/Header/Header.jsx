@@ -7,6 +7,7 @@ import { getTokenUser, removeUser } from "../../redux/actions/index";
 import Button from "../shared/Button";
 import { IoIosLogOut } from "react-icons/io";
 import { FaUserCircle, FaInfoCircle, FaBuffer } from "react-icons/fa";
+import Logo from "../../assets/logo.png";
 
 import Swal from "sweetalert2";
 
@@ -109,7 +110,7 @@ function Header() {
   return (
     <StyledNav>
       <LogoContainer onClick={(e) => handleLogoClick(e)}>
-        <img src={require("../../assets/logo.png")} alt="not found" />
+        <img src={Logo} alt="not found" />
       </LogoContainer>
       {jwt ? (
         <>

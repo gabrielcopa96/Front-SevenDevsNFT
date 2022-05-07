@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Autoplay, Navigation, Scrollbar, A11y } from "swiper";
+import { Navigation, Scrollbar, A11y } from "swiper";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -12,7 +12,6 @@ import SwiperCore, { Pagination } from "swiper/core";
 import {
   ContainerNFT,
   NftTitle,
-  ContainerCardNft,
 } from "../StylesHome/ViewNftStyles.jsx";
 
 import { Link } from "react-router-dom";

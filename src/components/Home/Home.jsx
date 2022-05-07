@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ViewNft } from "./elements/ViewNft/ViewNft.jsx";
-// import { CollectionsCarousel } from "./elements/CollectionCarousel/CollectionsCarousel.jsx";
+import { CollectionsCarousel } from "./elements/CollectionCarousel/CollectionCarousel.jsx";
 
 
 
@@ -12,7 +12,7 @@ const HomeTitle = styled.div`
 function Home() {
   return (
     <>
-      {/* <CollectionsCarousel /> */}
+      <CollectionsCarousel />
       <HomeTitle />
       <ViewNft />
      
