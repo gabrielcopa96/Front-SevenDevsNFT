@@ -84,6 +84,7 @@ export const ViewNft = () => {
       >
         Categories
       </h2>
+      <h2>Prueba category</h2>
       <ContainerTitleCategory>
         <div
           style={{
