@@ -30,12 +30,18 @@ body {
     rgba(53, 7, 93, 0.989233193277311) 47%,
     rgba(19, 5, 78, 0.969625350140056) 90%
   );
-
-  /* background: rgb(71, 17, 137);
-  background: linear-gradient(
-    45deg,
-    rgba(71, 17, 137, 1) 0%,
-    rgba(53, 7, 93, 1) 49%,
-    rgba(19, 5, 78, 1) 100%
-  ); */
 }
+
+.tableTheadBg {
+  background-color: #6b48ff;
+  color:white
+}
+
+.active {
+  background-color: #6b48ff;
+}
+
+
+/* h1,h2,h3,h4,h5 {
+  font-weight: 900;
+} */

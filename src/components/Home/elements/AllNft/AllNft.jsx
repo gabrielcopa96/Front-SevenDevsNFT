@@ -6,6 +6,10 @@ import { Loading } from "../../../Loading/Loading.jsx";
 import { getNftQuery, removeNftQuery } from "../../../../redux/actions/index";
 
 import { CardNft } from "../CardNft/CardNft.jsx";
+import CategoryFilter from "./filters/CategoryFilter.jsx";
+import CurrenciesFilter from "./filters/CurrenciesFilter.jsx";
+import SalesFilter from "./filters/SalesFilter.jsx";
+import FilesTypeFilter from "./filters/FilesTypeFilter.jsx";
 
 const ContainerAll = styled.div`
   width: 80%;
@@ -52,6 +56,7 @@ export const AllNft = () => {
   const nftAll = useSelector((state) => state.nfts);
   const nft = useSelector((state) => state.nftquery);
   const hasMore = useSelector((state) => state.hasMore);
+  const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
@@ -64,10 +69,9 @@ export const AllNft = () => {
     // }
   }, [instantCallback, page]);
 
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
 
-
-  console.log(token)
+  console.log(token);
 
   const fecthNft = () => {
     setTimeout(() => {
@@ -76,11 +80,17 @@ export const AllNft = () => {
       }
     }, 1500);
   };
-  
+
   return (
-    <div style={{marginTop: "7.5rem"}}>
+    <div style={{ marginTop: "7.5rem" }}>
       <ContainerFiltrosMain>
-        <h2 style={{color: 'var(--secondFontColor)'}}>Filter in construction</h2>
+        <CurrenciesFilter className={"filters"} />
+
+        <CategoryFilter className={"filters"} />
+
+        <SalesFilter className={"filters"} />
+
+        <FilesTypeFilter className={"filters"} />
       </ContainerFiltrosMain>
       <ContainerAll>
         <InfiniteScroll
@@ -104,7 +114,7 @@ export const AllNft = () => {
             </ContainerLoader>
           }
           endMessage={
-            <hr style={{borderColor: 'var(--mainBackGroundButtonColor)'}}/>
+            <hr style={{ borderColor: "var(--mainBackGroundButtonColor)" }} />
           }
         >
           <ContainerNft>

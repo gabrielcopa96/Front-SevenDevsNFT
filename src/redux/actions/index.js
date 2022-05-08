@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const SET_MODAL = 'SET_MODAL';
 export const SET_RESIZE = 'SET_RESIZE';
+export const GET_USERS = 'GET_USERS';
 export const GET_TOKEN = 'GET_TOKEN';
 export const GET_ALL_NFT = 'GET_ALL_NFT';
 export const GET_NFT_QUERY = 'GET_NFT_QUERY';
@@ -17,6 +18,11 @@ export const GET_ALL_COLLECTIONS = 'GET_ALL_COLLECTIONS';
 export const FILTER_NFT = 'FILTER_NFT';
 export const CREATE_NFT = 'CREATE_NFT';
 export const FILTER_CATEGORY = 'FILTER_CATEGORY';
+export const CATEGORY_FILTER = 'CATEGORY_FILTER';
+export const CURRENCY_FILTER = 'CURRENCY_FILTER';
+export const SALES_FILTER = 'SALES_FILTER';
+export const FILE_FILTER = 'FILE_FILTER';
+export const DELETE_NFT = 'DELETE_NFT';
 
 
 
@@ -52,6 +58,23 @@ export function filterNft(payload) {
         payload
     }
 };
+
+export const getUsers = (tokenuser) => async dispatch => {
+    try {
+        const dataUsers = await axios.get('http://localhost:4000/users?limit=50', {
+            headers: {
+                Authorization: JSON.parse(tokenuser)
+            }
+        })
+        const usersers = await dispatch({
+            type: GET_USERS,
+            payload: dataUsers.data
+        })
+        return usersers
+    } catch (error) {
+        console.log("error: " + error)
+    }
+}
 
 
 export const getNftQuery = (page) => async dispatch => {
@@ -151,6 +174,62 @@ export const getFileTypes = () => async dispatch => {
     }
 }
 
+export const filterByCategory = (id) => async dispatch => {
+    try {
+        const dataCategory = await axios.get('http://localhost:4000/filter/category/'+ id)
+        console.log(dataCategory.data)
+        const finallyDataCategory = await dispatch({
+            type: CATEGORY_FILTER,
+            payload: dataCategory.data
+        })
+        return finallyDataCategory
+    } catch (error) {
+        console.log('error:', error)
+    }
+}
+
+export const filterBySaleWay = (id) => async dispatch => {
+    try {
+        const dataCategory = await axios.get('http://localhost:4000/filter/sales/'+ id)
+        console.log(dataCategory.data)
+        const finallyDataCategory = await dispatch({
+            type: SALES_FILTER,
+            payload: dataCategory.data
+        })
+        return finallyDataCategory
+    } catch (error) {
+        console.log('error:', error)
+    }
+}
+
+export const filterByCurrencies = (id) => async dispatch => {
+    try {
+        const dataCurrencies = await axios.get('http://localhost:4000/filter/currencies/'+ id)
+        console.log(dataCurrencies.data)
+        const finallyDataCategory = await dispatch({
+            type: CURRENCY_FILTER,
+            payload: dataCurrencies.data
+        })
+        return finallyDataCategory
+    } catch (error) {
+        console.log('error:', error)
+    }
+}
+
+export const filterByFileType = (id) => async dispatch => {
+    try {
+        const dataCurrencies = await axios.get('http://localhost:4000/filter/files/'+ id)
+        console.log(dataCurrencies.data)
+        const finallyDataCategory = await dispatch({
+            type: FILE_FILTER,
+            payload: dataCurrencies.data
+        })
+        return finallyDataCategory
+    } catch (error) {
+        console.log('error:', error)
+    }
+}
+
 export const postNft = (tokenuser, item) => async dispatch => {
     try {
         const dataPost = await axios.post(`http://localhost:4000/nft`, item, {
@@ -164,6 +243,23 @@ export const postNft = (tokenuser, item) => async dispatch => {
         })
         console.log(dataPost.data)
         return responsePost
+    } catch (error) {
+        console.log("error", error)
+    }
+}
+
+export const deleteNft = (tokenuser, id) => async dispatch => {
+    try {
+        const dataNft = await axios.delete(`http://localhost:4000/nft/${id}`, {
+            headers: {
+                Authorization: JSON.parse(tokenuser)
+            }
+        })
+        const deleteUnNft = await dispatch({
+            type: DELETE_NFT,
+            payload: dataNft.data
+        })
+        return deleteUnNft
     } catch (error) {
         console.log("error", error)
     }

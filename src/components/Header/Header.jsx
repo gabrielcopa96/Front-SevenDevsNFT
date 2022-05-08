@@ -114,7 +114,50 @@ function Header() {
       <LogoContainer onClick={(e) => handleLogoClick(e)}>
         <img src={Logo} alt="not found" />
       </LogoContainer>
-      {jwt ? (
+      {(jwt && userData?.user_type?.name === "admin") ? (
+         <>
+         <div className={`${styles.navigation} ${isActive ? `${styles.active}` : ""}`}>
+           <div className={styles.userBox}>
+             <div className={styles.imageBox}>
+               <img src={userData.image} alt="foto-1" />
+             </div>
+             <p className={styles.username}>{userData.username}</p>
+           </div>
+           <div className={styles.menuToggle} onClick={(e) => handleClick(e)}>
+             <ul className={styles.menu}>
+               <li>
+                 <ContainerItemsMenu>
+                   <FaUserCircle style={{ width: "22px", height: "42px" }} />
+                   <Link to={`/admin`}>Admin</Link>
+                 </ContainerItemsMenu>
+               </li>
+               <li>
+                 <ContainerItemsMenu>
+                   <FaInfoCircle style={{ width: "22px", height: "42px" }} />
+                   <a href="#">About</a>
+                 </ContainerItemsMenu>
+               </li>
+               <li>
+                 <ContainerItemsMenu>
+                 <FaBuffer style={{ width: "22px", height: "42px" }} />
+                   <Link to={"/home/collections/"} style={{marginLeft: "1rem"}}>Collections</Link>
+                 </ContainerItemsMenu>
+               </li>
+               <li>
+                 <ContainerItemsMenu>
+                   <IoIosLogOut style={{ width: "22px", height: "42px" }} />
+                   <Link to="/home" onClick={handleLogout}>
+                     Logout
+                   </Link>
+                 </ContainerItemsMenu>
+               </li>
+             </ul>
+           </div>
+         </div>
+       </>
+      ) 
+      : jwt 
+      ? (
         <>
           <div className={`${styles.navigation} ${isActive ? `${styles.active}` : ""}`}>
             <div className={styles.userBox}>

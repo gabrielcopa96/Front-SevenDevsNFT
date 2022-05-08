@@ -25,9 +25,10 @@ const ContainerNewsletter = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   width: 30%;
-  h3 {
-    font-size: 1.3rem;
+  h4 {
+    font-size: 1.2rem;
     color: var(--secondFontColor);
+    font-weight: bold;
   }
   input {
     width: 90%;
@@ -39,16 +40,19 @@ const ContainerInfoFooter = styled.div`
   grid-template-rows: 1fr 1fr;
   text-align: center;
   margin-right: 7rem;
-  h3 {
+  h4 {
     color: var(--secondFontColor);
+    font-weight: bold;
   }
 `;
 
 const ContainerInfo = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
-  h3 {
+  gap: -1rem;
+  h4 {
     color: var(--secondFontColor);
+    font-weight: bold;
   }
   a {
     text-decoration: none;
@@ -63,9 +67,10 @@ const ContainerInfo = styled.div`
 const ContainerSoporte = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
-
-  h3 {
+  gap: -1rem;
+  h4 {
     color: var(--secondFontColor);
+    font-weight: bold;
   }
   
   a {
@@ -89,7 +94,7 @@ const Footer = () => {
         </ContainerImagen>
         <ContainerInfo>
           <div>
-            <h3>Informacion</h3>
+            <h4>Informacion</h4>
           </div>
           <div>
             <p>
@@ -110,7 +115,7 @@ const Footer = () => {
         </ContainerInfo>
         <ContainerSoporte>
           <div>
-            <h3>Soporte</h3>
+            <h4>Soporte</h4>
           </div>
           <p><a href="#">Danos tu opinion</a></p>
           <p><a href="#">Charla con el asistente virtual</a></p>
@@ -118,7 +123,7 @@ const Footer = () => {
         </ContainerSoporte>
         <ContainerInfoFooter>
           <div>
-            <h3>Comunidad</h3>
+            <h4>Comunidad</h4>
           </div>
           <div>
             <a href="https://discord.gg/get6j98T" target="_blank">
@@ -137,6 +142,7 @@ const Footer = () => {
         style={{
           textAlign: "center",
           color: "var(--colorInfo)",
+          fontSize: "1.2rem",
           paddingBottom: "1rem",
           paddingTop: "1rem",
         }}

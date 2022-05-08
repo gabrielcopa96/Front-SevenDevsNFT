@@ -87,12 +87,11 @@ const CardBodyFooter = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
 
   div {
     position: relative;
     padding-left: 1rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 
     &:nth-child(1) {
       color: hsl(178, 100%, 50%);

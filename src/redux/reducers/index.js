@@ -14,7 +14,13 @@ import {
     GET_CURRENCIES,
     GET_FILES_TYPE,
     GET_SALES_TYPE,
-    FILTER_CATEGORY
+    FILTER_CATEGORY,
+    CATEGORY_FILTER,
+    DELETE_NFT,
+    GET_USERS,
+    CURRENCY_FILTER,
+    SALES_FILTER,
+    FILE_FILTER
 } from "../actions";
 
 
@@ -27,6 +33,7 @@ const initialState = {
     isLogged: false,
     user: {},
     collections: [],
+    users: [],
     filterNfts: [],
     nft: {},
     category: [],
@@ -134,6 +141,24 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 nftquery: action.payload
             }
+        case DELETE_NFT:
+            return {
+                ...state,
+                // nft: action.payload
+            }
+        case GET_USERS:
+            return {
+                ...state,
+                users: action.payload.users
+            }
+        case CATEGORY_FILTER:
+            return { ...state, nftquery: action.payload }
+        case SALES_FILTER:
+            return { ...state, nftquery: action.payload }
+        case FILE_FILTER:
+            return { ...state, nftquery: action.payload }
+        case CURRENCY_FILTER:
+            return { ...state, nftquery: action.payload }
         default: return state
     };
 };
