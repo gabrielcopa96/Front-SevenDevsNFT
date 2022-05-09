@@ -10,7 +10,8 @@ export const GET_CATEGORY = 'GET_CATEGORY';
 export const GET_SALES_TYPE = 'GET_SALES_TYPE';
 export const GET_FILES_TYPE = 'GET_FILES_TYPE';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
-export const PUT_USER = 'PUT_USER'
+export const PUT_USER = 'PUT_USER';
+export const PUT_NFT = 'PUT_NFT';
 export const PUT_LIKES = 'PUT_LIKES';
 export const REMOVE_USER = 'REMOVE_USER';
 export const REMOVE_NFT_QUERY = 'REMOVE_NFT_QUERY';
@@ -24,7 +25,9 @@ export const SALES_FILTER = 'SALES_FILTER';
 export const FILE_FILTER = 'FILE_FILTER';
 export const DELETE_NFT = 'DELETE_NFT';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
+export const CREATE_CURRENCIES = 'CREATE_CURRENCIES';
 export const PUT_CATEGORY = 'PUT_CATEGORY';
+export const CREATE_SALES_TYPES = 'CREATE_SALES_TYPES';
 
 
 
@@ -326,6 +329,23 @@ export const modificacionUser = (id, item) => async dispatch => {
     // }
 }
 
+export const modificacionNft = (tokenuser, id, item) => async dispatch => {
+    try {
+        const modifNft = await axios.put(`https://sevendevs-backend.herokuapp.com/nft/${id}`, item, {
+            headers: {
+                Authorization: JSON.parse(tokenuser) 
+            }
+        })
+        const responseModifNft = await dispatch({
+            type: PUT_NFT,
+            payload: modifNft.data
+        })
+        return responseModifNft
+    } catch (error) {
+        console.log("error", error)
+    }
+}
+
 export const postCategory = (item) => async dispatch => {
     try {
         const dataPostCategory = await axios.post(`https://sevendevs-backend.herokuapp.com/misc/category`, item)
@@ -334,6 +354,32 @@ export const postCategory = (item) => async dispatch => {
             payload: dataPostCategory
         })
         return respDataPostCategory
+    } catch (error) {
+        console.log("error", error)
+    }
+}
+
+export const PostCurrencies = (item) => async dispatch => {
+    try {
+        const dataPostCurrencies = await axios.post(`https://sevendevs-backend.herokuapp.com/misc/category`, item)
+        const respDataPostCurencies = await dispatch({
+            type: CREATE_CURRENCIES,
+            payload: dataPostCurrencies
+        })
+        return respDataPostCurencies
+    } catch (error) {
+        console.log("error", error)
+    }
+}
+
+export const PostSalesTypes = (item) => async dispatch => {
+    try {
+        const dataPostSalestypes = await axios.post(`https://sevendevs-backend.herokuapp.com/misc/category`, item)
+        const respDataPostSalesTypes = await dispatch({
+            type: CREATE_SALES_TYPES,
+            payload: dataPostSalestypes
+        })
+        return respDataPostSalesTypes
     } catch (error) {
         console.log("error", error)
     }

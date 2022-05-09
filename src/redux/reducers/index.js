@@ -21,7 +21,10 @@ import {
     CURRENCY_FILTER,
     SALES_FILTER,
     FILE_FILTER,
-    CREATE_CATEGORY
+    CREATE_CATEGORY,
+    CREATE_CURRENCIES,
+    CREATE_SALES_TYPES,
+    PUT_NFT
 } from "../actions";
 
 
@@ -100,6 +103,12 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 user: username
             }
+        case PUT_NFT:
+            const modnft = action.payload
+            return {
+                ...state,
+                nft: {...state.nft, modnft}
+            }
         case PUT_LIKES:
             const objFav = []
             state.nfts.forEach(x => {
@@ -121,6 +130,16 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 category: [...state.category, action.payload]
+            }
+        case CREATE_CURRENCIES:
+            return {
+                ...state,
+                currencies: [...state.currencies, action.payload]
+            }
+        case CREATE_SALES_TYPES:
+            return {
+                ...state,
+                sales_type: [...state.sales_type, action.payload]
             }
         case GET_CATEGORY:
             return {

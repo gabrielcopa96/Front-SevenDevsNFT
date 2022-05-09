@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-// import {postCategory} from "../../../redux/actions"
+import { PostCurrencies } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
@@ -144,9 +144,7 @@ export const TableCurrencies = (props) => {
         name={number}
         value={number}
         onClick={(e) => handleClickPageNumbers(e.target.value)}
-        className={
-          currentPage.currencies === number ? "active" : null
-        }
+        className={currentPage.currencies === number ? "active" : null}
         style={{ cursor: "pointer" }}
       >
         <span>{number}</span>
@@ -173,8 +171,8 @@ export const TableCurrencies = (props) => {
 
   const handleCreateCurrencies = async () => {
     const { value: formValues } = await Swal.fire({
-      title: "Escribe la nueva categoria",
-      html: '<input id="swal-input1" class="swal2-input" placeholder="nueva categoria..."><div id="recaptcha"></div>',
+      title: "Escribe la nueva moneda",
+      html: '<input id="swal-input1" class="swal2-input" placeholder="nueva moneda..."><div id="recaptcha"></div>',
       focusConfirm: false,
       color: "var(--secondFontColor)",
       background: "#46198fb3",
@@ -189,18 +187,16 @@ export const TableCurrencies = (props) => {
 
     if (formValues) {
       Swal.fire({
-        title: "Este es tu nueva categoria",
+        title: "Este es tu nueva moneda",
         text: `${formValues.name}`,
       });
       setTimeout(() => {
-        // dispatch(postCategory(formValues));
+        dispatch(PostCurrencies(formValues));
       }, 2500);
     }
   };
 
   //? postCurrencies
-
-
 
   return (
     <>
@@ -209,9 +205,9 @@ export const TableCurrencies = (props) => {
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>
-              <ButtonAgregar onClick={() => console.log("en construccion")}>
+              <ButtonAgregar onClick={() => handleCreateCurrencies()}>
                 {/* <button to="/admin/create" style={{ color: "#fff" }}> */}
-                  <i className="fas fa-plus"></i>
+                <i className="fas fa-plus"></i>
                 {/* </button> */}
               </ButtonAgregar>
               <Link to="/"></Link>

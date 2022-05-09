@@ -4,14 +4,13 @@ import styled from "styled-components";
 
 import Swal from "sweetalert2";
 
-import 'sweetalert2/dist/sweetalert2.css'
+import "sweetalert2/dist/sweetalert2.css";
 import { putLikesNft } from "../../../../redux/actions";
 
 import imagenaudio from "../../../../assets/nft-audio.jpg";
 import imagenvideo from "../../../../assets/azuki-nft.gif";
 import { useDispatch } from "react-redux";
 import { BsHeartFill } from "react-icons/bs";
-
 
 const CardContainerNft = styled.div`
   width: 280px;
@@ -72,10 +71,15 @@ const CardBody = styled.div`
   h4 {
     a {
       color: hsl(0, 0%, 100%);
+      text-decoration: none;
       margin-bottom: 0;
       font-size: 18px;
       cursor: pointer;
       font-weight: 400;
+
+      &:hover {
+        color: hsl(178, 100%, 50%);
+      }
     }
   }
 
@@ -181,6 +185,18 @@ const PruebaPrice = (props) => {
   );
 };
 
+const ContainerHearth = styled.span`
+  i {
+    color: var(--colorInfo);
+
+    &:hover {
+      -webkit-box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.67);
+      box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.67);
+      cursor: pointer;
+    }
+  }
+`;
+
 export const CardNft = (props) => {
   const {
     image,
@@ -237,20 +253,23 @@ export const CardNft = (props) => {
       >
         <img src={handlePhoto()} alt="photo nft" />
       </CardingImg>
-      <div style={{ display: "flex", justifyContent: "flex-end"}}>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             alignItems: "center",
             top: "1.65rem",
-            position: "relative"
+            position: "relative",
           }}
         >
-          <BsHeartFill
+          {/* <BsHeartFill
             style={{ color: "var(--colorInfo)" }}
             onClick={handlerLikes}
-          />
+          /> */}
+          <ContainerHearth onClick={handlerLikes}>
+            <i class="fa fa-heart" aria-hidden="true"></i>
+          </ContainerHearth>
           <span
             style={{
               fontSize: "1rem",
@@ -265,7 +284,7 @@ export const CardNft = (props) => {
       <CardBody>
         <h4>
           <Link
-            style={{ textDecoration: "none", color: "white" }}
+            // style={{ textDecoration: "none", color: "var(--secondFontColor)" }}
             to={`/details/${id}`}
           >
             {name}

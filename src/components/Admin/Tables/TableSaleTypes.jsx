@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-// import {postCategory} from "../../../redux/actions"
+import {PostSalesTypes} from "../../../redux/actions"
 import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
@@ -188,11 +188,11 @@ export const TableSaleTypes = (props) => {
 
     if (formValues) {
       Swal.fire({
-        title: "Este es tu nueva categoria",
+        title: "Este es tu nuevo tipo de venta",
         text: `${formValues.name}`,
       });
       setTimeout(() => {
-        // dispatch(postCategory(formValues));
+        dispatch(PostSalesTypes(formValues));
       }, 2500);
     }
   };

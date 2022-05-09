@@ -4,6 +4,10 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
+import imagenvideo from "../../../assets/azuki-nft.gif";
+
+import imagenaudio from "../../../assets/nft-audio.jpg";
+
 const ContainerPagination = styled.div`
   margin: 0 auto;
   width: 50%;
@@ -91,19 +95,13 @@ const ListTable = styled.li`
 `;
 
 export const TableNft = (props) => {
-  const {
-    currentPage,
-    setCurrentPage,
-    nft,
-    itemsPerPage,
-  } = props;
+  const { currentPage, setCurrentPage, nft, itemsPerPage } = props;
 
   const pagesNft = []; //? pages for nft
   //? Paginado por nft
   for (let i = 1; i <= Math.ceil(nft.length / itemsPerPage); i++) {
     pagesNft.push(i);
   }
-
 
   const handleClickPageNumbers = (number) => {
     setCurrentPage({
@@ -113,7 +111,7 @@ export const TableNft = (props) => {
   };
 
   const renderPageNumberNft = pagesNft.map((number) => {
-    console.log(number)
+    console.log(number);
     return (
       <ListTable
         key={number}
@@ -134,13 +132,36 @@ export const TableNft = (props) => {
 
   const currentItemsNft = nft.slice(indexOfFirstItemNft, indexOfLastItemNft); //? items per nfts
 
+  // const handlePhoto = () => {
+  //   if (x.files_types.name === "Image") {
+  //     return `${x.image}`;
+  //   }
+  //   if (x.files_types.name === "Video") {
+  //     return `${imagenvideo}`;
+  //   }
+  //   if (x.file_types.name === "Audio") {
+  //     return `${imagenaudio}`;
+  //   }
+  // };
+
   const handleRenderTableNft = currentItemsNft?.map((x, i) => {
     return (
       <tr key={i} style={{ color: "white", marginBottom: ".2rem" }}>
         <td> {x.name}</td>
         <td>
           {x.image ? (
-            <img src={x.image} style={{ width: "55px", height: "52px" }} />
+            <img
+              src={
+                x.files_types.name === "Image"
+                  ? x.image
+                  : x.files_types.name === "Video"
+                  ? imagenvideo
+                  : x.files_types.name === "Audio"
+                  ? imagenaudio
+                  : null
+              }
+              style={{ width: "55px", height: "52px" }}
+            />
           ) : (
             "S/N"
           )}
@@ -179,13 +200,11 @@ export const TableNft = (props) => {
 
     setCurrentPage({
       ...currentPage,
-      nft: currentPage.nft - 1
-    })
-  }
+      nft: currentPage.nft - 1,
+    });
+  };
 
-
-  console.log(currentPage.nft)
-
+  // console.log(currentPage.nft)
 
   return (
     <>
@@ -246,7 +265,9 @@ export const TableNft = (props) => {
                 onClick={handlenNext}
                 name="nft"
                 disabled={
-                  currentPage.nft === pagesNft[pagesNft.length - 1] ? true : false
+                  currentPage.nft === pagesNft[pagesNft.length - 1]
+                    ? true
+                    : false
                 }
                 aria-label="Next"
                 style={{ cursor: "pointer" }}

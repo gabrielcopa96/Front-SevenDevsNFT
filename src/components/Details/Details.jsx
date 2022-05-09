@@ -340,6 +340,7 @@ const DetailsContainer = styled.div`
   margin: 7.5rem auto 3rem auto;
   display: grid;
   grid-template-columns: 28% 70%;
+  gap: 2rem;
 `;
 
 const Column = styled.div`
