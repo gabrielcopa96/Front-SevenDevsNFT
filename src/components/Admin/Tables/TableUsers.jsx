@@ -4,6 +4,17 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
+import "sweetalert2/dist/sweetalert2.css";
+
+import axios from "axios";
+
+import { removeUser } from "../../../redux/actions";
+import { useDispatch } from "react-redux";
+
+
+
 const ContainerPagination = styled.div`
   margin: 0 auto;
   width: 50%;
@@ -93,6 +104,9 @@ const ListTable = styled.li`
 export const TableUsers = (props) => {
   const { currentPage, setCurrentPage, users, itemsPerPage } = props;
 
+  const dispatch = useDispatch();
+
+
   const pagesUsers = []; //? pages for nft
   //? Paginado por nft
   for (let i = 1; i <= Math.ceil(users.length / itemsPerPage); i++) {
@@ -109,9 +123,7 @@ export const TableUsers = (props) => {
         name={number}
         value={number}
         onClick={(e) => handleClickPageNumbers(e.target.value)}
-        className={
-          currentPage.user === number ? "active" : null
-        }
+        className={currentPage.user === number ? "active" : null}
         style={{ cursor: "pointer" }}
       >
         <span>{number}</span>
@@ -119,7 +131,7 @@ export const TableUsers = (props) => {
     );
   });
 
-  console.log(users)
+  console.log(users);
 
   const indexOfLastItemUser = currentPage.user * itemsPerPage; //? valor = 9 , index last of nft
   const indexOfFirstItemUser = indexOfLastItemUser - itemsPerPage; //? valor = 0 , index first of nft
@@ -128,6 +140,53 @@ export const TableUsers = (props) => {
     indexOfFirstItemUser,
     indexOfLastItemUser
   ); //? items per nfts
+
+  
+
+  const handlenNext = (e) => {
+    e.preventDefault();
+    setCurrentPage({
+      ...currentPage,
+      user: currentPage.user + 1,
+    });
+  };
+
+  const handlePrev = (e) => {
+    e.preventDefault();
+
+    setCurrentPage({
+      ...currentPage,
+      user: currentPage.user - 1,
+    });
+  };
+
+  const handleEliminateUser = (id) => {
+    Swal.fire({
+      title: "Do you want to delete your user?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      color: "var(--secondFontColor)",
+      background: "#46198fb3",
+      denyButtonText: "No",
+      customClass: {
+        actions: "my-actions",
+        cancelButton: "order-1 right-gap",
+        confirmButton: "order-2",
+        denyButton: "order-3",
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Eliminated!", "", "success");
+        const eliminarUser = await axios.delete(
+          `http://localhost:4000/users/${id}`
+        );
+        return eliminarUser;
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+  };
 
   const handleRenderTableUser = currentItemsUser?.map((x, i) => {
     return (
@@ -152,30 +211,13 @@ export const TableUsers = (props) => {
               <i className="fas fa-edit"></i>
             </Link>
           </ContainerButtonEditar>
-          <ButtonEliminar onClick={() => console.log(x.uid)}>
+          <ButtonEliminar onClick={() => handleEliminateUser(x.uid)}>
             <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
           </ButtonEliminar>
         </td>
       </tr>
     );
   });
-
-  const handlenNext = (e) => {
-    e.preventDefault();
-    setCurrentPage({
-      ...currentPage,
-      user: currentPage.user + 1,
-    });
-  };
-
-  const handlePrev = (e) => {
-    e.preventDefault();
-
-    setCurrentPage({
-      ...currentPage,
-      user: currentPage.user - 1,
-    });
-  };
 
   return (
     <>

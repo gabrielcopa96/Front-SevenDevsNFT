@@ -18,15 +18,7 @@ const ContainerPrimario = styled.div`
   width: 90%;
   margin: 7.5rem auto 1.5rem auto;
   color: var(--secondFontColor);
-  /* display: grid;
-  grid-template-columns: 10% 90%; */
 `;
-
-// const ContainerMainAdmin = styled.div`
-//   width: 85%;
-//   margin: 0 auto;
-//   color: var(--secondFontColor);
-// `;
 
 const ContainerPagination = styled.div`
   margin: 0 auto;

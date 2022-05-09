@@ -12,10 +12,8 @@ import SalesFilter from "./filters/SalesFilter.jsx";
 import FilesTypeFilter from "./filters/FilesTypeFilter.jsx";
 
 const ContainerAll = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 100%;
 `;
 
 const ContainerFilterNft = styled.div`
@@ -23,21 +21,61 @@ const ContainerFilterNft = styled.div`
 `;
 
 const ContainerNft = styled.div`
-  width: 100%;
+  width: 90%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 0.5rem;
-  margin-left: 1rem;
+  grid-template-columns: auto auto auto auto;
+  gap: .1rem;
+  margin: 0 auto 0 10rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* grid-template-row; */
+  }
+`;
+
+const ContainerTitleFilter = styled.div`
+  width: 100%;
+  height: 70px;
+  margin: 2rem auto 2rem auto;
+  border-radius: 0.5rem;
+  display: grid;
+
+  /* @media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    padding: 30px;
+  } */
 `;
 
 const ContainerFiltrosMain = styled.div`
-  width: 80%;
-  height: 100px;
-  line-height: 100px;
+  width: 90%;
+  height: 70px;
   text-align: center;
   border-radius: 0.5rem;
-  margin: 0 auto 2rem auto;
+  display: grid;
+
+  /* padding-top: 2rem; */
+  margin: 2rem auto 2rem auto;
+  grid-template-columns: auto auto auto auto;
+  gap: 5rem;
   background-color: #46198f53;
+
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    padding: 30px;
+  }
 `;
 
 const ContainerLoader = styled.div`
@@ -97,7 +135,7 @@ export const AllNft = () => {
           dataLength={page * 10} //? 8
           next={fecthNft} //2
           hasMore={hasMore}
-          style={{ overflow: "hidden" }}
+          style={{ overflow: "hidden", width: "100%", margin: "0 auto"}}
           // loader={<h3 style={{color: 'var(--secondFontColor)', textAlign: 'center'}}>Loading...</h3>}
           loader={
             <ContainerLoader>

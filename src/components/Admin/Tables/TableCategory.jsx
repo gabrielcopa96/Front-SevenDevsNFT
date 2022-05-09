@@ -4,6 +4,13 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
+import {postCategory} from "../../../redux/actions"
+import { useDispatch } from "react-redux";
+
+import Swal from "sweetalert2";
+
+import "sweetalert2/dist/sweetalert2.css";
+
 const ContainerPagination = styled.div`
   margin: 0 auto;
   width: 50%;
@@ -94,6 +101,8 @@ export const TableCategory = (props) => {
   const { currentPage, itemsPerPage, setCurrentPage, category } = props;
   const pagesCategory = []; //? pages for category
 
+  const dispatch = useDispatch();
+
   //? Paginado por categoria
   for (let i = 1; i <= Math.ceil(category.length / itemsPerPage); i++) {
     pagesCategory.push(i);
@@ -161,6 +170,37 @@ export const TableCategory = (props) => {
     });
   };
 
+  const handleCreateCategory = async () => {
+    const { value: formValues } = await Swal.fire({
+      title: "Escribe la nueva categoria",
+      html: '<input id="swal-input1" class="swal2-input" placeholder="nueva categoria..."><div id="recaptcha"></div>',
+      focusConfirm: false,
+      color: "var(--secondFontColor)",
+      background: "#46198fb3",
+      showCancelButton: true,
+      preConfirm: () => {
+        const valores = document.getElementById("swal-input1").value;
+        return {
+          name: valores,
+        };
+      },
+    });
+
+    if (formValues) {
+      Swal.fire({
+        title: "Este es tu nueva categoria",
+        text: `${formValues.name}`,
+      });
+      setTimeout(() => {
+        dispatch(postCategory(formValues));
+      }, 2500);
+    }
+  };
+
+  //? postCategory
+
+
+
   return (
     <>
       <div>
@@ -168,10 +208,10 @@ export const TableCategory = (props) => {
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>
-              <ButtonAgregar>
-                <Link to="/admin/create" style={{ color: "#fff" }}>
+              <ButtonAgregar onClick={() => handleCreateCategory()}>
+                {/* <button to="/admin/create" style={{ color: "#fff" }}> */}
                   <i className="fas fa-plus"></i>
-                </Link>
+                {/* </button> */}
               </ButtonAgregar>
               <Link to="/"></Link>
               <ContainerTable>

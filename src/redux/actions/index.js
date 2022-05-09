@@ -23,6 +23,7 @@ export const CURRENCY_FILTER = 'CURRENCY_FILTER';
 export const SALES_FILTER = 'SALES_FILTER';
 export const FILE_FILTER = 'FILE_FILTER';
 export const DELETE_NFT = 'DELETE_NFT';
+export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 
 
 
@@ -306,6 +307,19 @@ export const modificacionUser = (id, item) => async dispatch => {
     // return dispatch => {
 
     // }
+}
+
+export const postCategory = (item) => async dispatch => {
+    try {
+        const dataPostCategory = await axios.post(`http://localhost:4000/misc/category`, item)
+        const respDataPostCategory = await dispatch({
+            type: CREATE_CATEGORY,
+            payload: dataPostCategory
+        })
+        return respDataPostCategory
+    } catch (error) {
+        console.log("error", error)
+    }
 }
 
 export const removeNftQuery = () => dispatch => {
