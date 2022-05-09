@@ -179,7 +179,7 @@ export const TableUsers = (props) => {
       if (result.isConfirmed) {
         Swal.fire("Eliminated!", "", "success");
         const eliminarUser = await axios.delete(
-          `http://localhost:4000/users/${id}`
+          `https://sevendevs-backend.herokuapp.com/users/${id}`
         );
         return eliminarUser;
       } else if (result.isDenied) {

@@ -77,7 +77,7 @@ export const ViewUser = React.memo(() => {
     }).then(async(result) => {
       if (result.isConfirmed) {
         Swal.fire('Eliminated!', '', 'success')
-        const eliminarUser = await axios.delete(`http://localhost:4000/users/${idUser}`)
+        const eliminarUser = await axios.delete(`https://sevendevs-backend.herokuapp.com/users/${idUser}`)
         authService.logut();
         dispatch(removeUser());
         navigate('/home')

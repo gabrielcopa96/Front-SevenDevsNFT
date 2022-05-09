@@ -116,7 +116,7 @@ export const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:4000/users/", input)
+      .post("https://sevendevs-backend.herokuapp.com/users/", input)
       .then((res) => {navigate("/home")
       Toast.fire({
         icon: "success",

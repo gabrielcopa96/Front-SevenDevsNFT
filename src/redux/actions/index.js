@@ -24,6 +24,7 @@ export const SALES_FILTER = 'SALES_FILTER';
 export const FILE_FILTER = 'FILE_FILTER';
 export const DELETE_NFT = 'DELETE_NFT';
 export const CREATE_CATEGORY = 'CREATE_CATEGORY';
+export const PUT_CATEGORY = 'PUT_CATEGORY';
 
 
 
@@ -36,7 +37,7 @@ export const setModalOpening = (isOpen) => async (dispatch) => {
 };
 
 export const getAllNft = () => async dispatch => {
-    const dataNft = await axios.get('http://localhost:4000/nft')
+    const dataNft = await axios.get('https://sevendevs-backend.herokuapp.com/nft')
     const data = await dispatch({
         type: GET_ALL_NFT,
         payload: dataNft.data.getAllNfts
@@ -45,7 +46,7 @@ export const getAllNft = () => async dispatch => {
 }
 
 export const getAllCollections = () => async dispatch => {
-    const dataCollections = await axios.get('http://localhost:4000/misc/collection')
+    const dataCollections = await axios.get('https://sevendevs-backend.herokuapp.com/misc/collection')
     const data = await dispatch({
         type: GET_ALL_COLLECTIONS,
         payload: dataCollections.data
@@ -62,7 +63,7 @@ export function filterNft(payload) {
 
 export const getUsers = (tokenuser) => async dispatch => {
     try {
-        const dataUsers = await axios.get('http://localhost:4000/users?limit=50', {
+        const dataUsers = await axios.get('https://sevendevs-backend.herokuapp.com/users?limit=50', {
             headers: {
                 Authorization: JSON.parse(tokenuser)
             }
@@ -79,7 +80,7 @@ export const getUsers = (tokenuser) => async dispatch => {
 
 
 export const getNftQuery = (page) => async dispatch => {
-    const dataQuery = await axios.get('http://localhost:4000/nft', { params: { page: page, limit: 8 } })
+    const dataQuery = await axios.get('https://sevendevs-backend.herokuapp.com/nft', { params: { page: page, limit: 8 } })
     if (dataQuery) {
         const dataNftQuery = await dispatch({
             type: GET_NFT_QUERY,
@@ -91,7 +92,7 @@ export const getNftQuery = (page) => async dispatch => {
 
 export const getTokenUser = (user) => async dispatch => {
     try {
-        const dataToken = await axios.get('http://localhost:4000/auth/renew', {
+        const dataToken = await axios.get('https://sevendevs-backend.herokuapp.com/auth/renew', {
             headers: {
                 authorization: JSON.parse(user)
             }
@@ -108,7 +109,7 @@ export const getTokenUser = (user) => async dispatch => {
 
 export const putLikesNft = (nft, tokenuser, item) => async dispatch => {
     try {
-        const dataLikes = await axios.put(`http://localhost:4000/nft/${nft}`, item, {
+        const dataLikes = await axios.put(`https://sevendevs-backend.herokuapp.com/nft/${nft}`, item, {
             headers: {
                 Authorization: JSON.parse(tokenuser)
             }
@@ -125,7 +126,7 @@ export const putLikesNft = (nft, tokenuser, item) => async dispatch => {
 
 export const getCategory = () => async dispatch => {
     try {
-        const dataCategory = await axios.get('http://localhost:4000/misc/category')
+        const dataCategory = await axios.get('https://sevendevs-backend.herokuapp.com/misc/category')
         const finallyDataCategory = await dispatch({
             type: GET_CATEGORY,
             payload: dataCategory.data
@@ -136,9 +137,22 @@ export const getCategory = () => async dispatch => {
     }
 }
 
+export const modifCategory = (id, item) => async dispatch => {
+    try {
+        const dataModifCategory = await axios.put(`https://sevendevs-backend.herokuapp.com/misc/category/${id}`, item)
+        const finallyModifDataCategory = await dispatch({
+            type: PUT_CATEGORY,
+            payload: dataModifCategory.data
+        })
+        return finallyModifDataCategory
+    } catch (error) {
+        console.log('error:', error)   
+    }
+}
+
 export const getSalesType = () => async dispatch => {
     try {
-        const dataSalesType = await axios.get('http://localhost:4000/misc/sales_type')
+        const dataSalesType = await axios.get('https://sevendevs-backend.herokuapp.com/misc/sales_type')
         const finallyDataSalesType = await dispatch({
             type: GET_SALES_TYPE,
             payload: dataSalesType.data
@@ -151,7 +165,7 @@ export const getSalesType = () => async dispatch => {
 
 export const getCurrencies = () => async dispatch => {
     try {
-        const dataCurrencies = await axios.get('http://localhost:4000/misc/currencies')
+        const dataCurrencies = await axios.get('https://sevendevs-backend.herokuapp.com/misc/currencies')
         const finallyDataCurrencies = dispatch({
             type: GET_CURRENCIES,
             payload: dataCurrencies.data
@@ -164,7 +178,7 @@ export const getCurrencies = () => async dispatch => {
 
 export const getFileTypes = () => async dispatch => {
     try {
-        const dataFileTypes = await axios.get('http://localhost:4000/misc/files_type')
+        const dataFileTypes = await axios.get('https://sevendevs-backend.herokuapp.com/misc/files_type')
         const finallyDataFilesType = await dispatch({
             type: GET_FILES_TYPE,
             payload: dataFileTypes.data
@@ -181,7 +195,7 @@ export const getFileTypes = () => async dispatch => {
 
 export const filterByCategory = (id) => async dispatch => {
     try {
-        const dataCategory = await axios.get('http://localhost:4000/filter/category/'+ id)
+        const dataCategory = await axios.get('https://sevendevs-backend.herokuapp.com/filter/category/'+ id)
         console.log(dataCategory.data)
         const finallyDataCategory = await dispatch({
             type: CATEGORY_FILTER,
@@ -195,7 +209,7 @@ export const filterByCategory = (id) => async dispatch => {
 
 export const filterBySaleWay = (id) => async dispatch => {
     try {
-        const dataCategory = await axios.get('http://localhost:4000/filter/sales/'+ id)
+        const dataCategory = await axios.get('https://sevendevs-backend.herokuapp.com/filter/sales/'+ id)
         console.log(dataCategory.data)
         const finallyDataCategory = await dispatch({
             type: SALES_FILTER,
@@ -209,7 +223,7 @@ export const filterBySaleWay = (id) => async dispatch => {
 
 export const filterByCurrencies = (id) => async dispatch => {
     try {
-        const dataCurrencies = await axios.get('http://localhost:4000/filter/currencies/'+ id)
+        const dataCurrencies = await axios.get('https://sevendevs-backend.herokuapp.com/filter/currencies/'+ id)
         console.log(dataCurrencies.data)
         const finallyDataCategory = await dispatch({
             type: CURRENCY_FILTER,
@@ -223,7 +237,7 @@ export const filterByCurrencies = (id) => async dispatch => {
 
 export const filterByFileType = (id) => async dispatch => {
     try {
-        const dataCurrencies = await axios.get('http://localhost:4000/filter/files/'+ id)
+        const dataCurrencies = await axios.get('https://sevendevs-backend.herokuapp.com/filter/files/'+ id)
         console.log(dataCurrencies.data)
         const finallyDataCategory = await dispatch({
             type: FILE_FILTER,
@@ -237,7 +251,7 @@ export const filterByFileType = (id) => async dispatch => {
 
 export const postNft = (tokenuser, item) => async dispatch => {
     try {
-        const dataPost = await axios.post(`http://localhost:4000/nft`, item, {
+        const dataPost = await axios.post(`https://sevendevs-backend.herokuapp.com/nft`, item, {
             headers: {
                 Authorization: JSON.parse(tokenuser) // usuarios registrados puedan hacer creeacion de nfts
             }
@@ -255,7 +269,7 @@ export const postNft = (tokenuser, item) => async dispatch => {
 
 export const deleteNft = (tokenuser, id) => async dispatch => {
     try {
-        const dataNft = await axios.delete(`http://localhost:4000/nft/${id}`, {
+        const dataNft = await axios.delete(`https://sevendevs-backend.herokuapp.com/nft/${id}`, {
             headers: {
                 Authorization: JSON.parse(tokenuser)
             }
@@ -272,7 +286,7 @@ export const deleteNft = (tokenuser, id) => async dispatch => {
 
 export const filterForCategory = (id) => async dispatch => {
     try {
-        const dataFilterCategory = await axios.get(`http://localhost:4000/filter/category/${id}`)
+        const dataFilterCategory = await axios.get(`hhttps://sevendevs-backend.herokuapp.com/filter/category/${id}`)
         const finallyFilterCategory = await dispatch({
             type: FILTER_CATEGORY,
             payload: dataFilterCategory.data
@@ -298,7 +312,7 @@ export const filterForCategory = (id) => async dispatch => {
 
 export const modificacionUser = (id, item) => async dispatch => {
     try {
-        const modifUser = await axios.put(`http://localhost:4000/users/${id}`, item)
+        const modifUser = await axios.put(`https://sevendevs-backend.herokuapp.com/users/${id}`, item)
         dispatch({
             type: PUT_USER,
             payload: modifUser
@@ -315,7 +329,7 @@ export const modificacionUser = (id, item) => async dispatch => {
 
 export const postCategory = (item) => async dispatch => {
     try {
-        const dataPostCategory = await axios.post(`http://localhost:4000/misc/category`, item)
+        const dataPostCategory = await axios.post(`https://sevendevs-backend.herokuapp.com/misc/category`, item)
         const respDataPostCategory = await dispatch({
             type: CREATE_CATEGORY,
             payload: dataPostCategory

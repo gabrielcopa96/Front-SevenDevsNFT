@@ -2,7 +2,7 @@ import axios from "axios";
 
 const login = async (email, password) => {
     try {
-        const authLogin = await axios.post("http://localhost:4000/auth", {
+        const authLogin = await axios.post("https://sevendevs-backend.herokuapp.com/auth", {
             email,
             password
         })

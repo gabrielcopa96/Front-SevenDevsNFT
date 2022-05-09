@@ -128,7 +128,7 @@ const Login = () => {
 
   const handleGoogleLogin = async (googleData) => {
     try {
-      const dataGoogle = await axios.post(`http://localhost:4000/auth/google`, {
+      const dataGoogle = await axios.post(`https://sevendevs-backend.herokuapp.com/auth/google`, {
         tokenId: googleData.tokenId,
         givenName: googleData.profileObj.givenName,
         familyName: googleData.profileObj.familyName,
