@@ -13,7 +13,7 @@ import FilesTypeFilter from "./filters/FilesTypeFilter.jsx";
 
 const ContainerAll = styled.div`
   width: 100%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 `;
 
 const ContainerFilterNft = styled.div`
@@ -24,15 +24,21 @@ const ContainerNft = styled.div`
   width: 90%;
   display: grid;
   grid-template-columns: auto auto auto auto;
-  gap: .1rem;
-  margin: 0 auto 0 10rem;
+  gap: 0.2rem;
+  margin: 0 auto;
+
+  @media (max-width: 900px) {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.2rem 6rem!important;
+    margin: 0 auto;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* grid-template-row; */
   }
 `;
 
@@ -135,7 +141,7 @@ export const AllNft = () => {
           dataLength={page * 10} //? 8
           next={fecthNft} //2
           hasMore={hasMore}
-          style={{ overflow: "hidden", width: "100%", margin: "0 auto"}}
+          style={{ overflow: "hidden" }}
           // loader={<h3 style={{color: 'var(--secondFontColor)', textAlign: 'center'}}>Loading...</h3>}
           loader={
             <ContainerLoader>

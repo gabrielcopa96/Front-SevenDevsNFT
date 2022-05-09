@@ -21,8 +21,9 @@ const CardContainerNft = styled.div`
   border: 1px solid #22a5a757;
   backdrop-filter: blur(5px);
   padding: 20px;
+  margin: 0 auto 2rem auto;
   box-sizing: border-box;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
   position: relative;
 `;
 
