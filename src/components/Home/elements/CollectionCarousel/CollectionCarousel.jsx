@@ -13,6 +13,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getAllCollections } from "../../../../redux/actions";
 
 const ContainerCarousel = styled.div`
   width: 100%;
@@ -42,6 +45,7 @@ const ContainerDataSlider = styled.div`
   text-align: justify;
   line-height: 32px;
   background-color: #ececec13;
+  backdrop-filter: blur(20px);
 `;
 
 const Slide = (props) => {
@@ -50,16 +54,41 @@ const Slide = (props) => {
   return (
     <SlideMain backgroundImage={backgroundImage}>
       <ContainerDataSlider>
-        <h2 style={{ fontSize: "1.9rem", color: "var(--secondFontColor)", marginLeft: "6.8rem", borderBottom: '1.2px solid var(--mainBackGroundButtonColor)', marginRight: "6.8rem"}}>
+        <h2
+          style={{
+            fontSize: "1.9rem",
+            color: "var(--secondFontColor)",
+            marginLeft: "6.8rem",
+            borderBottom: "1.2px solid var(--mainBackGroundButtonColor)",
+            marginRight: "6.8rem",
+          }}
+        >
           {title}
         </h2>
-        <p style={{color: "var(--colorInfo)", marginLeft: "6.8rem", marginRight: "6.8rem"}}>{subtitle}</p>
+        <p
+          style={{
+            color: "var(--secondFontColor)",
+            marginLeft: "6.8rem",
+            marginRight: "6.8rem",
+          }}
+        >
+          {subtitle}
+        </p>
       </ContainerDataSlider>
     </SlideMain>
   );
 };
 
 export const CollectionsCarousel = () => {
+  const collection = useSelector((state) => state.collections);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (collection.length === 0) {
+      dispatch(getAllCollections());
+    }
+  }, [dispatch]);
+
   return (
     <div>
       <ContainerCarousel>
@@ -71,27 +100,16 @@ export const CollectionsCarousel = () => {
           pagination={{ clickable: true }}
           slidesPerView={1}
         >
-          <SwiperSlide>
-            <Slide
-              backgroundImage={image1}
-              title="Collection Electronic"
-              subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mauris orci, dapibus nec pretium ut, efficitur eu ex. Maecenas convallis, augue ac placerat ultricies, metus libero condimentum ipsum, eget finibus elit purus eu justo. Sed id lacus sed orci convallis vehicula non sed sapien. Curabitur gravida dictum libero. Aenean volutpat bibendum nunc, eget ultricies urna facilisis vulputate. Donec dolor dolor, commodo eu molestie et, egestas quis magna. Ut magna ante, tempor eu purus sollicitudin, laoreet feugiat lorem. Curabitur posuere metus posuere, congue arcu eget, lacinia sapien. Sed vulputate efficitur turpis. Integer vestibulum nec nulla non rhoncus. Proin vitae felis sit amet est accumsan luctus. "
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Slide
-              backgroundImage={image2}
-              title="Collection Streaming"
-              subtitle="Quisque posuere erat ex, vel ornare nunc interdum non. Aliquam ut mattis felis. Vivamus aliquet erat ante, aliquam dictum ligula consectetur in. Suspendisse eu tortor condimentum, gravida libero non, aliquet nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim mauris ultrices faucibus placerat. Morbi hendrerit malesuada nibh, vel tempor dui pretium eget. Sed nec consequat quam, molestie luctus dolor. Nunc fringilla facilisis auctor. Aenean sed ipsum risus. Mauris ut lorem lectus. Phasellus magna nunc, dignissim sit amet libero eget, posuere facilisis ipsum. Curabitur ullamcorper ut nisl et maximus. Maecenas nec tortor sodales, lacinia magna at, pharetra risus. "
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Slide
-              backgroundImage={image3}
-              title="Collection Shoes"
-              subtitle="Vivamus in sollicitudin ligula. Aenean rutrum molestie ipsum sed pulvinar. Duis velit nisl, aliquam sed sollicitudin et, semper sodales lacus. Sed iaculis, urna ut aliquam porta, est nulla convallis diam, nec tincidunt augue leo at nisl. Ut non hendrerit eros. Pellentesque efficitur quam quis nibh dapibus, consequat molestie libero lobortis. Integer tempor nibh eu sem sollicitudin, eget sollicitudin enim auctor. Vivamus eget egestas turpis. Vivamus eget tincidunt urna. "
-            />
-          </SwiperSlide>
+          {collection?.map((x, i) => (
+            <SwiperSlide key={i}>
+              <Slide
+                backgroundImage={x.image}
+                key={x._id}
+                title={`Collection - ${x.name}`}
+                subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mauris orci, dapibus nec pretium ut, efficitur eu ex. Maecenas convallis, augue ac placerat ultricies, metus libero condimentum ipsum, eget finibus elit purus eu justo. Sed id lacus sed orci convallis vehicula non sed sapien. Curabitur gravida dictum libero. Aenean volutpat bibendum nunc, eget ultricies urna facilisis vulputate. Donec dolor dolor, commodo eu molestie et, egestas quis magna. Ut magna ante, tempor eu purus sollicitudin, laoreet feugiat lorem."
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </ContainerCarousel>
     </div>

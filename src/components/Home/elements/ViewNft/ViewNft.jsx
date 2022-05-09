@@ -58,19 +58,15 @@ export const ViewNft = () => {
 
   const dispatch = useDispatch();
 
-  const [mynft, setNft] = useState([]);
-
   const instantCallback = useCallback(dispatch, [dispatch]);
 
   useEffect(() => {
-    if (Object.keys(nft).length === 0) {
+    if (nft.length === 0) {
       instantCallback(getAllNft());
     }
-    setNft(nft);
-  }, [instantCallback, mynft]);
+  }, [instantCallback]);
 
   const token = localStorage.getItem("token")
-
 
   return (
     <ContainerNFT>
@@ -99,10 +95,6 @@ export const ViewNft = () => {
       </ContainerTitleCategory>
       <Swiper
         modules={[Navigation, Scrollbar, A11y]}
-        // autoplay={{
-        //   delay: 5000,
-        //   disableOnInteraction: false,
-        // }}
         grabCursor={true}
         breakpoints={{
           320: {
@@ -189,10 +181,6 @@ export const ViewNft = () => {
             spaceBetween: 45,
           },
         }}
-        // autoplay={{
-        //   delay: 5000,
-        //   disableOnInteraction: false,
-        // }}
       >
         {nft
           ?.filter((x) => x.category.name === "Sports")
@@ -254,10 +242,6 @@ export const ViewNft = () => {
             spaceBetween: 45,
           },
         }}
-        // autoplay={{
-        //   delay: 5000,
-        //   disableOnInteraction: false,
-        // }}
       >
         {nft
           ?.filter((x) => x.category.name === "Entertainment")
@@ -319,10 +303,6 @@ export const ViewNft = () => {
             spaceBetween: 45,
           },
         }}
-        // autoplay={{
-        //   delay: 5000,
-        //   disableOnInteraction: false,
-        // }}
       >
         {nft
           ?.filter((x) => x.category.name === "Art")
@@ -384,10 +364,6 @@ export const ViewNft = () => {
             spaceBetween: 45,
           },
         }}
-        // autoplay={{
-        //   delay: 5000,
-        //   disableOnInteraction: false,
-        // }}
       >
         {nft
           ?.filter((x) => x.category.name === "eSports")

@@ -50,6 +50,9 @@ export const ContainerMisPreferencias = styled.div`
   height: 200px;
   line-height: 140px;
   text-align: center;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .2rem; */
   width: 92%;
   border-radius: 0.6rem;
   padding: 1.5rem;

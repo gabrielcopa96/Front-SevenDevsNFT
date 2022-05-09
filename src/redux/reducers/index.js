@@ -145,7 +145,8 @@ const rootReducer = (state = initialState, action) => {
         case FILTER_CATEGORY:
             return {
                 ...state,
-                nftquery: action.payload
+                nftquery: action.payload,
+                hasMore: false
             }
         case DELETE_NFT:
             return {
@@ -158,13 +159,13 @@ const rootReducer = (state = initialState, action) => {
                 users: action.payload.users
             }
         case CATEGORY_FILTER:
-            return { ...state, nftquery: action.payload }
+            return { ...state, nftquery: action.payload, hasMore: false }
         case SALES_FILTER:
-            return { ...state, nftquery: action.payload }
+            return { ...state, nftquery: action.payload, hasMore: false }
         case FILE_FILTER:
-            return { ...state, nftquery: action.payload }
+            return { ...state, nftquery: action.payload, hasMore: false }
         case CURRENCY_FILTER:
-            return { ...state, nftquery: action.payload }
+            return { ...state, nftquery: action.payload, hasMore: false }
         default: return state
     };
 };

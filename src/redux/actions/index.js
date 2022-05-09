@@ -238,7 +238,6 @@ export const filterByCurrencies = (id) => async dispatch => {
 export const filterByFileType = (id) => async dispatch => {
     try {
         const dataCurrencies = await axios.get('https://sevendevs-backend.herokuapp.com/filter/files/'+ id)
-        console.log(dataCurrencies.data)
         const finallyDataCategory = await dispatch({
             type: FILE_FILTER,
             payload: dataCurrencies.data
