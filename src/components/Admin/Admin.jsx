@@ -6,12 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { TableNft } from "./Tables/TableNft.jsx";
 import { TableCategory } from "./Tables/TableCategory.jsx";
 import { TableUsers } from "./Tables/TableUsers.jsx";
+import { TableCurrencies } from "./Tables/TableCurrencies.jsx";
+import { TableSaleTypes } from "./Tables/TableSaleTypes.jsx";
+import { TableFileTypes } from "./Tables/TableFileTypes.jsx";
 
 import {
   getAllNft,
   deleteNft,
   getUsers,
   getCategory,
+  getCurrencies,
+  getSalesType,
+  getFileTypes
 } from "../../redux/actions/index";
 
 const ContainerPrimario = styled.div`
@@ -44,7 +50,13 @@ const ContainerMenu = styled.div`
 export const Admin = () => {
   const nfts = useSelector((state) => state.nfts);
 
+  const currencies = useSelector((state) => state.currencies);
+
   const category = useSelector((state) => state.category);
+
+  const sales = useSelector((state) => state.sales_type);
+
+  const files = useSelector((state) => state.files_type);
 
   const users = useSelector((state) => state.users);
 
@@ -60,6 +72,9 @@ export const Admin = () => {
     nft: 1,
     category: 1,
     user: 1,
+    currencies: 1,
+    salesType: 1,
+    fileTypes: 1
   });
 
   const token = localStorage.getItem("token"); //? token localStorage del usuario
@@ -69,6 +84,9 @@ export const Admin = () => {
       instantCallback(getAllNft());
       instantCallback(getCategory());
       instantCallback(getUsers(token));
+      instantCallback(getCurrencies())
+      instantCallback(getSalesType())
+      instantCallback(getFileTypes())
     // }
   }, [instantCallback]);
 
@@ -180,6 +198,8 @@ export const Admin = () => {
   //   );
   // });
 
+  console.log(files)
+
   return (
     <>
       <ContainerPrimario>
@@ -206,6 +226,24 @@ export const Admin = () => {
           />
           <TableUsers
             users={users}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <TableCurrencies
+            currencies={currencies}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          /> 
+          <TableSaleTypes
+            sales={sales}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <TableFileTypes
+            file={files}
             itemsPerPage={itemsPerPage}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

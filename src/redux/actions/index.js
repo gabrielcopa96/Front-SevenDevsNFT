@@ -175,6 +175,10 @@ export const getFileTypes = () => async dispatch => {
     }
 }
 
+// export const getTypesFile = () => async dispatch => {
+//     const
+// }
+
 export const filterByCategory = (id) => async dispatch => {
     try {
         const dataCategory = await axios.get('http://localhost:4000/filter/category/'+ id)
