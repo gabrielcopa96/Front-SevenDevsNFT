@@ -24,7 +24,8 @@ import {
     CREATE_CATEGORY,
     CREATE_CURRENCIES,
     CREATE_SALES_TYPES,
-    PUT_NFT
+    PUT_NFT,
+    UPDATE_IMAGE_NFT
 } from "../actions";
 
 
@@ -43,7 +44,8 @@ const initialState = {
     category: [],
     sales_type: [],
     files_type: [],
-    currencies: []
+    currencies: [],
+    img: ""
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -74,6 +76,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 nftquery: [],
                 hasMore: true
+            }
+        case UPDATE_IMAGE_NFT:
+            return {
+                ...state,
+                img: action.payload
             }
         case GET_ALL_COLLECTIONS:
             return {

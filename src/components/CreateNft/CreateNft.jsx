@@ -113,9 +113,9 @@ export const CreateNft = () => {
 
   const [data, setData] = useState({
     name: "",
-    image: "",
+    // image: "",
     description: "",
-    details: null,
+    contract_address: "",
     category: "",
     price: 0,
     sales_types: "",
@@ -123,13 +123,21 @@ export const CreateNft = () => {
     files_types: "",
   });
 
-  const [dataDetails, setDataDetails] = useState({
-    user_creator: idUser,
-    owner: "",
-    contract_address: "",
-  });
+  const [formData, setFormData] = useState("")
+
+  // const [dataDetails, setDataDetails] = useState({
+  //   user_creator: idUser,
+  //   owner: "",
+    
+  // });
 
   const [send, setSend] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState("")
+
+  const formDateishon = new FormData();
+  
+  formDateishon.append('img', selectedImage)
 
   useEffect(() => {
     if (
@@ -152,16 +160,23 @@ export const CreateNft = () => {
     });
   };
 
-  const handleInputDetails = (e) => {
-    setDataDetails({
-      ...dataDetails,
-      [e.target.name]: e.target.value,
-    });
-    setData({
-      ...data,
-      details: dataDetails,
-    });
-  };
+  // const handleInputDetails = (e) => {
+  //   setDataDetails({
+  //     ...dataDetails,
+  //     [e.target.name]: e.target.value,
+  //   });
+  //   setData({
+  //     ...data,
+  //     details: dataDetails,
+  //   });
+  // };
+
+  const handleImage = (e) => {
+    e.preventDefault();
+    setFormData(e.target.value)
+  }
+
+  // ? Realizar el upload de la image del nft
 
   const handleSelect = (e) => {
     setData({
@@ -176,16 +191,12 @@ export const CreateNft = () => {
     e.preventDefault();
     console.log(data);
     if (send === false) {
-      dispatch(postNft(token, data));
+      dispatch(postNft(token, data, formDateishon));
       setData({
         name: "",
         image: "",
         description: "",
-        details: {
-          user_creator: idUser,
-          owner: "",
-          contract_address: "",
-        },
+        contract_address: "",
         category: "",
         price: 0,
         sales_types: "",
@@ -194,7 +205,7 @@ export const CreateNft = () => {
       });
       setSend(true);
       alert("nft creado correctamente");
-      navigate("/home");
+      // navigate("/home");
     } else {
       alert("no se pudo crear el nft");
     }
@@ -227,9 +238,10 @@ export const CreateNft = () => {
               placeholder="URL image..."
               padding=".4rem"
               width="75%"
-              onChange={(e) => handleInput(e)}
+              type="file"
+              onChange={(e) => setSelectedImage(e.target.files[0])}
               name="image"
-              value={data.image}
+              value={formData}
             />
           </ContainerGridLabelInput>
           {data.image && <ImageView backgroundImage={data.image} />}
@@ -247,20 +259,13 @@ export const CreateNft = () => {
         </div>
         <div>
           <ContainerGridLabelInput>
-            <label style={{ fontSize: "1.2rem" }}>Owner</label>
-            <SelectType name="owner" onChange={(e) => handleInputDetails(e)}>
-              <option value={idUser}>{user.username}</option>
-              <option value={idUser}>Otro...</option>
-            </SelectType>
-          </ContainerGridLabelInput>
-          <ContainerGridLabelInput>
             <label style={{ fontSize: "1.2rem" }}>Contract Address</label>
             <Input
               placeholder="Address..."
               padding=".4rem"
               width="75%"
-              onChange={(e) => handleInputDetails(e)}
-              value={dataDetails.contract_address}
+              onChange={(e) => handleInput(e)}
+              value={data.contract_address}
               name="contract_address"
             />
           </ContainerGridLabelInput>

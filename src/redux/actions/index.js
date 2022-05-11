@@ -28,6 +28,7 @@ export const CREATE_CATEGORY = 'CREATE_CATEGORY';
 export const CREATE_CURRENCIES = 'CREATE_CURRENCIES';
 export const PUT_CATEGORY = 'PUT_CATEGORY';
 export const CREATE_SALES_TYPES = 'CREATE_SALES_TYPES';
+export const UPDATE_IMAGE_NFT = 'UPDATE_IMAGE_NFT';
 
 
 
@@ -251,21 +252,57 @@ export const filterByFileType = (id) => async dispatch => {
     }
 }
 
-export const postNft = (tokenuser, item) => async dispatch => {
+export const postNft = (tokenuser, item, formData) => async dispatch => {
     try {
+        //? aca despues tendria
+        
         const dataPost = await axios.post(`https://sevendevs-backend.herokuapp.com/nft`, item, {
             headers: {
                 Authorization: JSON.parse(tokenuser) // usuarios registrados puedan hacer creeacion de nfts
             }
         })
+        const uid = dataPost.data.nft._id
+        console.log(uid)
+        const dataImageNft = await axios.put(`https://sevendevs-backend.herokuapp.com/upload/nft/${uid}`, formData, { 
+            headers: {
+                Authorization: JSON.parse(tokenuser),
+                "Content-Type": "multipart/form-data",
+                
+            }
+        })
+        const obj1 = {...dataPost.data.nft, image: dataImageNft.url}
         const responsePost = await dispatch({
             type: CREATE_NFT,
-            payload: dataPost.data
+            payload: obj1
         })
-        console.log(dataPost.data)
+
+        // const finallyUpdateImageNft = await dispatch({
+        //     type: UPDATE_IMAGE_NFT,
+        //     payload: dataImageNft.data.url
+        // })
         return responsePost
     } catch (error) {
-        console.log("error", error)
+        console.log("paso por aqui perro asi que hay errores", error)
+    }
+}
+
+export const putImageNft = (tokenuser, formData) => async dispatch => {
+    try {
+        const dataImageNft = await axios.put(`https://sevendevs-backend.herokuapp.com/upload/nft/627adc6ebee63abe0d8212ff`, formData, { 
+            headers: {
+                Authorization: JSON.parse(tokenuser),
+                "Content-Type": "multipart/form-data",
+            }
+        })
+        console.log(dataImageNft)
+        const finallyUpdateImageNft = await dispatch({
+            type: UPDATE_IMAGE_NFT,
+            payload: dataImageNft.data.url
+        })
+        console.log(finallyUpdateImageNft)
+        return finallyUpdateImageNft
+    } catch (error) {
+        console.log(error)
     }
 }
 

@@ -22,8 +22,6 @@ const StyledNav = styled.nav`
   top: 0;
   left: 0;
   z-index: 1000;
-  /* backdrop-filter: blur(2px); */
-  /* backdrop-filter: saturate(100%); */
   align-items: center;
   background-color: #46198f47;
   justify-content: space-between;

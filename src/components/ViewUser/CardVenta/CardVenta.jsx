@@ -1,7 +1,7 @@
 import React from "react";
 import { UltimasVentas, ImgNft } from "../elements/StyleViewUser.jsx";
 
-export const CardVenta = (props) => {
+export const CardVenta = (props) => { //! Este es el contenedor de ultimas ventas
   const { title, tiempo, tipo } = props;
   return (
     <UltimasVentas>

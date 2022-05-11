@@ -11,6 +11,7 @@ import { ViewUser } from "./components/ViewUser/ViewUser.jsx";
 import Login from "./components/Auth/Login.jsx";
 import { Details } from "./components/Details/Details.jsx";
 import { AllNft } from "./components/Home/elements/AllNft/AllNft.jsx";
+import {CreateCollection} from './components/CreateNft/CreateCollection.jsx';
 // import PrivateRoute from './services/getPrivateRoute'
 import { Register } from "./components/Register/Register.jsx";
 import Collections from "./components/Collections/Collections.jsx";
@@ -68,6 +69,7 @@ function App() {
             />
             <Route exact path={"/home/register"} element={<Register />} />
             <Route exact path={"/home/collections"} element={<Collections />} />
+            <Route exact path={"/home/createnft/collectionCreated"} element={<CreateCollection/>}/>
             <Route
               exact
               path={"/admin/create"}
