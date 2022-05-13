@@ -9,6 +9,7 @@ import {
   ContainerEliminarUser,
   InputData,
   ImagenPerfil,
+  ModificacionPerfil,
 } from "./elements/StyleViewUser.jsx";
 
 import { Favorito } from "./Favorito/Favorito.jsx";
@@ -93,13 +94,18 @@ export const ViewUser = React.memo(() => {
     });
   };
 
+  //? <i className="fas fa-edit"></i>
+
   const { username, image, favorite, collectionNft } = user;
 
   return (
     <>
       <ContainerHeaderUser>
         <div style={{ display: "flex" }}>
-          <ImagenPerfil background={image} />
+          <div style={{position: "relative"}}>
+            <ImagenPerfil background={image} />
+            <ModificacionPerfil onClick={() => console.log("enia")}><i className="fas fa-plus" style={{position: "relative", left: "5px"}}></i></ModificacionPerfil>
+          </div>
           <div>
             <h2>{username}</h2>
             <p style={{ color: "var(--colorInfo)" }}>
@@ -113,6 +119,7 @@ export const ViewUser = React.memo(() => {
             title="MIS PUBLICACIONES"
             onClick={() => navigate(`/myprofile/mispublicaciones`)}
           />
+          <Button title="WALLET" />
           <Button title="LOGOUT" />
         </ContainerButton>
       </ContainerHeaderUser>
@@ -124,11 +131,11 @@ export const ViewUser = React.memo(() => {
           </ContainerMisPreferencias>
           <h2 style={{ marginTop: ".8rem" }}>Mis Collecciones</h2>
           <ContenedorUltimasVentas>
-            {
-              collectionNft?.length === 0
-              ? <h2>No tienes colleciones</h2>
-              : "Tiene"
-            }
+            {collectionNft?.length === 0 ? (
+              <h2>No tienes colleciones</h2>
+            ) : (
+              "Tiene"
+            )}
           </ContenedorUltimasVentas>
         </div>
         <div

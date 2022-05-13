@@ -118,7 +118,7 @@ export const TableSaleTypes = (props) => {
 
   const handleRenderTableSales = currentItemsSaleTypes?.map((x, i) => {
     return (
-      <tr key={i} style={{ color: "white", marginBottom: ".2rem" }}>
+      <tr key={i} style={{ color: "#141414", marginBottom: ".2rem" }}>
         <td> {x._id}</td>
         <td> {x.name}</td>
         <td style={{ display: "flex", justifyContent: "space-evenly" }}>
@@ -204,7 +204,7 @@ export const TableSaleTypes = (props) => {
   return (
     <>
       <div>
-        <h2 style={{ borderBottom: "1px solid #fff" }}>Sales Types</h2>
+        <h2 style={{ borderBottom: "1px solid #fff" }}>Table Sales Types</h2>
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>

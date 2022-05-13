@@ -33,7 +33,6 @@ export const UPDATE_IMAGE_NFT = 'UPDATE_IMAGE_NFT';
 
 
 export const setModalOpening = (isOpen) => async (dispatch) => {
-
     dispatch({
         type: SET_MODAL,
         payload: isOpen
@@ -282,7 +281,7 @@ export const postNft = (tokenuser, item, formData) => async dispatch => {
         // })
         return responsePost
     } catch (error) {
-        console.log("paso por aqui perro asi que hay errores", error)
+        console.log("paso por aqui perro asi que hay", error)
     }
 }
 

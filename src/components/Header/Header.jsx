@@ -126,7 +126,7 @@ function Header() {
                <li>
                  <ContainerItemsMenu>
                    <FaUserCircle style={{ width: "22px", height: "42px" }} />
-                   <Link to={`/admin`}>Admin</Link>
+                   <Link to={`/admin/menuadmin`}>Admin</Link>
                  </ContainerItemsMenu>
                </li>
                <li>

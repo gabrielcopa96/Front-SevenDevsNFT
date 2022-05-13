@@ -90,11 +90,10 @@ const ContainerLoader = styled.div`
   margin: 0 auto;
 `;
 
-// const ContainerLoading = styled.div`
-//   background-color: red;
-//   width: 50%;
-//   margin: 0 auto;
-// `
+
+const ContainerAllNftTotalMain = styled.div`
+  padding-top: 6.25rem;
+`;
 
 export const AllNft = () => {
   const nftAll = useSelector((state) => state.nfts);
@@ -126,7 +125,7 @@ export const AllNft = () => {
   };
 
   return (
-    <div style={{ marginTop: "7.5rem" }}>
+    <ContainerAllNftTotalMain>
       <ContainerFiltrosMain>
         <CurrenciesFilter className={"filters"} />
 
@@ -182,6 +181,6 @@ export const AllNft = () => {
           </ContainerNft>
         </InfiniteScroll>
       </ContainerAll>
-    </div>
+    </ContainerAllNftTotalMain>
   );
 };

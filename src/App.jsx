@@ -11,7 +11,9 @@ import { ViewUser } from "./components/ViewUser/ViewUser.jsx";
 import Login from "./components/Auth/Login.jsx";
 import { Details } from "./components/Details/Details.jsx";
 import { AllNft } from "./components/Home/elements/AllNft/AllNft.jsx";
-import {CreateCollection} from './components/CreateNft/CreateCollection.jsx';
+import { MenuAdmin } from "./components/Admin/MenuAdmin.jsx";
+import { Dashboard } from "./components/Admin/secciones/Dashboard.jsx";
+import { CreateCollection } from "./components/CreateNft/CreateCollection.jsx";
 // import PrivateRoute from './services/getPrivateRoute'
 import { Register } from "./components/Register/Register.jsx";
 import Collections from "./components/Collections/Collections.jsx";
@@ -23,13 +25,22 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 function MainLayout() {
   return (
-    <div>
+    <div className="body-fondo">
       <Header />
       <Outlet />
       <Footer />
     </div>
   );
 }
+
+const MainLayoutAdmin = () => {
+  return (
+    <div className="body-admin">
+      <MenuAdmin />
+      <Outlet />
+    </div>
+  );
+};
 
 function App() {
   const logged = useSelector((state) => state.isLogged);
@@ -69,27 +80,37 @@ function App() {
             />
             <Route exact path={"/home/register"} element={<Register />} />
             <Route exact path={"/home/collections"} element={<Collections />} />
-            <Route exact path={"/home/createnft/collectionCreated"} element={<CreateCollection/>}/>
-            <Route
-              exact
-              path={"/admin/create"}
-              element={<CreateNftAdmin />}
-            />
-            <Route
-              exact
-              path={"/admin"}
-              element={
-                logged && user?.user_type.name === "admin" ? (
-                  <Admin />
-                ) : (
-                  <Home />
-                )
-              }
-            />
             <Route
               exact
               path={"/home/collections/nfts/:name"}
               element={<CardNftCollection />}
+            />
+          </Route>
+        </Routes>
+        <Routes>
+          <Route element={<MainLayoutAdmin />}>
+            <Route
+              exact
+              path={"/home/createnft/collectionCreated"}
+              element={<CreateCollection />}
+            />
+            <Route exact path={"/admin/create"} element={<CreateNftAdmin />} />
+            <Route
+              exact
+              path={"/admin/menuadmin/tables"}
+              element={
+                logged && user?.user_type.name === "admin" ? (
+                  <Admin />
+                ) : (
+                  <Admin />
+                )
+              }
+            />
+            <Route exact path={"/admin/menuadmin"} element={<MenuAdmin />} />
+            <Route
+              exact
+              path={"/admin/menuadmin/dashboard"}
+              element={<Dashboard />}
             />
           </Route>
         </Routes>

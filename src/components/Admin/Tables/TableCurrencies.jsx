@@ -118,7 +118,7 @@ export const TableCurrencies = (props) => {
 
   const handleRenderTableCurrencies = currentItemsCurrencies?.map((x, i) => {
     return (
-      <tr key={i} style={{ color: "white", marginBottom: ".2rem" }}>
+      <tr key={i} style={{ color: "#141414", marginBottom: ".2rem" }}>
         <td> {x._id}</td>
         <td> {x.name}</td>
         <td> {x.image}</td>
@@ -201,7 +201,7 @@ export const TableCurrencies = (props) => {
   return (
     <>
       <div>
-        <h2 style={{ borderBottom: "1px solid #fff" }}>Currencies</h2>
+        <h2 style={{ borderBottom: "1px solid #fff" }}>Table Currencies</h2>
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>

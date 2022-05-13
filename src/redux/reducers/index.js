@@ -30,7 +30,7 @@ import {
 
 
 const initialState = {
-    isOpen: false,
+    // isOpen: true,
     nfts: [],
     copynft: [],
     nftquery: [],
@@ -45,13 +45,14 @@ const initialState = {
     sales_type: [],
     files_type: [],
     currencies: [],
-    img: ""
+    img: "",
+    open: false
 };
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_MODAL:
-            return { ...state, isOpen: action.payload }
+            return { ...state, open: action.payload }
         case GET_ALL_NFT:
             return { ...state, nfts: action.payload, copynft: action.payload }
         case GET_TOKEN:

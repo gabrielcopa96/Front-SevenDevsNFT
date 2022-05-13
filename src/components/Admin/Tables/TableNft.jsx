@@ -146,7 +146,7 @@ export const TableNft = (props) => {
 
   const handleRenderTableNft = currentItemsNft?.map((x, i) => {
     return (
-      <tr key={i} style={{ color: "white", marginBottom: ".2rem" }}>
+      <tr key={i} style={{ color: "#141414", marginBottom: ".2rem" }}>
         <td> {x.name}</td>
         <td>
           {x.image ? (
@@ -209,8 +209,7 @@ export const TableNft = (props) => {
   return (
     <>
       <div>
-        <h1 style={{ textAlign: "center", fontWeight: "bold" }}>Tables</h1>
-        <h2 style={{ borderBottom: "1px solid #fff" }}>All NFT</h2>
+        <h2 style={{ borderBottom: "1px solid #fff" }}>Table NFT</h2>
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>

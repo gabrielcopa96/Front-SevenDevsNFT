@@ -1,0 +1,260 @@
+.sidebar {
+  width: 345px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: rgb(71, 17, 137);
+  background: linear-gradient(
+    45deg,
+    rgba(71, 17, 137, 0.9752275910364145) 0%,
+    rgba(69, 16, 132, 1) 5%,
+    rgba(69, 17, 135, 0.989233193277311) 9%,
+    rgba(53, 7, 93, 0.989233193277311) 47%
+  );
+  z-index: 100;
+  transition: width 0.5s ease-in-out;
+}
+
+.sidebarClose {
+  width: 85px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: rgb(71, 17, 137);
+  background: linear-gradient(
+    45deg,
+    rgba(71, 17, 137, 0.9752275910364145) 0%,
+    rgba(69, 16, 132, 1) 5%,
+    rgba(69, 17, 135, 0.989233193277311) 9%,
+    rgba(53, 7, 93, 0.989233193277311) 47%
+  );
+  z-index: 100;
+  transition: width 0.5s ease-in-out;
+}
+
+.logo {
+  width: 200px;
+  height: 78px;
+  transition: width 0.5s ease-in-out;
+}
+
+.logoClose {
+  width: 85px;
+  height: 40px;
+  margin-top: 10px;
+  margin-left: -80px;
+  transition: width 0.5s ease-in-out;
+  /* transition: display .5s ease-in-out; */
+}
+
+.sidebarBrand {
+  height: 90px;
+  padding: 1.2rem 0rem 1rem 5rem;
+  color: #fff;
+}
+
+.sidebarMenu {
+  margin-top: 1.5rem;
+}
+
+.sidebarBrand span {
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+.sidebarMenu li {
+  width: 100%;
+  margin-bottom: 1.3rem;
+  padding-left: 2rem;
+}
+
+.sidebarMenu a {
+  display: block;
+  padding-left: 1rem;
+  color: #fff;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.sidebarMenu a:hover {
+  cursor: pointer;
+}
+
+.sidebarMenu a.active {
+  background-color: #fff;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: rgb(71, 17, 137);
+  border-radius: 30px 0px 0px 30px;
+  transition: all .5s ease-in-out;
+}
+
+.sidebarMenu a span:first-child {
+  font-size: 1.5rem;
+  padding-right: 1rem;
+}
+
+.sidebarMenuClose {
+  margin-top: 1.5rem;
+}
+
+.sidebarMenuClose li {
+  width: 100%;
+  margin-bottom: 1.3rem;
+  padding-left: 1rem;
+}
+
+.sidebarMenuClose a {
+  padding-left: 1rem;
+  color: #fff;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.sidebarMenuClose a p {
+    display: none;
+}
+
+.sidebarMenuClose a.active {
+  background-color: #fff;
+  padding-right: .8rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: rgb(71, 17, 137);
+  border-radius: 30px 0px 0px 30px;
+  transition: all .5s ease-in-out;
+}
+
+.sidebarMenuClose a span:first-child {
+    font-size: 1.5rem;
+    padding-right: 1rem;
+  }
+
+.mainContent {
+  margin-left: 345px;
+  transition: margin-left .5s ease-in-out;
+}
+
+.mainContentClose {
+  transition: all .5s ease-in-out;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 345px;
+  width: calc(100% - 345px);
+  top: 0;
+  z-index: 100;
+  transition: all .5s linear;
+}
+
+.headerClose {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  left: 85px;
+  width: calc(100% - 85px);
+  top: 0;
+  z-index: 100;
+  transition: all .5s linear;
+}
+
+/* .searchWrapper{
+    border: 1px solid rgb(71, 17, 137);
+    border-radius: 50px;
+    width: 30%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.searchWrapper span {
+    display: inline-block;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
+
+}
+
+.searchWrapper input {
+    height: 100%;
+    padding: .5rem;
+    border: none;
+    outline: none;
+} */
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.userWrapper img {
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.userWrappper small {
+  display: inline-block;
+  color: rgb(133, 133, 133);
+}
+
+main {
+  margin-top: 85px;
+  padding: 2rem 1.5rem;
+  background: #f1f5f9;
+  min-height: calc(100vh - 90px);
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.cardSingle {
+  display: flex;
+  width: 300px;
+  height: 150px;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  box-shadow: 2px 3px 2px 2px rgba(71, 17, 137, 0.425);
+}
+
+.cardSingle div:last-child span {
+  color: rgb(71, 17, 137);
+  font-size: 3rem;
+}
+
+.cardSingle div:first-child span {
+  color: rgb(133, 133, 133);
+}
+
+.cardSingle:last-child {
+  color: rgb(71, 17, 137);
+}
+
+.containerPrimario {
+  width: 70%;
+  margin: 3.5rem auto 0 24%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  transition: all 0.5s ease-in-out;
+}
+
+.containerPrimarioClose {
+  width: 90%;
+  margin: 5rem 10% 0 10%;
+  transition: all 0.5s ease-in-out;
+}

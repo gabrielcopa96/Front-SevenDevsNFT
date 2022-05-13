@@ -190,7 +190,7 @@ export const TableUsers = (props) => {
 
   const handleRenderTableUser = currentItemsUser?.map((x, i) => {
     return (
-      <tr key={i} style={{ color: "white", marginBottom: ".2rem" }}>
+      <tr key={i} style={{ color: "#141414", marginBottom: ".2rem" }}>
         <td> {x.uid}</td>
         <td>
           {x.image ? (
@@ -222,7 +222,7 @@ export const TableUsers = (props) => {
   return (
     <>
       <div>
-        <h2 style={{ borderBottom: "1px solid #fff" }}>Users</h2>
+        <h2 style={{ borderBottom: "1px solid #fff" }}>Table Users</h2>
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>

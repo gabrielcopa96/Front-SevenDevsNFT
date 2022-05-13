@@ -119,7 +119,7 @@ export const TableFileTypes = (props) => {
 
   const handleRenderTableFile = currentItemsFile?.map((x, i) => {
     return (
-      <tr key={i} style={{ color: "white", marginBottom: ".2rem" }}>
+      <tr key={i} style={{color: "#141414", marginBottom: ".2rem" }}>
         <td> {x._id}</td>
         <td> {x.name}</td>
         <td style={{ display: "flex", justifyContent: "space-evenly" }}>
@@ -205,7 +205,7 @@ export const TableFileTypes = (props) => {
   return (
     <>
       <div>
-        <h2 style={{ borderBottom: "1px solid #fff" }}>File Types</h2>
+        <h2 style={{ borderBottom: "1px solid #fff" }}>Table File Types</h2>
         <ContainerNavTable>
           <RowNavTable>
             <ColNavTable>

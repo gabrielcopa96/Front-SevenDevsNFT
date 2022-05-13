@@ -15,7 +15,7 @@ export const ContainerHeaderUser = styled.div`
 export const ContainerButton = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 25%;
+  width: 30%;
   @media (max-width: 1600px) {
     width: 29%;
   }
@@ -120,6 +120,7 @@ const ImgPerfil = styled.div`
   background-image: ${(props) => `url(${props.background})`};
   background-repeat: no-repeat;
   background-size: contain;
+  position: relative;
   height: 60px;
   margin-right: 10px;
   border-radius: 50%;
@@ -135,6 +136,21 @@ export const ImagenPerfil = (props) => {
     <ImgPerfil background={background}/>
   )
 }
+
+export const ModificacionPerfil = styled.div`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  position: absolute;
+  border: 1px solid var(--mainBackGroundButtonColor);
+  background-color: var(--mainBackGroundButton);
+  top: 0;
+  right: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export const InputData = styled.div`
   display: flex;
