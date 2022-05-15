@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ContainerHeaderUser,
   ContainerButton,
@@ -28,9 +28,56 @@ import axios from "axios";
 export const ViewUser = React.memo(() => {
   const { idUser } = useParams();
 
+  const paginaWallet = () => window.open( `https://metamask.io/download/`)
+
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
+
+  const [currentAccount, setCurrentAccount] = useState(null);
+
+  const checkWalletIsConnected = async () => {
+    const { ethereum } = window;
+    console.log(ethereum);
+
+    if (!ethereum) {
+      console.log("Make sure you have Metamask installed!");
+      return;
+    } else {
+      console.log("Wallet exists! We're ready to go!");
+    }
+
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+    console.log('account' ,accounts);
+    if (accounts.length !== 0) {
+      const account = accounts[0];
+      console.log("Found an authorized account:", account);
+      setCurrentAccount(account);
+    } else {
+      console.log("No authorized account found!");
+    }
+  }
+
+  useEffect(() => {
+    checkWalletIsConnected();
+  }, [])
+
+  const connectWalletHandler = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      
+      return paginaWallet()
+    };
+
+    try {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      console.log("Found an account! Address:", accounts[0]);//numero de cuenta en accounts
+      setCurrentAccount(accounts[0]);
+    } catch (err) {
+      console.log(err);
+    };
+  };
 
   const user = useSelector((state) => state.user);
   const [selectedImage, setSelectedImage] = useState("");
@@ -99,6 +146,8 @@ export const ViewUser = React.memo(() => {
     const { value: file } = await Swal.fire({
       title: "Select image",
       input: "file",
+      background: "#46198fb3",
+      color: "var(--secondFontColor)",
       inputAttributes: {
         accept: "image/*",
         "aria-label": "Upload your profile picture",
@@ -114,6 +163,8 @@ export const ViewUser = React.memo(() => {
         Swal.fire({
           title: "Your uploaded picture",
           imageUrl: e.target.result,
+          background: "#46198fb3",
+          color: "var(--secondFontColor)",
           imageAlt: "The uploaded picture",
         });
       };
@@ -139,9 +190,13 @@ export const ViewUser = React.memo(() => {
             </ModificacionPerfil>
           </div>
           <div>
-            <h2>{username}</h2>
+            <h2>{username}</h2> <span>{currentAccount ? "Wallet Connected" : currentAccount}</span>
             <p style={{ color: "var(--colorInfo)" }}>
-              Calificacion como vendedor - 10/10
+              {
+                <>
+                Wallet Address: {currentAccount ? currentAccount : "No Wallet Connected"}
+                </>
+              }
             </p>
           </div>
         </div>
