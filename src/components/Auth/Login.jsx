@@ -141,7 +141,7 @@ const Login = () => {
       navigate("/home");
     } catch (error) {
       console.log(error);
-      alert("error no se pudo ingresar", error);
+        // alert("error no se pudo ingresar", error);
     }
   };
 

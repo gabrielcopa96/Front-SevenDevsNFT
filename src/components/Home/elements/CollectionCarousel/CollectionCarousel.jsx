@@ -34,6 +34,14 @@ const SlideMain = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+
+  @media (max-width: 768px) {
+    background-size: cover;
+    background-clip: cover;
+    background-repeat: no-repeat;
+    background-position: middle;
+  }
 `;
 
 const ContainerDataSlider = styled.div`
@@ -46,6 +54,39 @@ const ContainerDataSlider = styled.div`
   line-height: 32px;
   background-color: #ececec13;
   backdrop-filter: blur(20px);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 58%;
+    bottom: 0;
+    padding: 0;
+    line-height: 28px;
+  }
+`;
+
+const SubtitleSlider = styled.p`
+  color: var(--secondFontColor);
+  margin-left: 6.8rem;
+  margin-right: 6.8rem;
+
+  @media (max-width: 768px) {
+    margin: .2rem;
+    font-size: 1rem;
+  }
+`;
+
+const TitleSliderCollection = styled.h2`
+  font-size: 1.9rem;
+  color: var(--secondFontColor);
+  margin-left: 6.8rem;
+  margin-right: 6.8rem;
+  border-bottom: 1px solid var(--mainBackGroundButtonColor);
+
+  @media (max-width: 768px) {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
 `;
 
 const Slide = (props) => {
@@ -54,26 +95,12 @@ const Slide = (props) => {
   return (
     <SlideMain backgroundImage={backgroundImage}>
       <ContainerDataSlider>
-        <h2
-          style={{
-            fontSize: "1.9rem",
-            color: "var(--secondFontColor)",
-            marginLeft: "6.8rem",
-            borderBottom: "1.2px solid var(--mainBackGroundButtonColor)",
-            marginRight: "6.8rem",
-          }}
-        >
+        <TitleSliderCollection>
           {title}
-        </h2>
-        <p
-          style={{
-            color: "var(--secondFontColor)",
-            marginLeft: "6.8rem",
-            marginRight: "6.8rem",
-          }}
-        >
+        </TitleSliderCollection>
+        <SubtitleSlider>
           {subtitle}
-        </p>
+        </SubtitleSlider>
       </ContainerDataSlider>
     </SlideMain>
   );
