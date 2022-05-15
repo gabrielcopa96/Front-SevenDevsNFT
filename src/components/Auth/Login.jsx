@@ -11,7 +11,6 @@ import Button from "../shared/Button.jsx";
 
 import Input from "../shared/Input.jsx";
 import Swal from "sweetalert2";
-import 'sweetalert2/dist/sweetalert2.css'
 
 
 const ContainerLogin = styled.form`
@@ -21,6 +20,10 @@ const ContainerLogin = styled.form`
   margin: 7.5rem auto 0 auto;
   padding: 3.2rem 2rem;
   text-align: center;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const ContainerUsuarioLogin = styled.div`
@@ -138,11 +141,10 @@ const Login = () => {
       navigate("/home");
     } catch (error) {
       console.log(error);
-      // alert("error no se pudo ingresar", error);
+      alert("error no se pudo ingresar", error);
     }
   };
 
-  // console.log(client)
 
   const handleSend = async (e) => {
     e.preventDefault();

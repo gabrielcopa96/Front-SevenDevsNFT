@@ -1,12 +1,11 @@
 import Input from "../shared/Input.jsx";
 import axios from "axios";
 import styled, { css } from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF } from "react-icons/fa";
 import GoogleLogin from "react-google-login";
 import Swal from "sweetalert2";
-import 'sweetalert2/dist/sweetalert2.css'
 
 
 import React, { useState, useEffect } from "react";
@@ -117,6 +116,10 @@ export const Register = () => {
     e.preventDefault();
     axios
       .post("https://sevendevs-backend.herokuapp.com/users/", input)
+      .then((res) =>{
+        console.log(res)
+        navigate("/home")
+      })
       .then((res) => {navigate("/home")
       Toast.fire({
         icon: "success",
@@ -129,25 +132,7 @@ export const Register = () => {
       });
   };
 
-  const handleOnBlur = (e) => {};
-
   const handleLogin = (googleData) => {
-    /* axios
-    .post("http://localhost:4000/auth/google",
-      {token: googleData.tokenId,
-      givenName: googleData.profileObj.givenName,
-      familyName: googleData.profileObj.familyName })
-      .then((res) => {
-        console.log(res.data)
-        setLoginData(res.data);
-        localStorage.setItem('loginData', JSON.stringify(res.data))
-        
-      })
-      .catch((e) => {
-        console.log(e.response.data);
-        alert(e.response.data.msg);
-      });
-      */
     console.log(googleData);
     localStorage.setItem("token", JSON.stringify(googleData));
     navigate("/home");
@@ -180,7 +165,6 @@ export const Register = () => {
                   placeholder="Enter your name"
                   padding= ".5rem"
                   onChange={handleChange}
-                  //onBlur={handleOnBlur}
                   width="100%"
                 />
                 <MsgError>{errors.firstName}</MsgError>
@@ -195,7 +179,6 @@ export const Register = () => {
                   placeholder="Enter your name"
                   padding= ".5rem"
                   onChange={handleChange}
-                  //onBlur={handleOnBlur}
                   width="100%"
                 />
                 <MsgError>{errors.lastName}</MsgError>
@@ -211,7 +194,6 @@ export const Register = () => {
                   placeholder="Enter your Username"
                   padding= ".5rem"
                   onChange={handleChange}
-                  //onBlur={handleOnBlur}
                   width="100%"
                 />
                 <MsgError>{errors.username}</MsgError>
@@ -224,7 +206,6 @@ export const Register = () => {
                   placeholder="Enter your email"
                   padding= ".5rem"
                   onChange={handleChange}
-                  //onBlur={handleOnBlur}
                   width="100%"
                 />
                 <MsgError>{errors.email}</MsgError>
@@ -240,7 +221,6 @@ export const Register = () => {
                   placeholder="Enter your password"
                   padding= ".5rem"
                   onChange={handleChange}
-                  //onBlur={handleOnBlur}
                   width="100%"
                 />
                 <MsgError>{errors.password}</MsgError>
@@ -254,7 +234,6 @@ export const Register = () => {
                   padding= ".5rem"
                   placeholder="Enter your phone number"
                   onChange={handleChange}
-                  //onBlur={handleOnBlur}
                   width="100%"
                 />
                 <MsgError>{errors.phone}</MsgError>
@@ -285,7 +264,6 @@ export const Register = () => {
               </BotonFacebook>
               <GoogleLogin
                 clientId="623666465652-gdbjevbm9pvugieks0it5c4hijk97gag.apps.googleusercontent.com"
-                //buttonText="Login"
                 render={(renderProps) => (
                   <BotonGoogle>
                     <FcGoogle
@@ -379,7 +357,6 @@ const FormIcons = styled.div`
   gap: 10%;
   padding: 0.1rem;
   margin: 5%;
-  //svg{cursor: pointer};
 `;
 
 const FormButtons = styled.div`
@@ -389,6 +366,10 @@ const FormButtons = styled.div`
   width: 60%;
   align-items: center;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 `;
 
 const Form = styled.form`
@@ -411,6 +392,11 @@ const FormContainer = styled.div`
   border-radius: 1rem;
   margin: 5% 25% 0% 25%;
   padding: 2% 2%;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
+  }
 `;
 
 const ContainerAccept = styled.div`
@@ -462,10 +448,7 @@ const StyledButton = styled.button`
   text-align: center;
   font-size: 1rem;
   outline: none;
-  /* background: ${(props) => props.color || "#23136e"}; */
   background: ${(props) => props.color || "var(--mainBackGroundButtonColor)"};
-  /* border: 1px solid ${(props) => props.color || "#23136e"}; */
-  /* background: ${(props) => props.color || "#6d6a799f"}; */
   width: ${(props) => props.width || "60px"};
   height: ${(props) => props.height || "40px"};
   line-height: 30px;
@@ -510,13 +493,3 @@ const Button1 = ({
     </StyledButton>
   );
 };
-
-/*Salida del Componente
-{ 
-    name
-    nickname
-    email
-    password
-    phone
-}
-*/

@@ -15,23 +15,21 @@ const ContainerFooter = styled.div`
   padding-top: 1rem;
   margin-top: auto;
   height: 100%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
 `;
 
 const ContainerImagen = styled.div`
   margin-left: 5rem;
-`;
 
-const ContainerNewsletter = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  width: 30%;
-  h4 {
-    font-size: 1.2rem;
-    color: var(--secondFontColor);
-    font-weight: bold;
-  }
-  input {
-    width: 90%;
+  @media (max-width: 768px) {
+    margin: 0 auto;
   }
 `;
 
@@ -40,19 +38,22 @@ const ContainerInfoFooter = styled.div`
   grid-template-rows: 1fr 1fr;
   text-align: center;
   margin-right: 7rem;
-  h4 {
+  h3 {
     color: var(--secondFontColor);
-    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
   }
 `;
 
 const ContainerInfo = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: -1rem;
-  h4 {
+  h3 {
     color: var(--secondFontColor);
-    font-weight: bold;
   }
   a {
     text-decoration: none;
@@ -67,12 +68,11 @@ const ContainerInfo = styled.div`
 const ContainerSoporte = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: -1rem;
-  h4 {
+
+  h3 {
     color: var(--secondFontColor);
-    font-weight: bold;
   }
-  
+
   a {
     color: var(--colorInfo);
     text-decoration: none;
@@ -81,6 +81,10 @@ const ContainerSoporte = styled.div`
       transition: all 0.3s ease-in-out;
     }
   }
+`;
+
+const ContainerDerechoAutor = styled.div`
+
 `;
 
 const Footer = () => {
@@ -94,7 +98,7 @@ const Footer = () => {
         </ContainerImagen>
         <ContainerInfo>
           <div>
-            <h4>Informacion</h4>
+            <h3>Informacion</h3>
           </div>
           <div>
             <p>
@@ -111,19 +115,27 @@ const Footer = () => {
               Que son los NFT ?
             </a>
           </p>
-          <p><a href="#">Como comprar un NFT</a></p>
+          <p>
+            <a href="#">Como comprar un NFT</a>
+          </p>
         </ContainerInfo>
         <ContainerSoporte>
           <div>
-            <h4>Soporte</h4>
+            <h3>Soporte</h3>
           </div>
-          <p><a href="#">Danos tu opinion</a></p>
-          <p><a href="#">Charla con el asistente virtual</a></p>
-          <p><a href="#">Preguntas frecuentes</a></p>
+          <p>
+            <a href="#">Danos tu opinion</a>
+          </p>
+          <p>
+            <a href="#">Charla con el asistente virtual</a>
+          </p>
+          <p>
+            <a href="#">Preguntas frecuentes</a>
+          </p>
         </ContainerSoporte>
         <ContainerInfoFooter>
           <div>
-            <h4>Comunidad</h4>
+            <h3>Comunidad</h3>
           </div>
           <div>
             <a href="https://discord.gg/get6j98T" target="_blank">
@@ -138,17 +150,19 @@ const Footer = () => {
           </div>
         </ContainerInfoFooter>
       </ContainerFooter>
-      <h4
-        style={{
-          textAlign: "center",
-          color: "var(--colorInfo)",
-          fontSize: "1.2rem",
-          paddingBottom: "1rem",
-          paddingTop: "1rem",
-        }}
-      >
-        @ Derechos reservados 7DevsNFT
-      </h4>
+      <ContainerDerechoAutor>
+        <h4
+          style={{
+            // backgroundColor: "var(--mainContainersColor)",
+            textAlign: "center",
+            color: "var(--colorInfo)",
+            paddingBottom: "1rem",
+            paddingTop: "1rem",
+          }}
+        >
+          @ Derechos reservados 7DevsNFT
+        </h4>
+      </ContainerDerechoAutor>
     </footer>
   );
 };

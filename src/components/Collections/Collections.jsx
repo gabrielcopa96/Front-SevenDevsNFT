@@ -14,13 +14,19 @@ const CentrarCard = styled.div`
   width: 85%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export default function Collections() {
   const dispatch = useDispatch();
   const selectorNfts = useSelector((state) => state.nfts);
   const selectorCollections = useSelector((state) => state.collections);
-  // const nftCollections = useSelector((state) => state.filter(collection => collection.selectorCollections))
 
   useEffect(() => {
     dispatch(getAllCollections());

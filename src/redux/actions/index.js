@@ -192,9 +192,6 @@ export const getFileTypes = () => async dispatch => {
     }
 }
 
-// export const getTypesFile = () => async dispatch => {
-//     const
-// }
 
 export const filterByCategory = (id) => async dispatch => {
     try {
@@ -257,7 +254,7 @@ export const postNft = (tokenuser, item, formData) => async dispatch => {
         
         const dataPost = await axios.post(`https://sevendevs-backend.herokuapp.com/nft`, item, {
             headers: {
-                Authorization: JSON.parse(tokenuser) // usuarios registrados puedan hacer creeacion de nfts
+                Authorization: JSON.parse(tokenuser) //? usuarios registrados puedan hacer creeacion de nfts
             }
         })
         const uid = dataPost.data.nft._id
@@ -274,11 +271,6 @@ export const postNft = (tokenuser, item, formData) => async dispatch => {
             type: CREATE_NFT,
             payload: obj1
         })
-
-        // const finallyUpdateImageNft = await dispatch({
-        //     type: UPDATE_IMAGE_NFT,
-        //     payload: dataImageNft.data.url
-        // })
         return responsePost
     } catch (error) {
         console.log("paso por aqui perro asi que hay", error)
@@ -335,19 +327,6 @@ export const filterForCategory = (id) => async dispatch => {
     }
 }
 
-// export const filterForCollections = (id) => async dispatch => {
-//     try {
-//         const dataFilterCategory = await axios.get(`http://localhost:4000/filter/category/${id}`)
-//         const finallyFilterCategory = await dispatch({
-//             type: FILTER_CATEGORY,
-//             payload: dataFilterCategory.data
-//         })
-//         return finallyFilterCategory
-//     } catch (error) {
-//         console.log("error", error)
-//     }
-// }
-
 export const modificacionUser = (id, item) => async dispatch => {
     try {
         const modifUser = await axios.put(`https://sevendevs-backend.herokuapp.com/users/${id}`, item)
@@ -360,9 +339,6 @@ export const modificacionUser = (id, item) => async dispatch => {
     } catch (error) {
         console.log('un error nuevo', error)
     }
-    // return dispatch => {
-
-    // }
 }
 
 export const modificacionNft = (tokenuser, id, item) => async dispatch => {

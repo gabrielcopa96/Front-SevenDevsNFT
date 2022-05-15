@@ -1,150 +1,165 @@
 
 :root {
-    --gray: #555;
-    --purple: #4e65ff;
-    --green-blue: #92effd;
-    --white: #fff;
-  }
-  
+  --gray: #555;
+  --purple: #4e65ff;
+  --green-blue: #92effd;
+  --white: #fff;
+}
+
+.navigation {
+  position: fixed;
+  top: 20px;
+  right: 5rem;
+  width: 120px;
+  z-index: 1000;
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  opacity: 90%;
+  /* background: #22a5a7bb; */
+  box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(100px);
+  overflow: hidden;
+  transition: height 0.5s, width 0.5s;
+  transition-delay: 0s, 0.75s;
+}
+
+@media (max-width: 678px) {
   .navigation {
     position: fixed;
     top: 20px;
-    right: 5rem;
-    width: 120px;
-    z-index: 1000;
-    height: 55px;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 5px;
-    opacity: 90%;
-    /* background: #22a5a7bb; */
-    box-shadow: 0 25px 35px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(100px);
-    overflow: hidden;
-    transition: height 0.5s, width 0.5s;
-    transition-delay: 0s, 0.75s;
+    right: 8px;
   }
-  
+
   .navigation .userBox {
-    /* position: relative; */
-    width: 60px;
-    height: 55px;
-    /* background: #131833f3; */
     display: flex;
     align-items: center;
     overflow: hidden;
     transition: 0.5s;
     transition-delay: 0.5s;
   }
-  
-  .navigation .userBox .username {
-    font-size: 1.1rem;
-    font-weight: bold;
-    white-space: nowrap;
-    color: var(--secondFontColor);
-  }
-  
-  .navigation .userBox .imageBox {
-    position: relative;
-    min-width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 8px solid transparent;
-  
-  }
-  
-  .navigation .userBox .imageBox img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .navigation .menuToggle {
-    position: relative;
-    width: 60px;
-    background: transparent;
-    height: 55px;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .navigation .menuToggle::before {
-    content: "";
-    position: absolute;
-    width: 32px;
-    height: 2px;
-    background: var(--secondFontColor);
-    transform: translateY(-10px);
-    box-shadow: 0 10px var(--secondFontColor);
-    transition: 0.5s;
-  }
-  
-  .navigation .menuToggle::after {
-    content: "";
-    position: absolute;
-    width: 32px;
-    height: 2px;
-    background: var(--secondFontColor);
-    transform: translateY(10px);
-    transition: 0.5s;
-  }
-  
-  .menu {
-    position: absolute;
-    width: 90%;
-    height: calc(100% - 50px);
-    margin-top: 60px;
-    margin-left: -7.3rem;
-  }
-  
-  .menu li {
-    list-style: none;
-  }
-  
-  .menu li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
-    font-size: 1rem;
-    text-decoration: none;
-    color: var(--secondFontColor);
-  }
-  
-  .menu li a ion-icon {
-    font-size: 1.5rem;
-  }
-  
-  .menu li a:hover {
-    /* border-bottom: 2px solid var(----mainBackGroundButtonColor); */
-    text-decoration: underline
-  }
-  
-  .navigation.active .menuToggle::before {
-    transform: translateY(0px) rotate(45deg);
-    box-shadow: none;
-  }
-  
-  .navigation.active .menuToggle::after {
-    transform: translateY(0px) rotate(-45deg);
-  }
-  
-  .navigation.active {
-    width: 250px;
-    background: #131833f3;
-    height: 260px;
-    transition: width 0.5s, height 0.5s;
-    transition-delay: 0s, 0.75s;
-  }
-  
-  .navigation.active .userBox {
-    width: calc(100% - 80px);
-    transition-delay: 0s;
-  }
-  
+}
+
+.navigation .userBox {
+  /* position: relative; */
+  width: 60px;
+  height: 55px;
+  /* background: #131833f3; */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+
+.navigation .userBox .username {
+  font-size: 1.1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  color: var(--secondFontColor);
+}
+
+.navigation .userBox .imageBox {
+  position: relative;
+  min-width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 8px solid transparent;
+
+}
+
+.navigation .userBox .imageBox img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navigation .menuToggle {
+  position: relative;
+  width: 60px;
+  background: transparent;
+  height: 55px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.navigation .menuToggle::before {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 2px;
+  background: var(--secondFontColor);
+  transform: translateY(-10px);
+  box-shadow: 0 10px var(--secondFontColor);
+  transition: 0.5s;
+}
+
+.navigation .menuToggle::after {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 2px;
+  background: var(--secondFontColor);
+  transform: translateY(10px);
+  transition: 0.5s;
+}
+
+.menu {
+  position: absolute;
+  width: 90%;
+  height: calc(100% - 50px);
+  margin-top: 60px;
+  margin-left: -7.3rem;
+}
+
+.menu li {
+  list-style: none;
+}
+
+.menu li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--secondFontColor);
+}
+
+.menu li a ion-icon {
+  font-size: 1.5rem;
+}
+
+.menu li a:hover {
+  /* border-bottom: 2px solid var(----mainBackGroundButtonColor); */
+  text-decoration: underline
+}
+
+.navigation.active .menuToggle::before {
+  transform: translateY(0px) rotate(45deg);
+  box-shadow: none;
+}
+
+.navigation.active .menuToggle::after {
+  transform: translateY(0px) rotate(-45deg);
+}
+
+.navigation.active {
+  width: 250px;
+  background: #131833f3;
+  height: 260px;
+  transition: width 0.5s, height 0.5s;
+  transition-delay: 0s, 0.75s;
+}
+
+.navigation.active .userBox {
+  width: calc(100% - 80px);
+  transition-delay: 0s;
+}

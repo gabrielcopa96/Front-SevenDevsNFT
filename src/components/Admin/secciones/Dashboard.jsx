@@ -58,7 +58,7 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        <div className="recentFlex">
+        {/* <div className="recentFlex">
           <div className="projects">
             <div className="card">
               <div className="cardHeader"></div>
@@ -68,7 +68,7 @@ export const Dashboard = () => {
           </div>
 
           <div className="customers"></div>
-        </div>
+        </div> */} 
       </main>
     </div>
   );

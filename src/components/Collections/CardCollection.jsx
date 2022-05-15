@@ -21,6 +21,10 @@ const ContainerCollectionCard = styled.div`
     box-shadow: 5px 5px 40px 20px rgba(43, 37, 70, 0.53);
     transition: all .5s ease-in-out;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const ContainerImgCollection = styled.div`

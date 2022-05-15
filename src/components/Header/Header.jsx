@@ -50,6 +50,10 @@ const LogoContainer = styled.div`
   &:hover img {
     transform: scale(1.05);
   }
+
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -63,6 +67,14 @@ const ButtonsContainer = styled.div`
       text-decoration-line: underline;
       text-decoration-thickness: 3px;
     }
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin: 0 auto;
   }
 `;
 
@@ -132,7 +144,7 @@ function Header() {
                <li>
                  <ContainerItemsMenu>
                    <FaInfoCircle style={{ width: "22px", height: "42px" }} />
-                   <a href="#">About</a>
+                   <Link to={"/about"}>About</Link>
                  </ContainerItemsMenu>
                </li>
                <li>
@@ -175,7 +187,7 @@ function Header() {
                 <li>
                   <ContainerItemsMenu>
                     <FaInfoCircle style={{ width: "22px", height: "42px" }} />
-                    <a href="#">About</a>
+                    <Link to={"/about"}>About</Link>
                   </ContainerItemsMenu>
                 </li>
                 <li>
@@ -201,22 +213,7 @@ function Header() {
           <ButtonsContainer>
             <Link to={"/home"}>Home</Link>
             <Link
-              to={"/home"}
-              onClick={() =>
-                Swal.fire({
-                  title: "In Construction",
-                  width: 600,
-                  padding: "3em",
-                  color: "var(--secondFontColor)",
-                  background: "#46198fb3",
-                  backdrop: `
-                #21217750
-                url("https://static.wixstatic.com/media/98a066_b36ecd03055c4f12b0b00651ae9d0ce3~mv2.gif")
-                left top
-                no-repeat
-              `,
-                })
-              }
+              to={"/about"}
             >
               About
             </Link>
