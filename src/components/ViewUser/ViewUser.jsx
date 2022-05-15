@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   ContainerHeaderUser,
   ContainerButton,
@@ -12,15 +12,13 @@ import {
   ModificacionPerfil,
 } from "./elements/StyleViewUser.jsx";
 
-import { Favorito } from "./Favorito/Favorito.jsx";
-
-import { modificacionUser } from "../../redux/actions/index";
+import { modificacionUser, putImagePerfil } from "../../redux/actions/index";
 import Swal from "sweetalert2";
 
 import "sweetalert2/dist/sweetalert2.css";
 import Input from "../shared/Input.jsx";
 import Button from "../shared/Button.jsx";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import authService from "../../services/authService";
 import { removeUser } from "../../redux/actions/index";
@@ -32,7 +30,10 @@ export const ViewUser = React.memo(() => {
 
   const dispatch = useDispatch();
 
+  const token = localStorage.getItem("token");
+
   const user = useSelector((state) => state.user);
+  const [selectedImage, setSelectedImage] = useState("");
   const navigate = useNavigate();
 
   const handleUser = async () => {
@@ -94,6 +95,32 @@ export const ViewUser = React.memo(() => {
     });
   };
 
+  const handleModificationImgProfile = async () => {
+    const { value: file } = await Swal.fire({
+      title: "Select image",
+      input: "file",
+      inputAttributes: {
+        accept: "image/*",
+        "aria-label": "Upload your profile picture",
+      },
+    });
+    setSelectedImage(file);
+    const formData = new FormData();
+    formData.append("img", selectedImage);
+    dispatch(putImagePerfil(token, idUser, formData));
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        Swal.fire({
+          title: "Your uploaded picture",
+          imageUrl: e.target.result,
+          imageAlt: "The uploaded picture",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   //? <i className="fas fa-edit"></i>
 
   const { username, image, favorite, collectionNft } = user;
@@ -102,9 +129,14 @@ export const ViewUser = React.memo(() => {
     <>
       <ContainerHeaderUser>
         <div style={{ display: "flex" }}>
-          <div style={{position: "relative"}}>
+          <div style={{ position: "relative" }}>
             <ImagenPerfil background={image} />
-            <ModificacionPerfil onClick={() => console.log("enia")}><i className="fas fa-plus" style={{position: "relative", left: "5px"}}></i></ModificacionPerfil>
+            <ModificacionPerfil onClick={() => handleModificationImgProfile()}>
+              <i
+                className="fas fa-plus"
+                style={{ position: "relative", left: "5px" }}
+              ></i>
+            </ModificacionPerfil>
           </div>
           <div>
             <h2>{username}</h2>

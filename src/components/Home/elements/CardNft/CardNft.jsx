@@ -10,7 +10,6 @@ import { putLikesNft } from "../../../../redux/actions";
 import imagenaudio from "../../../../assets/nft-audio.jpg";
 import imagenvideo from "../../../../assets/azuki-nft.gif";
 import { useDispatch } from "react-redux";
-import { BsHeartFill } from "react-icons/bs";
 
 const CardContainerNft = styled.div`
   width: 280px;
@@ -22,7 +21,6 @@ const CardContainerNft = styled.div`
   padding: 20px;
   margin: 0 auto 2rem auto;
   box-sizing: border-box;
-  /* margin-bottom: 2rem; */
   position: relative;
 `;
 
@@ -108,15 +106,6 @@ const CardBodyFooter = styled.div`
         content: url(https://rvs-nft-preview-card.netlify.app/images/icon-clock.svg);
       }
     }
-
-    /* &::before {
-      content: url(https://rvs-nft-preview-card.netlify.app/images/icon-ethereum.svg);
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translate(0%, -50%);
-      line-height: 0px;
-    } */
   }
 `;
 
@@ -213,14 +202,25 @@ export const CardNft = (props) => {
     token,
   } = props;
 
-  const likecurrent = likes;
-
   const dispatch = useDispatch();
   const handlerLikes = () => {
     const acumLikes = {
       likes: 1,
     };
-    dispatch(putLikesNft(id, token, acumLikes));
+    if (token) {
+      dispatch(putLikesNft(id, token, acumLikes));
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        color: "var(--secondFontColor)",
+        background: "#46198fb3",
+        backdrop: `
+            #46198f84
+            `,
+        text: "Not autenticated",
+      });
+    }
   };
   const handlePhoto = () => {
     if (files === "Image") {
@@ -263,10 +263,6 @@ export const CardNft = (props) => {
             position: "relative",
           }}
         >
-          {/* <BsHeartFill
-            style={{ color: "var(--colorInfo)" }}
-            onClick={handlerLikes}
-          /> */}
           <ContainerHearth onClick={handlerLikes}>
             <i class="fa fa-heart" aria-hidden="true"></i>
           </ContainerHearth>

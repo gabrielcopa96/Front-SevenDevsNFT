@@ -25,7 +25,8 @@ import {
     CREATE_CURRENCIES,
     CREATE_SALES_TYPES,
     PUT_NFT,
-    UPDATE_IMAGE_NFT
+    UPDATE_IMAGE_NFT,
+    UPDATE_IMAGE_USER
 } from "../actions";
 
 
@@ -184,6 +185,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: action.payload.users
+            }
+        case UPDATE_IMAGE_USER:
+            const profile = action.payload 
+            return {
+                ...state,
+                user: {...state.user, image: profile}
             }
         case CATEGORY_FILTER:
             return { ...state, nftquery: action.payload, hasMore: false }

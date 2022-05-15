@@ -160,17 +160,6 @@ export const CreateNft = () => {
     });
   };
 
-  // const handleInputDetails = (e) => {
-  //   setDataDetails({
-  //     ...dataDetails,
-  //     [e.target.name]: e.target.value,
-  //   });
-  //   setData({
-  //     ...data,
-  //     details: dataDetails,
-  //   });
-  // };
-
   const handleImage = (e) => {
     e.preventDefault();
     setFormData(e.target.value)
@@ -190,6 +179,7 @@ export const CreateNft = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data);
+    console.log(formDateishon)
     if (send === false) {
       dispatch(postNft(token, data, formDateishon));
       setData({

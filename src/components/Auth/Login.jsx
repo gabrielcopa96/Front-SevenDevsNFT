@@ -138,10 +138,18 @@ const Login = () => {
       });
       const finallyGoogle = await dataGoogle.data;
       localStorage.setItem("token", JSON.stringify(finallyGoogle.token));
-      navigate("/home");
+      if(finallyGoogle.ok === true) {
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+        });
+        navigate("/home");
+      }
     } catch (error) {
-      console.log(error);
-        // alert("error no se pudo ingresar", error);
+      Toast.fire({
+        icon: "error",
+        title: "Correo no registrado",
+      });
     }
   };
 
@@ -163,7 +171,7 @@ const Login = () => {
         icon: "error",
         title: "Correo no registrado",
       });
-      console.log(error);
+      // console.log(error);
     }
   };
 

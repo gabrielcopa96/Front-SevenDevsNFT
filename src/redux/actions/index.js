@@ -29,6 +29,7 @@ export const CREATE_CURRENCIES = 'CREATE_CURRENCIES';
 export const PUT_CATEGORY = 'PUT_CATEGORY';
 export const CREATE_SALES_TYPES = 'CREATE_SALES_TYPES';
 export const UPDATE_IMAGE_NFT = 'UPDATE_IMAGE_NFT';
+export const UPDATE_IMAGE_USER = 'UPDATE_IMAGE_USER';
 
 
 
@@ -250,8 +251,6 @@ export const filterByFileType = (id) => async dispatch => {
 
 export const postNft = (tokenuser, item, formData) => async dispatch => {
     try {
-        //? aca despues tendria
-        
         const dataPost = await axios.post(`https://sevendevs-backend.herokuapp.com/nft`, item, {
             headers: {
                 Authorization: JSON.parse(tokenuser) //? usuarios registrados puedan hacer creeacion de nfts
@@ -277,23 +276,23 @@ export const postNft = (tokenuser, item, formData) => async dispatch => {
     }
 }
 
-export const putImageNft = (tokenuser, formData) => async dispatch => {
+export const putImagePerfil = (tokenuser,id, formData) => async dispatch => {
     try {
-        const dataImageNft = await axios.put(`https://sevendevs-backend.herokuapp.com/upload/nft/627adc6ebee63abe0d8212ff`, formData, { 
+        const dataImageUser = await axios.put(`https://sevendevs-backend.herokuapp.com/upload/user/${id}`, formData, { 
             headers: {
                 Authorization: JSON.parse(tokenuser),
                 "Content-Type": "multipart/form-data",
             }
         })
-        console.log(dataImageNft)
-        const finallyUpdateImageNft = await dispatch({
-            type: UPDATE_IMAGE_NFT,
-            payload: dataImageNft.data.url
+        console.log(dataImageUser)
+        const finallyUpdateImageUser = await dispatch({
+            type: UPDATE_IMAGE_USER,
+            payload: dataImageUser.data.url
         })
-        console.log(finallyUpdateImageNft)
-        return finallyUpdateImageNft
+        console.log(finallyUpdateImageUser)
+        return finallyUpdateImageUser
     } catch (error) {
-        console.log(error)
+        console.log("paso directo al error", error)
     }
 }
 
