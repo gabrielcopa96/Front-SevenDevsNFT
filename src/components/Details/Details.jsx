@@ -316,7 +316,7 @@ export const Details = () => {
               </p>
             ) : nft[0].currencies.name === "ETH" ? (
               <p style={{ color: "var(--colorInfo)" }}>
-                = ${nft[0].price * 2008} USD
+                = ${(nft[0].price * 2008).toFixed(2)} USD
               </p>
             ) : (
               <p style={{ color: "var(--colorInfo)" }}>
