@@ -28,7 +28,9 @@ import {
     UPDATE_IMAGE_NFT,
     UPDATE_IMAGE_USER,
     SEARCHBAR_FILTER,
-    POST_COLLECTIONS
+    POST_COLLECTIONS,
+    GET_TRANSACTIONS,
+    FILTER_CONTRACT_TOKEN
 } from "../actions";
 
 
@@ -49,7 +51,9 @@ const initialState = {
     files_type: [],
     currencies: [],
     img: "",
-    open: false
+    open: false,
+    transactions: [],
+    contract: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -91,6 +95,10 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 collections: action.payload
             }
+        case GET_TRANSACTIONS:
+            return {
+                ...state, transactions: action.payload
+            }
         case FILTER_NFT:
             //  nfts[0].collection_nft.name //collections[0].name
             const nftsAll = state.nfts
@@ -100,6 +108,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filterNfts: filters
+            }
+
+        case FILTER_CONTRACT_TOKEN:
+            return {
+                ...state,
+                contract: [...state.contract, action.payload]
             }
 
         case REMOVE_NFT_QUERY:

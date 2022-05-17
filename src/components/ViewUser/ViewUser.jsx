@@ -85,13 +85,7 @@ export const ViewUser = React.memo(() => {
     }
   };
 
-  useEffect(() => {
-    checkWalletIsConnected();
-    if (filetypes.length === 0) {
-      dispatch(getFileTypes());
-    }
-  }, [dispatch]);
-
+  
   const connectWalletHandler = async () => {
     const { ethereum } = window;
 
@@ -109,6 +103,14 @@ export const ViewUser = React.memo(() => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    checkWalletIsConnected();
+    if (filetypes.length === 0) {
+      dispatch(getFileTypes());
+    }
+  }, [dispatch]);
+
 
   const user = useSelector((state) => state.user);
   const [selectedImage, setSelectedImage] = useState("");
@@ -259,7 +261,7 @@ export const ViewUser = React.memo(() => {
             title="MY POSTS"
             onClick={() => navigate(`/myprofile/mispublicaciones`)}
           />
-          <Button title="WALLET" />
+          <Button title="WALLET" onClick={connectWalletHandler}/>
           <Button title="LOGOUT" />
         </ContainerButton>
       </ContainerHeaderUser>

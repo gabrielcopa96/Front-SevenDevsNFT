@@ -32,6 +32,8 @@ export const UPDATE_IMAGE_NFT = 'UPDATE_IMAGE_NFT';
 export const UPDATE_IMAGE_USER = 'UPDATE_IMAGE_USER';
 export const SEARCHBAR_FILTER = 'SEARCHBAR_FILTER';
 export const POST_COLLECTIONS = 'POST_COLLECTIONS';
+export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+export const FILTER_CONTRACT_TOKEN = 'FILTER_CONTRACT_TOKEN';
 
 
 
@@ -71,6 +73,13 @@ export const getAllCollections = () => async dispatch => {
 export function filterNft(payload) {
     return {
         type: 'FILTER_NFT',
+        payload
+    }
+};
+
+export function contratcToken(payload) {
+    return {
+        type: 'FILTER_CONTRACT_TOKEN',
         payload
     }
 };
@@ -213,6 +222,20 @@ export const filterByCategory = (id) => async dispatch => {
             payload: dataCategory.data
         })
         return finallyDataCategory
+    } catch (error) {
+        console.log('error:', error)
+    }
+}
+
+export const getTransactions = () => async dispatch => {
+    try {
+        const dataTransactions = await axios.get('https://sevendevs-backend.herokuapp.com/trans')
+        console.log(dataTransactions.data)
+        const pruebatrans = await dispatch({
+            type: GET_TRANSACTIONS,
+            payload: dataTransactions.data
+        })
+        return pruebatrans
     } catch (error) {
         console.log('error:', error)
     }

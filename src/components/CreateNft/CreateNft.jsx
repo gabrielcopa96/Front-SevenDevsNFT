@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../shared/Button.jsx";
 import {
   postNft,
@@ -9,7 +9,7 @@ import {
   getCurrencies,
   getSalesType,
   getCategory,
-  getAllCollections
+  // getAllCollections
 } from "../../redux/actions";
 
 import Input from "../shared/Input.jsx";
@@ -115,11 +115,17 @@ export const CreateNft = () => {
 
   const dispatch = useDispatch();
 
+  const location = useLocation();
+
+  const contracts = location.state.contract[0]
+  const token_id = location.state.contract[1]
+
   const [data, setData] = useState({
     name: "",
     description: "",
-    contract_address: "",
-    collection_nft: "",
+    contract_address: contracts,
+    token_id: token_id,
+    // collection_nft: "",
     category: "",
     price: 0,
     sales_types: "",
@@ -127,7 +133,7 @@ export const CreateNft = () => {
     files_types: "",
   });
 
-  const [formData, setFormData] = useState("");
+  // const [formData, setFormData] = useState("");
 
   const [send, setSend] = useState(false);
 
@@ -148,7 +154,7 @@ export const CreateNft = () => {
       dispatch(getFileTypes());
       dispatch(getCurrencies());
       dispatch(getSalesType());
-      dispatch(getAllCollections())
+      // dispatch(getAllCollections())
     }
   }, [dispatch]);
 
@@ -159,13 +165,10 @@ export const CreateNft = () => {
     });
   };
 
-
-  console.log(category)
-
-  const handleImage = (e) => {
-    e.preventDefault();
-    setFormData(e.target.value);
-  };
+  // const handleImage = (e) => {
+  //   e.preventDefault();
+  //   setFormData(e.target.value);
+  // };
 
   // ? Realizar el upload de la image del nft
 
@@ -175,8 +178,6 @@ export const CreateNft = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  console.log(data);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -255,7 +256,7 @@ export const CreateNft = () => {
             </ContainerGridLabelInput>
           </div>
           <div>
-            <ContainerGridLabelInput>
+            {/* <ContainerGridLabelInput>
               <label style={{ fontSize: "1.2rem" }}>Contract Address</label>
               <Input
                 placeholder="Address..."
@@ -265,7 +266,7 @@ export const CreateNft = () => {
                 value={data.contract_address}
                 name="contract_address"
               />
-            </ContainerGridLabelInput>
+            </ContainerGridLabelInput> */}
             <ContainerGridLabelInput>
               <label style={{ fontSize: "1.2rem" }}>Category</label>
               <SelectType name="category" onChange={(e) => handleSelect(e)}>
@@ -277,7 +278,7 @@ export const CreateNft = () => {
                 ))}
               </SelectType>
             </ContainerGridLabelInput>
-            <ContainerGridLabelInput>
+            {/* <ContainerGridLabelInput>
               <label style={{ fontSize: "1.2rem" }}>Collections</label>
               <SelectType name="collection_nft" onChange={(e) => handleSelect(e)}>
                 <option>select option..</option>
@@ -287,7 +288,7 @@ export const CreateNft = () => {
                   </option>
                 ))}
               </SelectType>
-            </ContainerGridLabelInput>
+            </ContainerGridLabelInput> */}
             <ContainerGridLabelInput>
               <label style={{ fontSize: "1.2rem" }}>Sale Types</label>
               <SelectType name="sales_types" onChange={(e) => handleSelect(e)}>

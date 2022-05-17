@@ -10,17 +10,26 @@ import {
 } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
+import LineChartSold from "../Chart/LineChartSold.jsx";
+
+import styled from "styled-components";
+
+const ContainerChart = styled.div`
+  width: 60%;
+  margin: 2rem auto;
+`;
+
 export const Dashboard = () => {
-  const isOpen = useSelector((state) => state.open)
+  const isOpen = useSelector((state) => state.open);
 
-  const nfts = useSelector((state) => state.nfts)
+  const nfts = useSelector((state) => state.nfts);
 
-  const users = useSelector((state) => state.users)
-
-
+  const users = useSelector((state) => state.users);
 
   return (
-    <div className={isOpen === true ? styles.mainContent : styles.mainContentClose}>
+    <div
+      className={isOpen === true ? styles.mainContent : styles.mainContentClose}
+    >
       <main>
         <div className={styles.cards}>
           <div className={styles.cardSingle}>
@@ -57,6 +66,9 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
+        <ContainerChart>
+          <LineChartSold />
+        </ContainerChart>
 
         {/* <div className="recentFlex">
           <div className="projects">
@@ -68,7 +80,7 @@ export const Dashboard = () => {
           </div>
 
           <div className="customers"></div>
-        </div> */} 
+        </div> */}
       </main>
     </div>
   );
