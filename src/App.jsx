@@ -13,7 +13,7 @@ import { Details } from "./components/Details/Details.jsx";
 import { AllNft } from "./components/Home/elements/AllNft/AllNft.jsx";
 import { MenuAdmin } from "./components/Admin/MenuAdmin.jsx";
 import { Dashboard } from "./components/Admin/secciones/Dashboard.jsx";
-// import { CreateCollection } from "./components/CreateNft/CreateCollection.jsx";
+import { CreateCollection } from "./components/CreateNft/CreateCollection.jsx";
 // import PrivateRoute from './services/getPrivateRoute'
 import { Register } from "./components/Register/Register.jsx";
 import Collections from "./components/Collections/Collections.jsx";
@@ -66,6 +66,7 @@ function App() {
               path={"/home/createnft"}
               element={logged ? <CreateNft /> : <Home />}
             />
+            <Route exact path={"/home/creationcollection"} element={logged ? <CreateCollection /> : <Home />}/>
             <Route exact path={"/details/:idNft"} element={<Details />} />
             <Route exact path={"/nft"} element={<AllNft />} />
 

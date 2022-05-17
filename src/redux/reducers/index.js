@@ -26,7 +26,9 @@ import {
     CREATE_SALES_TYPES,
     PUT_NFT,
     UPDATE_IMAGE_NFT,
-    UPDATE_IMAGE_USER
+    UPDATE_IMAGE_USER,
+    SEARCHBAR_FILTER,
+    POST_COLLECTIONS
 } from "../actions";
 
 
@@ -116,7 +118,7 @@ const rootReducer = (state = initialState, action) => {
             const modnft = action.payload
             return {
                 ...state,
-                nft: {...state.nft, modnft}
+                nft: { ...state.nft, modnft }
             }
         case PUT_LIKES:
             const objFav = []
@@ -126,14 +128,29 @@ const rootReducer = (state = initialState, action) => {
                 }
                 objFav.push(x)
             })
+            const miNewNft = action.payload.nft
+            const actFav = state.user.favorite
+            const intFav = () => {
+                if (actFav.some(x => x._id === action.payload.nft._id)) {
+                    return actFav.filter(x => x._id !== action.payload.nft._id)
+                }
+                return [...actFav, miNewNft]
+            }
+            console.log(intFav())
             return {
                 ...state,
                 nfts: objFav,
+                user: { ...state.user, favorite: intFav() }
             }
         case CREATE_NFT:
             return {
                 ...state,
                 ntfs: [...state.nfts, action.payload]
+            }
+        case POST_COLLECTIONS:
+            return {
+                ...state,
+                collections: [...state.collections, action.payload]
             }
         case CREATE_CATEGORY:
             return {
@@ -177,8 +194,10 @@ const rootReducer = (state = initialState, action) => {
                 hasMore: false
             }
         case DELETE_NFT:
+            const filterDelete = state.nfts.filter(x => x._id !== action.payload._id)
             return {
                 ...state,
+                nfts: filterDelete
                 // nft: action.payload
             }
         case GET_USERS:
@@ -187,11 +206,13 @@ const rootReducer = (state = initialState, action) => {
                 users: action.payload.users
             }
         case UPDATE_IMAGE_USER:
-            const profile = action.payload 
+            const profile = action.payload
             return {
                 ...state,
-                user: {...state.user, image: profile}
+                user: { ...state.user, image: profile }
             }
+        case SEARCHBAR_FILTER:
+            return { ...state, nftquery: action.payload }
         case CATEGORY_FILTER:
             return { ...state, nftquery: action.payload, hasMore: false }
         case SALES_FILTER:

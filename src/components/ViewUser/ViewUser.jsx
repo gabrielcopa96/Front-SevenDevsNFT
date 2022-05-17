@@ -15,24 +15,51 @@ import {
 import { modificacionUser, putImagePerfil } from "../../redux/actions/index";
 import Swal from "sweetalert2";
 
+import { Favorito } from "./Favorito/Favorito.jsx";
+
 import "sweetalert2/dist/sweetalert2.css";
 import Input from "../shared/Input.jsx";
 import Button from "../shared/Button.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import authService from "../../services/authService";
-import { removeUser } from "../../redux/actions/index";
+import { removeUser, getFileTypes } from "../../redux/actions/index";
+import styled from "styled-components";
 
 import axios from "axios";
+
+
+const BtnPrev = styled.button`
+  background-color: #6b48ff;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+`;
+
+const BtnNext = styled.button`
+  background-color: #6b48ff;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+`;
 
 export const ViewUser = React.memo(() => {
   const { idUser } = useParams();
 
-  const paginaWallet = () => window.open( `https://metamask.io/download/`)
+  const paginaWallet = () => window.open(`https://metamask.io/download/`);
+
+  const [disabled, setDisabled] = useState(true);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
 
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
+
+  const filetypes = useSelector((state) => state.files_type);
 
   const [currentAccount, setCurrentAccount] = useState(null);
 
@@ -47,8 +74,8 @@ export const ViewUser = React.memo(() => {
       console.log("Wallet exists! We're ready to go!");
     }
 
-    const accounts = await ethereum.request({ method: 'eth_accounts' });
-    console.log('account' ,accounts);
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+    console.log("account", accounts);
     if (accounts.length !== 0) {
       const account = accounts[0];
       console.log("Found an authorized account:", account);
@@ -56,27 +83,31 @@ export const ViewUser = React.memo(() => {
     } else {
       console.log("No authorized account found!");
     }
-  }
+  };
 
   useEffect(() => {
     checkWalletIsConnected();
-  }, [])
+    if (filetypes.length === 0) {
+      dispatch(getFileTypes());
+    }
+  }, [dispatch]);
 
   const connectWalletHandler = async () => {
     const { ethereum } = window;
 
     if (!ethereum) {
-      
-      return paginaWallet()
-    };
+      return paginaWallet();
+    }
 
     try {
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      console.log("Found an account! Address:", accounts[0]);//numero de cuenta en accounts
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      console.log("Found an account! Address:", accounts[0]); //numero de cuenta en accounts
       setCurrentAccount(accounts[0]);
     } catch (err) {
       console.log(err);
-    };
+    }
   };
 
   const user = useSelector((state) => state.user);
@@ -134,7 +165,6 @@ export const ViewUser = React.memo(() => {
         authService.logut();
         dispatch(removeUser());
         navigate("/home");
-        console.log("Entro a eliminar la cuenta!");
         return eliminarUser;
       } else if (result.isDenied) {
         Swal.fire("Changes are not saved", "", "info");
@@ -176,6 +206,27 @@ export const ViewUser = React.memo(() => {
 
   const { username, image, favorite, collectionNft } = user;
 
+  const pages = [];
+
+  for (let i = 1; i <= Math.ceil(favorite.length / itemsPerPage); i++) {
+    pages.push(i);
+  }
+
+  const indexItem = currentPage * itemsPerPage;
+  const indexFirstItem = indexItem - itemsPerPage;
+
+  const currentItemsFavorite = favorite.slice(indexFirstItem, indexItem);
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePrev = (e) => {
+    e.preventDefault();
+    setCurrentPage((prev) => prev - 1);
+  };
+
   return (
     <>
       <ContainerHeaderUser>
@@ -190,11 +241,13 @@ export const ViewUser = React.memo(() => {
             </ModificacionPerfil>
           </div>
           <div>
-            <h2>{username}</h2> <span>{currentAccount ? "Wallet Connected" : currentAccount}</span>
+            <h2>{username}</h2>{" "}
+            <span>{currentAccount ? "Wallet Connected" : currentAccount}</span>
             <p style={{ color: "var(--colorInfo)" }}>
               {
                 <>
-                Wallet Address: {currentAccount ? currentAccount : "No Wallet Connected"}
+                  Wallet Address:{" "}
+                  {currentAccount ? currentAccount : "No Wallet Connected"}
                 </>
               }
             </p>
@@ -203,7 +256,7 @@ export const ViewUser = React.memo(() => {
 
         <ContainerButton>
           <Button
-            title="MIS PUBLICACIONES"
+            title="MY POSTS"
             onClick={() => navigate(`/myprofile/mispublicaciones`)}
           />
           <Button title="WALLET" />
@@ -212,16 +265,37 @@ export const ViewUser = React.memo(() => {
       </ContainerHeaderUser>
       <ContainerBodyUser>
         <div>
-          <h2>Mis Favoritos</h2>
+          <h2>My Favorites</h2>
           <ContainerMisPreferencias>
-            <h2>No tienes favoritos</h2>
+            {favorite.length === 0 ? (
+              <h1>Not favorites</h1>
+            ) : (
+              currentItemsFavorite.map((x, y) => (
+                <Favorito
+                  key={y}
+                  id={x._id}
+                  files={filetypes}
+                  filesid={x.files_types}
+                  setCurrentPage={setCurrentPage}
+                  name={x.name}
+                  price={x.price}
+                  currencies={"ETH"}
+                  image={x.image}
+                />
+              ))
+            )}
+            <div style={{ display: "flex", margin: "0 auto", width: "30%", gap: ".5rem", alignItems: "center"}}>
+              <BtnPrev onClick={handlePrev} disabled={currentPage === pages[0] ? true : false}><span aria-hidden="true" style={{color: "white"}}>&laquo;</span></BtnPrev>
+              <span style={{display: "flex", margin: "0 auto", color: "var(--colorInfo)"}}>{currentPage}/<span>{pages[pages.length - 1]}</span></span>
+              <BtnNext onClick={handleNext} disabled={currentPage === pages[pages.length - 1] ? true : false}><span aria-hidden="true" style={{color: "white"}}>&raquo;</span></BtnNext>
+            </div>
           </ContainerMisPreferencias>
-          <h2 style={{ marginTop: ".8rem" }}>Mis Collecciones</h2>
+          <h2 style={{ marginTop: ".8rem" }}>My Collections</h2>
           <ContenedorUltimasVentas>
             {collectionNft?.length === 0 ? (
-              <h2>No tienes colleciones</h2>
+              <h2 style={{color: "var(--colorInfo)"}}>Hasn't collections</h2>
             ) : (
-              "Tiene"
+              <h2 style={{color: "var(--colorInfo)"}}>Tiene collections</h2>
             )}
           </ContenedorUltimasVentas>
         </div>
@@ -241,6 +315,7 @@ export const ViewUser = React.memo(() => {
               <InputData>
                 <Input
                   type="text"
+                  disabled={disabled}
                   placeholder={username}
                   height="32px"
                   padding=".4rem"

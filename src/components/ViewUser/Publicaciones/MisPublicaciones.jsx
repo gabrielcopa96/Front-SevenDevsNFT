@@ -1,27 +1,17 @@
 import React from "react";
 
-
-import styles from "./publicaciones.module.css"
-
 import styled from "styled-components";
 
 import Button from "../../shared/Button.jsx";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { CardsMisPublicaciones } from "./CardsMisPublicaciones.jsx";
 
 const ContainerMisPublicaciones = styled.div`
-  width: 85%;
-  margin: 6.5rem auto 0 auto;
+  width: 65%;
+  margin: 7.5rem auto 2.5rem auto;
   color: var(--secondFontColor);
-`;
-
-const ContainerPublicaciones = styled.div`
-  width: 100%;
-  height: 70vh;
-  text-align: center;
-  border-radius: .3rem;
-  line-height: 68vh;
-  margin: 2rem auto 0 auto;
-  background-color: #181e5553;
 `;
 
 const ContainerHeaderPublicaciones = styled.div`
@@ -29,19 +19,44 @@ const ContainerHeaderPublicaciones = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`
+`;
+
+const ContainerPublicaciones = styled.div`
+  width: 100%;
+  border-radius: 0.3rem;
+  padding: 0.6rem 0;
+  margin: 2rem auto 0 auto;
+  background-color: #181e5553;
+`;
 
 export const MisPublicaciones = () => {
+  const nfts = useSelector((state) => state.nfts);
+
+  const user = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
+  const misNfts = nfts.filter(
+    (x) => x.details.owner.username === user.username
+  );
+
+  const { uid } = user;
 
   return (
     <ContainerMisPublicaciones>
       <>
         <ContainerHeaderPublicaciones>
-          <h2>Mis Publicaciones</h2>
-          <Button title="CREATE NFT" onClick={() => navigate("/home/createnft")}/>
+          <h2>My Posts</h2>
+          <div style={{ display: "flex", gap: "2rem" }}>
+            <Button
+              title="BACK"
+              onClick={() => navigate(`/myprofile/${uid}`)}
+            />
+            <Button
+              title="CREATE NFT"
+              onClick={() => navigate("/home/createnft")}
+            />
+          </div>
         </ContainerHeaderPublicaciones>
         <hr
           style={{
@@ -51,7 +66,21 @@ export const MisPublicaciones = () => {
         />
       </>
       <ContainerPublicaciones>
-        <h1>No tiene nft creados</h1>
+        {misNfts?.map((x, y) => (
+          <CardsMisPublicaciones
+            id={x._id}
+            key={y}
+            category={x.category.name}
+            currencies={x.currencies.name}
+            imgCurrencies={x.currencies.image}
+            contract={x.details.contract_address}
+            image={x.image}
+            name={x.name}
+            sales={x.sales_types.name}
+            price={x.price}
+            description={x.description}
+          />
+        ))}
       </ContainerPublicaciones>
     </ContainerMisPublicaciones>
   );

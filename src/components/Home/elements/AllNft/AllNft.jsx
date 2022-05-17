@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loading } from "../../../Loading/Loading.jsx";
-import { getNftQuery, removeNftQuery } from "../../../../redux/actions/index";
+import { getNftQuery, removeNftQuery, searchBarFilter } from "../../../../redux/actions/index";
 
 import { CardNft } from "../CardNft/CardNft.jsx";
 import CategoryFilter from "./filters/CategoryFilter.jsx";
@@ -11,12 +11,9 @@ import CurrenciesFilter from "./filters/CurrenciesFilter.jsx";
 import SalesFilter from "./filters/SalesFilter.jsx";
 import FilesTypeFilter from "./filters/FilesTypeFilter.jsx";
 
-const ContainerAll = styled.div`
-  width: 100%;
-  /* margin: 0 auto; */
-`;
+import Input from '../../../shared/Input.jsx';
 
-const ContainerFilterNft = styled.div`
+const ContainerAll = styled.div`
   width: 100%;
 `;
 
@@ -48,16 +45,6 @@ const ContainerTitleFilter = styled.div`
   margin: 2rem auto 2rem auto;
   border-radius: 0.5rem;
   display: grid;
-
-  /* @media (max-width: 800px) {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    height: 250px;
-    padding: 30px;
-  } */
 `;
 
 const ContainerFiltrosMain = styled.div`
@@ -66,12 +53,11 @@ const ContainerFiltrosMain = styled.div`
   text-align: center;
   border-radius: 0.5rem;
   display: grid;
-
-  /* padding-top: 2rem; */
   margin: 2rem auto 2rem auto;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto;
   gap: 5rem;
   background-color: #46198f53;
+  color: #fff;
 
   @media (max-width: 800px) {
     display: flex;
@@ -81,6 +67,7 @@ const ContainerFiltrosMain = styled.div`
     justify-content: center;
     height: 250px;
     padding: 30px;
+    color: #fff;
   }
 `;
 
@@ -93,23 +80,45 @@ const ContainerLoader = styled.div`
 
 const ContainerAllNftTotalMain = styled.div`
   padding-top: 6.25rem;
+  color: #fff;
 `;
+
+const ContainerSearch = styled.div`
+  margin-top: 1rem;
+  color: #fff;
+  input {
+    background-color: rgba(71, 17, 137, 1);
+    border-radius: .5rem;
+    color: #fff;
+  }
+`;
+
+
 
 export const AllNft = () => {
   const nftAll = useSelector((state) => state.nfts);
   const nft = useSelector((state) => state.nftquery);
   const hasMore = useSelector((state) => state.hasMore);
-  const category = useSelector((state) => state.category);
+  // const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("")
 
   const instantCallback = useCallback(dispatch, [dispatch]);
 
+  const handleInputSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value)
+    if(value === "") {
+      fecthNft()
+    } else {
+      dispatch(searchBarFilter(search))
+    }
+  }
+
   useEffect(() => {
-    // if(hasMore) {
     instantCallback(getNftQuery(page));
-    // }
   }, [instantCallback, page]);
 
   const token = localStorage.getItem("token");
@@ -127,6 +136,11 @@ export const AllNft = () => {
   return (
     <ContainerAllNftTotalMain>
       <ContainerFiltrosMain>
+
+        <ContainerSearch>
+          <Input type="text" value={search} onChange={(e) => handleInputSearch(e)} width="80%" height="35px" placeholder="Search..." padding=".3rem"/>
+        </ContainerSearch>
+
         <CurrenciesFilter className={"filters"} />
 
         <CategoryFilter className={"filters"} />
