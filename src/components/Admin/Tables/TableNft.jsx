@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
+
+import styles from "../admin.module.css";
 
 import imagenvideo from "../../../assets/azuki-nft.gif";
 
@@ -102,6 +104,8 @@ export const TableNft = (props) => {
   for (let i = 1; i <= Math.ceil(nft.length / itemsPerPage); i++) {
     pagesNft.push(i);
   }
+
+  const [openDrop, setOpenDrop] = useState(false);
 
   const handleClickPageNumbers = (number) => {
     setCurrentPage({
@@ -206,79 +210,99 @@ export const TableNft = (props) => {
 
   // console.log(currentPage.nft)
 
+  const handleDespliegue = () => {
+    if (openDrop === false) {
+      setOpenDrop(true);
+    }
+    if (openDrop === true) {
+      setOpenDrop(false);
+    }
+  };
+
   return (
-    <>
-      <div>
+    <div className={styles.table}>
+      {/* <div className="enia">
+        <h1>Prueba que se tiene que ver este cambio</h1>
+      </div> */}
+      <div className={styles.ContainerTitleTableAll}>
         <h2 style={{ borderBottom: "1px solid #fff" }}>Table NFT</h2>
-        <ContainerNavTable>
-          <RowNavTable>
-            <ColNavTable>
-              <ButtonAgregar>
-                <Link to="/admin/create" style={{ color: "#fff" }}>
-                  <i className="fas fa-plus"></i>
-                </Link>
-              </ButtonAgregar>
-              <Link to="/"></Link>
-              <ContainerTable>
-                <thead className="tableTheadBg">
-                  <tr>
-                    <th>Title</th>
-                    <th>Image</th>
-                    <th>Files</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Sales</th>
-                    <th>Creator</th>
-                    <th>Owner</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>{handleRenderTableNft}</tbody>
-              </ContainerTable>
-            </ColNavTable>
-          </RowNavTable>
-        </ContainerNavTable>
+        <i
+          className="fa-solid fa-circle-chevron-down"
+          onClick={() => handleDespliegue()}
+        ></i>
       </div>
-      <ContainerPagination>
-        <nav
-          className="Page navigation example"
-          style={{ margin: "0 auto", width: "40%" }}
-        >
-          <ContainerPaginationTable>
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlePrev}
-                name="nft"
-                disabled={currentPage.nft === pagesNft[0] ? true : false}
-                aria-label="Previus"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &laquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-            {renderPageNumberNft}
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlenNext}
-                name="nft"
-                disabled={
-                  currentPage.nft === pagesNft[pagesNft.length - 1]
-                    ? true
-                    : false
-                }
-                aria-label="Next"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &raquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-          </ContainerPaginationTable>
-        </nav>
-      </ContainerPagination>
-    </>
+      <div className={openDrop === false ? styles.dropdown : styles.dropup}>
+        <div>
+          <ContainerNavTable>
+            <RowNavTable>
+              <ColNavTable>
+                <ButtonAgregar>
+                  <Link to="/admin/create" style={{ color: "#fff" }}>
+                    <i className="fas fa-plus"></i>
+                  </Link>
+                </ButtonAgregar>
+                <Link to="/"></Link>
+                <ContainerTable>
+                  <thead className="tableTheadBg">
+                    <tr>
+                      <th>Title</th>
+                      <th>Image</th>
+                      <th>Files</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Sales</th>
+                      <th>Creator</th>
+                      <th>Owner</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{handleRenderTableNft}</tbody>
+                </ContainerTable>
+              </ColNavTable>
+            </RowNavTable>
+          </ContainerNavTable>
+        </div>
+        <ContainerPagination>
+          <nav
+            className="Page navigation example"
+            style={{ margin: "0 auto", width: "40%" }}
+          >
+            <ContainerPaginationTable>
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlePrev}
+                  name="nft"
+                  disabled={currentPage.nft === pagesNft[0] ? true : false}
+                  aria-label="Previus"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &laquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+              {renderPageNumberNft}
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlenNext}
+                  name="nft"
+                  disabled={
+                    currentPage.nft === pagesNft[pagesNft.length - 1]
+                      ? true
+                      : false
+                  }
+                  aria-label="Next"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &raquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+            </ContainerPaginationTable>
+          </nav>
+        </ContainerPagination>
+      </div>
+    </div>
   );
 };

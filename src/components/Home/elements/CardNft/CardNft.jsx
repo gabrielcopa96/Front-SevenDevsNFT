@@ -197,7 +197,6 @@ export const CardNft = (props) => {
     currency,
     salestype,
     owner,
-    imageCurrencies,
     likes,
     token,
   } = props;
@@ -264,7 +263,7 @@ export const CardNft = (props) => {
           }}
         >
           <ContainerHearth onClick={handlerLikes}>
-            <i class="fa fa-heart" aria-hidden="true"></i>
+            <i className="fa fa-heart" aria-hidden="true"></i>
           </ContainerHearth>
           <span
             style={{

@@ -258,3 +258,42 @@ main {
   margin: 5rem 10% 0 10%;
   transition: all 0.5s ease-in-out;
 }
+
+.openClick:hover {
+  cursor: pointer;
+}
+
+.containerBtnAddNft {
+  display: flex;
+  justify-content:center;
+  background-color: rgb(76, 32, 129);
+  padding-bottom: 2.2rem;
+  border-radius: 0 0 .2rem .2rem;
+}
+
+.table {
+  padding: .2rem .8rem;
+  border: 1px solid rgb(76, 32, 129);
+  margin-top: 2rem;
+  border-radius: .4rem;
+}
+
+.dropdown {
+  display: none;
+  transition: display .5s ease-in-out;
+}
+
+.dropup {
+  display: visible;
+  transition: display .5s ease-in-out;
+}
+
+.ContainerTitleTableAll {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ContainerTitleTableNft i {
+  cursor: pointer;
+}

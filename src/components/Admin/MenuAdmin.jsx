@@ -4,7 +4,6 @@ import styles from "./admin.module.css";
 
 import { Link } from "react-router-dom";
 
-import imagenPerfil from "../../assets/azuki-nft.gif";
 import logo from "../../assets/logo.png";
 
 import { setModalOpening } from "../../redux/actions";
@@ -26,16 +25,12 @@ export const MenuAdmin = () => {
       dispatch(setModalOpening(true));
   }, [dispatch]);
 
-  // console.log(isOpen);
-
   const handleOpen = () => {
     if (isOpen === true) {
       dispatch(setModalOpening(false));
-      // setIsOpern(false)
     }
     if (isOpen === false) {
       dispatch(setModalOpening(true));
-      // setIsOpern(true)
     }
   };
 
@@ -96,15 +91,6 @@ export const MenuAdmin = () => {
                 <p id="tables">Tables</p>
               </Link>
             </li>
-            {/* <li>
-              <a href="#">
-                {" "}
-                <span>
-                  <BsFillPersonFill />{" "}
-                </span>
-                Users
-              </a>
-            </li> */}
           </ul>
         </div>
       </div>
@@ -124,7 +110,7 @@ export const MenuAdmin = () => {
               gap: "1rem",
             }}
           >
-            <span onClick={() => handleOpen()}>
+            <span onClick={() => handleOpen()} style={{cursor: "pointer"}}>
               <BsGrid
                 style={{ width: "30px", height: "30px", marginTop: ".4rem" }}
               />

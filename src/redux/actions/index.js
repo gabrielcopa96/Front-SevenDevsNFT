@@ -78,11 +78,13 @@ export function filterNft(payload) {
 };
 
 export function contratcToken(payload) {
+    console.log(payload)
     return {
-        type: 'FILTER_CONTRACT_TOKEN',
+        type: FILTER_CONTRACT_TOKEN,
         payload
     }
 };
+
 
 export const getUsers = (tokenuser) => async dispatch => {
     try {
@@ -283,6 +285,7 @@ export const filterByFileType = (id) => async dispatch => {
 }
 
 export const postNft = (tokenuser, item, formData) => async dispatch => {
+   
     try {
         const dataPost = await axios.post(`https://sevendevs-backend.herokuapp.com/nft`, item, {
             headers: {
@@ -290,7 +293,6 @@ export const postNft = (tokenuser, item, formData) => async dispatch => {
             }
         })
         const uid = dataPost.data.nft._id
-        console.log(uid)
         const dataImageNft = await axios.put(`https://sevendevs-backend.herokuapp.com/upload/nft/${uid}`, formData, {
             headers: {
                 Authorization: JSON.parse(tokenuser),
@@ -349,12 +351,27 @@ export const putImagePerfil = (tokenuser, id, formData) => async dispatch => {
             type: UPDATE_IMAGE_USER,
             payload: dataImageUser.data.url
         })
-        console.log(finallyUpdateImageUser)
         return finallyUpdateImageUser
     } catch (error) {
         console.log("error: ", error)
     }
 }
+
+// export const putOwner = (tokenuser) => async dispatch => {
+//     try {
+//         const dataOwner = await axios.put(`https://sevendevs-backend.herokuapp.com/nft`, { 
+//             headers: {
+//                Authorization: JSON.parse(tokenuser) 
+//             }
+//         })
+//         const finallyUpdateOwner = await dispatch({
+//             type: UPDATE_OWN,
+//             payload: dataOwner.data.nft
+//         })
+//     } catch (error) { 
+//         console.log("error: ", error)
+//     }
+// }
 
 export const searchBarFilter = (name) => async dispatch => {
     try {

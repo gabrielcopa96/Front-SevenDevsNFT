@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -9,12 +9,12 @@ import {
   getCurrencies,
   getSalesType,
   getCategory,
-  // getAllCollections
 } from "../../redux/actions";
 
 import Input from "../shared/Input.jsx";
 
 import Swal from "sweetalert2";
+
 
 const ContainerCreateNft = styled.div`
   width: 60%;
@@ -106,7 +106,6 @@ export const CreateNft = () => {
   const currency = useSelector((state) => state.currencies);
   const filesType = useSelector((state) => state.files_type);
   const salesType = useSelector((state) => state.sales_type);
-  const collections = useSelector((state) => state.collections);
   const user = useSelector((state) => state.user);
 
   const idUser = user.uid;
@@ -117,14 +116,31 @@ export const CreateNft = () => {
 
   const location = useLocation();
 
-  const contracts = location.state.contract[0]
-  const token_id = location.state.contract[1]
+  const contrato = location.state.obj1[0]
+  const tokenId = location.state.obj1[1]
+
+  const [send, setSend] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const formDateishon = new FormData();
+
+  const instantCallback = useCallback(dispatch, [dispatch]);
+
+  formDateishon.append("img", selectedImage);
+
+  useEffect(() => {
+    instantCallback(getCategory());
+    instantCallback(getFileTypes());
+    instantCallback(getCurrencies());
+    instantCallback(getSalesType());
+  }, [instantCallback]);
 
   const [data, setData] = useState({
     name: "",
     description: "",
-    contract_address: contracts,
-    token_id: token_id,
+    contract_address: contrato,
+    token_id: tokenId,
     // collection_nft: "",
     category: "",
     price: 0,
@@ -133,30 +149,7 @@ export const CreateNft = () => {
     files_types: "",
   });
 
-  // const [formData, setFormData] = useState("");
-
-  const [send, setSend] = useState(false);
-
-  const [selectedImage, setSelectedImage] = useState("");
-
-  const formDateishon = new FormData();
-
-  formDateishon.append("img", selectedImage);
-
-  useEffect(() => {
-    if (
-      category.length === 0 &&
-      currency.length === 0 &&
-      filesType.length === 0 &&
-      salesType.length === 0 
-    ) {
-      dispatch(getCategory());
-      dispatch(getFileTypes());
-      dispatch(getCurrencies());
-      dispatch(getSalesType());
-      // dispatch(getAllCollections())
-    }
-  }, [dispatch]);
+  const [enia, setEnia] = useState("");
 
   const handleInput = (e) => {
     setData({
@@ -164,11 +157,6 @@ export const CreateNft = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  // const handleImage = (e) => {
-  //   e.preventDefault();
-  //   setFormData(e.target.value);
-  // };
 
   // ? Realizar el upload de la image del nft
 
@@ -179,6 +167,7 @@ export const CreateNft = () => {
     });
   };
 
+  //! acordarse que una de las soluciones puede ser de al setear del otro lado le mandemos el await por lo que la funcion es async
   const handleSubmit = (e) => {
     e.preventDefault();
     if (send === false) {
@@ -197,15 +186,13 @@ export const CreateNft = () => {
       });
       setSend(true);
       Swal.fire(
-        'NFT Created Successfully',
-        'You Clicked the button!',
-        'success'
-      )
+        "NFT Created Successfully",
+        "You Clicked the button!",
+        "success"
+      );
+      navigate("/home")
     } else {
-      Swal.fire(
-        'Error, no se creo el nft',
-        'error'
-      )
+      Swal.fire("Error, no se creo el nft", "error");
     }
   };
 
@@ -213,7 +200,10 @@ export const CreateNft = () => {
     <ContainerCreateNft>
       <HeaderCreateNft>
         <h1>Create NFT</h1>
-        <Button title="CREATE COLLECTION" onClick={() => navigate("/home/creationcollection")}/>
+        <Button
+          title="CREATE COLLECTION"
+          onClick={() => navigate("/home/creationcollection")}
+        />
       </HeaderCreateNft>
       <hr style={{ borderColor: "var(--mainBackGroundButtonColor)" }} />
       <FormCreateNft onSubmit={(e) => handleSubmit(e)}>
@@ -237,9 +227,8 @@ export const CreateNft = () => {
                 width="75%"
                 type="file"
                 onChange={(e) => setSelectedImage(e.target.files[0])}
-                style={{color: "#000"}}
+                style={{ color: "#000" }}
                 name="image"
-                // value={formData}
               />
             </ContainerGridLabelInput>
             {/* <ImageView backgroundImage={selectedImage.name} /> */}
@@ -256,17 +245,6 @@ export const CreateNft = () => {
             </ContainerGridLabelInput>
           </div>
           <div>
-            {/* <ContainerGridLabelInput>
-              <label style={{ fontSize: "1.2rem" }}>Contract Address</label>
-              <Input
-                placeholder="Address..."
-                padding=".4rem"
-                width="75%"
-                onChange={(e) => handleInput(e)}
-                value={data.contract_address}
-                name="contract_address"
-              />
-            </ContainerGridLabelInput> */}
             <ContainerGridLabelInput>
               <label style={{ fontSize: "1.2rem" }}>Category</label>
               <SelectType name="category" onChange={(e) => handleSelect(e)}>
@@ -278,17 +256,6 @@ export const CreateNft = () => {
                 ))}
               </SelectType>
             </ContainerGridLabelInput>
-            {/* <ContainerGridLabelInput>
-              <label style={{ fontSize: "1.2rem" }}>Collections</label>
-              <SelectType name="collection_nft" onChange={(e) => handleSelect(e)}>
-                <option>select option..</option>
-                {collections?.map((x) => (
-                  <option value={x._id} key={x._id}>
-                    {x.name}
-                  </option>
-                ))}
-              </SelectType>
-            </ContainerGridLabelInput> */}
             <ContainerGridLabelInput>
               <label style={{ fontSize: "1.2rem" }}>Sale Types</label>
               <SelectType name="sales_types" onChange={(e) => handleSelect(e)}>

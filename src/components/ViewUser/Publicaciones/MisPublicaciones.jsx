@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import styled from "styled-components";
 import contract from "../../Contract/Contrato-NFT/contracts/contract.json";
 
-import { contratcToken } from "../../../redux/actions";
+import Swal from "sweetalert2";
+
 import Button from "../../shared/Button.jsx";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { CardsMisPublicaciones } from "./CardsMisPublicaciones.jsx";
 
@@ -39,7 +40,28 @@ export const MisPublicaciones = () => {
 
   const user = useSelector((state) => state.user);
 
-  const contract = useSelector((state) => state.contract);
+  const contracts = useSelector((state) => state.contrato);
+
+  const [dataContract, setDataContract] = useState({
+    bol: true,
+    contract_address: null,
+    token_id: null,
+  });
+
+  // const [details, setDetails] = useState({
+  //   details: {
+  //     owner: null,
+  //     creator: creator,
+  //     contract_address: contract_address,
+  //     token_id: token_id
+  //   }
+  // })
+
+  // setDetails(({
+  //   details: {...details.details, [e.target.name]: ""}
+  // }))
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -54,14 +76,12 @@ export const MisPublicaciones = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const nftContract = new ethers.Contract(contractAddress, abi, signer);
-        const contratoNft = nftContract.address; //// Aca almacenas el numero de contrato del NFT.
-
-        dispatch(contratcToken(contratoNft));
-
+        const contratoNft = nftContract.address; // Aca almacenas el numero de contrato del NFT.
         const tokenNft = await provider.getBlockNumber(); /// Aca almacenas el numero de Token del NFT.
-        dispatch(contratcToken(tokenNft));
 
+        // const obj1 = { contract_address: contratoNft, token_id: tokenNft };
         console.log("Initialize payment");
+
         let nftTxn = await nftContract.mint(
           "0x41f532bED9dF43eb4895c4ddc9A756ED568E761d",
           1,
@@ -69,10 +89,20 @@ export const MisPublicaciones = () => {
             value: ethers.utils.parseEther("0.01"),
           }
         );
+        console.log(`token ${tokenNft}`);
+        console.log(`contrato ${contratoNft}`);
         console.log("Mining... please wait");
         await nftTxn.wait();
         console.log(`Mined, transaction hash: ${nftTxn.hash}`);
-        alert("Contract and Token successfully created");
+
+        const obj1 = [contratoNft, tokenNft];
+
+        Swal.fire({
+          title: "Contract and Token created successfully",
+          icon: "success",
+          timer: 3200,
+        });
+        navigate("/home/createnft", { state: { obj1 } });
       } else {
         console.log("Ethereum object does not exit");
       }
@@ -82,11 +112,6 @@ export const MisPublicaciones = () => {
   };
 
   const { uid } = user;
-
-  const handleClick = () => {
-    mintNftHandler();
-    navigate("/home/createnft", { state: { contract } });
-  };
 
   return (
     <ContainerMisPublicaciones>
@@ -98,10 +123,7 @@ export const MisPublicaciones = () => {
               title="BACK"
               onClick={() => navigate(`/myprofile/${uid}`)}
             />
-            <Button
-              title="CREATE NFT"
-              onClick={() => handleClick()}
-            />
+            <Button title="CREATE NFT" onClick={() => mintNftHandler()} />
           </div>
         </ContainerHeaderPublicaciones>
         <hr
@@ -112,25 +134,27 @@ export const MisPublicaciones = () => {
         />
       </>
       <ContainerPublicaciones>
-        {
-          misNfts?.length > 0
-          ? misNfts.map((x, y) => (
+        {misNfts?.length > 0 ? (
+          misNfts.map((x, y) => (
             <CardsMisPublicaciones
-            id={x._id}
-            key={y}
-            category={x.category.name}
-            currencies={x.currencies.name}
-            imgCurrencies={x.currencies.image}
-            contract={x.details.contract_address}
-            image={x.image}
-            name={x.name}
-            sales={x.sales_types.name}
-            price={x.price}
-            description={x.description}
-          />
+              id={x._id}
+              key={y}
+              category={x.category.name}
+              currencies={x.currencies.name}
+              imgCurrencies={x.currencies.image}
+              contract={x.details.contract_address}
+              image={x.image}
+              name={x.name}
+              sales={x.sales_types.name}
+              price={x.price}
+              description={x.description}
+            />
           ))
-          : <h1 style={{color: 'var(--secondFontColor)'}}>Actualmente no cuentas con nft en tu propiedad</h1>
-        }
+        ) : (
+          <h1 style={{ color: "var(--secondFontColor)" }}>
+            Actualmente no cuentas con nft en tu propiedad
+          </h1>
+        )}
       </ContainerPublicaciones>
     </ContainerMisPublicaciones>
   );

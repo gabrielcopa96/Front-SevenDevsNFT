@@ -53,7 +53,8 @@ const initialState = {
     img: "",
     open: false,
     transactions: [],
-    contract: []
+    contract: [],
+    contrato: null
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -113,7 +114,7 @@ const rootReducer = (state = initialState, action) => {
         case FILTER_CONTRACT_TOKEN:
             return {
                 ...state,
-                contract: [...state.contract, action.payload]
+                contrato: action.payload
             }
 
         case REMOVE_NFT_QUERY:
@@ -157,6 +158,7 @@ const rootReducer = (state = initialState, action) => {
                 user: { ...state.user, favorite: intFav() }
             }
         case CREATE_NFT:
+            console.log(action.payload)
             return {
                 ...state,
                 ntfs: [...state.nfts, action.payload]

@@ -28,7 +28,6 @@ import styled from "styled-components";
 
 import axios from "axios";
 
-
 const BtnPrev = styled.button`
   background-color: #6b48ff;
   border: none;
@@ -85,7 +84,6 @@ export const ViewUser = React.memo(() => {
     }
   };
 
-  
   const connectWalletHandler = async () => {
     const { ethereum } = window;
 
@@ -111,9 +109,7 @@ export const ViewUser = React.memo(() => {
     }
   }, [dispatch]);
 
-
   const user = useSelector((state) => state.user);
-  const [selectedImage, setSelectedImage] = useState("");
   const navigate = useNavigate();
 
   const handleUser = async () => {
@@ -185,9 +181,8 @@ export const ViewUser = React.memo(() => {
         "aria-label": "Upload your profile picture",
       },
     });
-    setSelectedImage(file);
     const formData = new FormData();
-    formData.append("img", selectedImage);
+    formData.append("img", file);
     dispatch(putImagePerfil(token, idUser, formData));
     if (file) {
       const reader = new FileReader();
@@ -243,8 +238,25 @@ export const ViewUser = React.memo(() => {
             </ModificacionPerfil>
           </div>
           <div>
-            <h2>{username}</h2>{" "}
-            <span>{currentAccount ? "Wallet Connected" : currentAccount}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <h2>{username}</h2>
+              <span>
+                {currentAccount ? (
+                  <span
+                    style={{
+                      padding: ".2rem",
+                      border: "1px solid #22a4a7",
+                      borderRadius: ".4rem",
+                      color: "#94c97c",
+                    }}
+                  >
+                    Wallet Connected
+                  </span>
+                ) : (
+                  currentAccount
+                )}
+              </span>
+            </div>
             <p style={{ color: "var(--colorInfo)" }}>
               {
                 <>
@@ -261,7 +273,10 @@ export const ViewUser = React.memo(() => {
             title="MY POSTS"
             onClick={() => navigate(`/myprofile/mispublicaciones`)}
           />
-          <Button title="WALLET" onClick={connectWalletHandler}/>
+          <Button
+            title={currentAccount ? "WALLET CONNECTED" : "CONNECT WALLET"}
+            onClick={connectWalletHandler}
+          />
           <Button title="LOGOUT" />
         </ContainerButton>
       </ContainerHeaderUser>
@@ -286,18 +301,50 @@ export const ViewUser = React.memo(() => {
                 />
               ))
             )}
-            <div style={{ display: "flex", margin: "0 auto", width: "30%", gap: ".5rem", alignItems: "center"}}>
-              <BtnPrev onClick={handlePrev} disabled={currentPage === pages[0] ? true : false}><span aria-hidden="true" style={{color: "white"}}>&laquo;</span></BtnPrev>
-              <span style={{display: "flex", margin: "0 auto", color: "var(--colorInfo)"}}>{currentPage}/<span>{pages[pages.length - 1]}</span></span>
-              <BtnNext onClick={handleNext} disabled={currentPage === pages[pages.length - 1] ? true : false}><span aria-hidden="true" style={{color: "white"}}>&raquo;</span></BtnNext>
+            <div
+              style={{
+                display: "flex",
+                margin: "0 auto",
+                width: "30%",
+                gap: ".5rem",
+                alignItems: "center",
+              }}
+            >
+              <BtnPrev
+                onClick={handlePrev}
+                disabled={currentPage === pages[0] ? true : false}
+              >
+                <span aria-hidden="true" style={{ color: "white" }}>
+                  &laquo;
+                </span>
+              </BtnPrev>
+              <span
+                style={{
+                  display: "flex",
+                  margin: "0 auto",
+                  color: "var(--colorInfo)",
+                }}
+              >
+                {currentPage}/<span>{pages[pages.length - 1]}</span>
+              </span>
+              <BtnNext
+                onClick={handleNext}
+                disabled={
+                  currentPage === pages[pages.length - 1] ? true : false
+                }
+              >
+                <span aria-hidden="true" style={{ color: "white" }}>
+                  &raquo;
+                </span>
+              </BtnNext>
             </div>
           </ContainerMisPreferencias>
           <h2 style={{ marginTop: ".8rem" }}>My Collections</h2>
           <ContenedorUltimasVentas>
             {collectionNft?.length === 0 ? (
-              <h2 style={{color: "var(--colorInfo)"}}>Hasn't collections</h2>
+              <h2 style={{ color: "var(--colorInfo)" }}>Hasn't collections</h2>
             ) : (
-              <h2 style={{color: "var(--colorInfo)"}}>Tiene collections</h2>
+              <h2 style={{ color: "var(--colorInfo)" }}>Tiene collections</h2>
             )}
           </ContenedorUltimasVentas>
         </div>

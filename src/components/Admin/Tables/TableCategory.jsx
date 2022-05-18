@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-import {postCategory} from "../../../redux/actions"
+import styles from "../admin.module.css";
+
+import { postCategory } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
@@ -103,6 +105,8 @@ export const TableCategory = (props) => {
 
   const dispatch = useDispatch();
 
+  const [openDrop, setOpenDrop] = useState(false);
+
   //? Paginado por categoria
   for (let i = 1; i <= Math.ceil(category.length / itemsPerPage); i++) {
     pagesCategory.push(i);
@@ -143,9 +147,7 @@ export const TableCategory = (props) => {
         name={number}
         value={number}
         onClick={(e) => handleClickPageNumbers(e.target.value)}
-        className={
-          currentPage.category === number ? "active" : null
-        }
+        className={currentPage.category === number ? "active" : null}
         style={{ cursor: "pointer" }}
       >
         <span>{number}</span>
@@ -199,78 +201,91 @@ export const TableCategory = (props) => {
 
   //? postCategory
 
-
+  const handleDespliegue = () => {
+    if (openDrop === false) {
+      setOpenDrop(true);
+    }
+    if (openDrop === true) {
+      setOpenDrop(false);
+    }
+  };
 
   return (
-    <>
-      <div>
+    <div className={styles.table}>
+      <div className={styles.ContainerTitleTableAll}>
         <h2 style={{ borderBottom: "1px solid #fff" }}>Table Category</h2>
-        <ContainerNavTable>
-          <RowNavTable>
-            <ColNavTable>
-              <ButtonAgregar onClick={() => handleCreateCategory()}>
-                {/* <button to="/admin/create" style={{ color: "#fff" }}> */}
-                  <i className="fas fa-plus"></i>
-                {/* </button> */}
-              </ButtonAgregar>
-              <Link to="/"></Link>
-              <ContainerTable>
-                <thead className="tableTheadBg">
-                  <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>{handleRenderTableCategory}</tbody>
-              </ContainerTable>
-            </ColNavTable>
-          </RowNavTable>
-        </ContainerNavTable>
+        <i
+          className="fa-solid fa-circle-chevron-down"
+          onClick={() => handleDespliegue()}
+        ></i>
       </div>
-      <ContainerPagination>
-        <nav
-          className="Page navigation example"
-          style={{ margin: "0 auto", width: "40%" }}
-        >
-          <ContainerPaginationTable>
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlenPrev}
-                name="category"
-                disabled={
-                  currentPage.category === pagesCategory[0] ? true : false
-                }
-                aria-label="Previus"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &laquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-            {renderPageNumberCategory}
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlenNext}
-                name="category"
-                disabled={
-                  currentPage.category ===
-                  pagesCategory[pagesCategory.length - 1]
-                    ? true
-                    : false
-                }
-                aria-label="Next"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &raquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-          </ContainerPaginationTable>
-        </nav>
-      </ContainerPagination>
-    </>
+      <div className={openDrop === false ? styles.dropdown : styles.dropup}>
+        <div>
+          <ContainerNavTable>
+            <RowNavTable>
+              <ColNavTable>
+                <ButtonAgregar onClick={() => handleCreateCategory()}>
+                  <i className="fas fa-plus"></i>
+                </ButtonAgregar>
+                <Link to="/"></Link>
+                <ContainerTable>
+                  <thead className="tableTheadBg">
+                    <tr>
+                      <th>Id</th>
+                      <th>Name</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{handleRenderTableCategory}</tbody>
+                </ContainerTable>
+              </ColNavTable>
+            </RowNavTable>
+          </ContainerNavTable>
+        </div>
+        <ContainerPagination>
+          <nav
+            className="Page navigation example"
+            style={{ margin: "0 auto", width: "40%" }}
+          >
+            <ContainerPaginationTable>
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlenPrev}
+                  name="category"
+                  disabled={
+                    currentPage.category === pagesCategory[0] ? true : false
+                  }
+                  aria-label="Previus"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &laquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+              {renderPageNumberCategory}
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlenNext}
+                  name="category"
+                  disabled={
+                    currentPage.category ===
+                    pagesCategory[pagesCategory.length - 1]
+                      ? true
+                      : false
+                  }
+                  aria-label="Next"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &raquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+            </ContainerPaginationTable>
+          </nav>
+        </ContainerPagination>
+      </div>
+    </div>
   );
 };

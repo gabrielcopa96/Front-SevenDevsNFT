@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
@@ -8,12 +8,12 @@ import Swal from "sweetalert2";
 
 import "sweetalert2/dist/sweetalert2.css";
 
+import styles from "../admin.module.css";
+
 import axios from "axios";
 
 import { removeUser } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
-
-
 
 const ContainerPagination = styled.div`
   margin: 0 auto;
@@ -106,6 +106,7 @@ export const TableUsers = (props) => {
 
   const dispatch = useDispatch();
 
+  const [openDrop, setOpenDrop] = useState(false);
 
   const pagesUsers = []; //? pages for nft
   //? Paginado por nft
@@ -140,8 +141,6 @@ export const TableUsers = (props) => {
     indexOfFirstItemUser,
     indexOfLastItemUser
   ); //? items per nfts
-
-  
 
   const handlenNext = (e) => {
     e.preventDefault();
@@ -219,79 +218,96 @@ export const TableUsers = (props) => {
     );
   });
 
+  const handleDespliegue = () => {
+    if (openDrop === false) {
+      setOpenDrop(true);
+    }
+    if (openDrop === true) {
+      setOpenDrop(false);
+    }
+  };
+
   return (
-    <>
-      <div>
+    <div className={styles.table}>
+      <div className={styles.ContainerTitleTableAll}>
         <h2 style={{ borderBottom: "1px solid #fff" }}>Table Users</h2>
-        <ContainerNavTable>
-          <RowNavTable>
-            <ColNavTable>
-              <ButtonAgregar>
-                <Link to="/admin/create" style={{ color: "#fff" }}>
-                  <i className="fas fa-plus"></i>
-                </Link>
-              </ButtonAgregar>
-              <Link to="/"></Link>
-              <ContainerTable>
-                <thead className="tableTheadBg">
-                  <tr>
-                    <th>Id</th>
-                    <th>Image</th>
-                    <th>username</th>
-                    <th>firstName</th>
-                    <th>LastName</th>
-                    <th>email</th>
-                    <th>user type</th>
-                    <th>wallet</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>{handleRenderTableUser}</tbody>
-              </ContainerTable>
-            </ColNavTable>
-          </RowNavTable>
-        </ContainerNavTable>
+        <i
+          className="fa-solid fa-circle-chevron-down"
+          onClick={() => handleDespliegue()}
+        ></i>
       </div>
-      <ContainerPagination>
-        <nav
-          className="Page navigation example"
-          style={{ margin: "0 auto", width: "40%" }}
-        >
-          <ContainerPaginationTable>
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlePrev}
-                name="nft"
-                disabled={currentPage.user === pagesUsers[0] ? true : false}
-                aria-label="Previus"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &laquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-            {renderPageNumberUser}
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlenNext}
-                name="nft"
-                disabled={
-                  currentPage.user === pagesUsers[pagesUsers.length - 1]
-                    ? true
-                    : false
-                }
-                aria-label="Next"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &raquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-          </ContainerPaginationTable>
-        </nav>
-      </ContainerPagination>
-    </>
+      <div className={openDrop === false ? styles.dropdown : styles.dropup}>
+        <div>
+          <ContainerNavTable>
+            <RowNavTable>
+              <ColNavTable>
+                <ButtonAgregar>
+                  <Link to="/admin/create" style={{ color: "#fff" }}>
+                    <i className="fas fa-plus"></i>
+                  </Link>
+                </ButtonAgregar>
+                <Link to="/"></Link>
+                <ContainerTable>
+                  <thead className="tableTheadBg">
+                    <tr>
+                      <th>Id</th>
+                      <th>Image</th>
+                      <th>username</th>
+                      <th>firstName</th>
+                      <th>LastName</th>
+                      <th>email</th>
+                      <th>user type</th>
+                      <th>wallet</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{handleRenderTableUser}</tbody>
+                </ContainerTable>
+              </ColNavTable>
+            </RowNavTable>
+          </ContainerNavTable>
+        </div>
+        <ContainerPagination>
+          <nav
+            className="Page navigation example"
+            style={{ margin: "0 auto", width: "40%" }}
+          >
+            <ContainerPaginationTable>
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlePrev}
+                  name="nft"
+                  disabled={currentPage.user === pagesUsers[0] ? true : false}
+                  aria-label="Previus"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &laquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+              {renderPageNumberUser}
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlenNext}
+                  name="nft"
+                  disabled={
+                    currentPage.user === pagesUsers[pagesUsers.length - 1]
+                      ? true
+                      : false
+                  }
+                  aria-label="Next"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &raquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+            </ContainerPaginationTable>
+          </nav>
+        </ContainerPagination>
+      </div>
+    </div>
   );
 };

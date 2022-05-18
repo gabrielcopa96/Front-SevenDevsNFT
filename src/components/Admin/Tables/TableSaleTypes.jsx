@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-import {PostSalesTypes} from "../../../redux/actions"
+import { PostSalesTypes } from "../../../redux/actions";
 import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
+
+import styles from "../admin.module.css";
 
 import "sweetalert2/dist/sweetalert2.css";
 
@@ -103,6 +105,8 @@ export const TableSaleTypes = (props) => {
 
   const dispatch = useDispatch();
 
+  const [openDrop, setOpenDrop] = useState(false);
+
   //? Paginado por sales types
   for (let i = 1; i <= Math.ceil(sales.length / itemsPerPage); i++) {
     pagesSaleTypes.push(i);
@@ -127,7 +131,7 @@ export const TableSaleTypes = (props) => {
               <i className="fas fa-edit"></i>
             </Link>
           </ContainerButtonEditar>
-          <ButtonEliminar onClick={() => console.log('en construccion')}>
+          <ButtonEliminar onClick={() => console.log("en construccion")}>
             <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
           </ButtonEliminar>
         </td>
@@ -143,9 +147,7 @@ export const TableSaleTypes = (props) => {
         name={number}
         value={number}
         onClick={(e) => handleClickPageNumbers(e.target.value)}
-        className={
-          currentPage.salesType === number ? "active" : null
-        }
+        className={currentPage.salesType === number ? "active" : null}
         style={{ cursor: "pointer" }}
       >
         <span>{number}</span>
@@ -199,78 +201,92 @@ export const TableSaleTypes = (props) => {
 
   //? postSales
 
-  console.log(sales)
+  const handleDespliegue = () => {
+    if (openDrop === false) {
+      setOpenDrop(true);
+    }
+    if (openDrop === true) {
+      setOpenDrop(false);
+    }
+  };
 
   return (
-    <>
-      <div>
+    <div className={styles.table}>
+      <div className={styles.ContainerTitleTableAll}>
         <h2 style={{ borderBottom: "1px solid #fff" }}>Table Sales Types</h2>
-        <ContainerNavTable>
-          <RowNavTable>
-            <ColNavTable>
-              <ButtonAgregar onClick={() => handleCreateSales()}>
-                {/* <button to="/admin/create" style={{ color: "#fff" }}> */}
-                  <i className="fas fa-plus"></i>
-                {/* </button> */}
-              </ButtonAgregar>
-              <Link to="/"></Link>
-              <ContainerTable>
-                <thead className="tableTheadBg">
-                  <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>{handleRenderTableSales}</tbody>
-              </ContainerTable>
-            </ColNavTable>
-          </RowNavTable>
-        </ContainerNavTable>
+        <i
+          className="fa-solid fa-circle-chevron-down"
+          onClick={() => handleDespliegue()}
+        ></i>
       </div>
-      <ContainerPagination>
-        <nav
-          className="Page navigation example"
-          style={{ margin: "0 auto", width: "40%" }}
-        >
-          <ContainerPaginationTable>
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlenPrev}
-                name="salesType"
-                disabled={
-                  currentPage.salesType === pagesSaleTypes[0] ? true : false
-                }
-                aria-label="Previus"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &laquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-            {renderPageNumberSales}
-            <li>
-              <ButtonPrevAndNext
-                onClick={handlenNext}
-                name="category"
-                disabled={
-                  currentPage.salesType ===
-                  pagesSaleTypes[pagesSaleTypes.length - 1]
-                    ? true
-                    : false
-                }
-                aria-label="Next"
-                style={{ cursor: "pointer" }}
-              >
-                <span aria-hidden="true" style={{ color: "#fff" }}>
-                  &raquo;
-                </span>
-              </ButtonPrevAndNext>
-            </li>
-          </ContainerPaginationTable>
-        </nav>
-      </ContainerPagination>
-    </>
+      <div className={openDrop === false ? styles.dropdown : styles.dropup}>
+        <div>
+          <ContainerNavTable>
+            <RowNavTable>
+              <ColNavTable>
+                <ButtonAgregar onClick={() => handleCreateSales()}>
+                  <i className="fas fa-plus"></i>
+                  {/* </button> */}
+                </ButtonAgregar>
+                <Link to="/"></Link>
+                <ContainerTable>
+                  <thead className="tableTheadBg">
+                    <tr>
+                      <th>Id</th>
+                      <th>Name</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{handleRenderTableSales}</tbody>
+                </ContainerTable>
+              </ColNavTable>
+            </RowNavTable>
+          </ContainerNavTable>
+        </div>
+        <ContainerPagination>
+          <nav
+            className="Page navigation example"
+            style={{ margin: "0 auto", width: "40%" }}
+          >
+            <ContainerPaginationTable>
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlenPrev}
+                  name="salesType"
+                  disabled={
+                    currentPage.salesType === pagesSaleTypes[0] ? true : false
+                  }
+                  aria-label="Previus"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &laquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+              {renderPageNumberSales}
+              <li>
+                <ButtonPrevAndNext
+                  onClick={handlenNext}
+                  name="category"
+                  disabled={
+                    currentPage.salesType ===
+                    pagesSaleTypes[pagesSaleTypes.length - 1]
+                      ? true
+                      : false
+                  }
+                  aria-label="Next"
+                  style={{ cursor: "pointer" }}
+                >
+                  <span aria-hidden="true" style={{ color: "#fff" }}>
+                    &raquo;
+                  </span>
+                </ButtonPrevAndNext>
+              </li>
+            </ContainerPaginationTable>
+          </nav>
+        </ContainerPagination>
+      </div>
+    </div>
   );
 };

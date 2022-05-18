@@ -17,7 +17,7 @@ export const ContainerButton = styled.div`
   justify-content: space-between;
   width: 30%;
   @media (max-width: 1600px) {
-    width: 29%;
+    width: 38%;
   }
   @media (max-width: 1400px) {
     width: 35%;

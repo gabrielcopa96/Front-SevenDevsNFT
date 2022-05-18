@@ -7,7 +7,7 @@ import imagenaudio from "../../../assets/nft-audio.jpg";
 import { putLikesNft } from "../../../redux/actions";
 
 const ContainerMisFavoritos = styled.div`
-  width: 95%;
+  width: 100%;
   background-color: #46198f53;
   border: 1px solid var(--mainBackGroundButtonColor);
   border-radius: 0.2rem;
@@ -58,15 +58,6 @@ export const Favorito = (props) => {
     dispatch(putLikesNft(idNftFav, token, acumLikes))
     console.log("se elimino de tus favoritos este nft")
   }
-  // const handleNext = (e) => {
-  //   e.preventDefault();
-  //   setCurrentPage(prev => prev + 1)
-  // }
-
-  // const handlePrev = (e) => {
-  //   e.preventDefault();
-  //   setCurrentPage(prev => prev - 1)
-  // }
 
   return (
     <div>
