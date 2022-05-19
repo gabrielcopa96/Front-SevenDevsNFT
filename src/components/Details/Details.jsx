@@ -7,10 +7,11 @@ import { HiShare } from "react-icons/hi";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { BsFillSuitHeartFill } from "react-icons/bs";
-import { getAllNft } from "../../redux/actions";
+import { getAllNft, getTransactionsForId } from "../../redux/actions";
 import Timer from "./Timer";
 import imgAudio from "../../assets/audio-nft.gif";
 import imgVideo from "../../assets/azuki-nft.gif";
+import { TableTrans } from "./TableTrans.jsx";
 import {
   isMetamaskInstalledp,
   saldoWallet,
@@ -24,6 +25,7 @@ export const Details = () => {
   let navigate = useNavigate();
   const location = useLocation();
   const userData = useSelector((state) => state.user);
+  const transId = useSelector((state) => state.transactionsid);
 
   const idNft = location.pathname.split("/")[2];
   const cards = useSelector((state) => state.nfts);
@@ -88,6 +90,7 @@ export const Details = () => {
 
   useEffect(() => {
     dispatch(getAllNft);
+    dispatch(getTransactionsForId(nft[0]._id));
   }, [like, cantLikes]);
 
   const handleClick = (e) => {
@@ -156,7 +159,7 @@ export const Details = () => {
     });
   };
 
-  console.log(nft[0].collection_nft);
+  console.log(transId);
 
   return (
     <DetailsContainer>
@@ -429,25 +432,27 @@ export const Details = () => {
           style={{ color: "white", textAlign: "center", fontWeight: "lighter" }}
         >
           <tr>
-            <th>Name</th>
-            <th>Action</th>
-            <th>Trade Price</th>
-            <th>Timerade Price</th>
+            <th>id transaction</th>
+            <th>Amount</th>
+            <th>Create Date</th>
+            <th>Transaction Type</th>
           </tr>
 
-          {/* </Row> */}
-
-          {offers.length > 0 &&
-            offers.map((el) => (
-              <tr>
-                <td>{el.idUser.username}</td>
-                <td>Offered</td>
-                <td>
-                  {el.amount} {el.currency.name}
-                </td>
-                <td>{el.create_date}</td>
-              </tr>
-            ))}
+            {
+              transId.length > 0
+              ? transId?.map((x,y) => (
+                <TableTrans
+                  key={y}
+                  id={x._id}
+                  amount={x.amount}
+                  date={x.create_date}
+                  curr={x.currencies.name}
+                  price={x.nftId.price}
+                  name={x.nftId.name}
+                  transactiontype={x.transaction_type.name}
+                />
+              )) : null
+            }
         </table>
       </ContenedorDerecho>
     </DetailsContainer>

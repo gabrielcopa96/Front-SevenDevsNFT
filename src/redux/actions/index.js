@@ -37,6 +37,7 @@ export const FILTER_CONTRACT_TOKEN = 'FILTER_CONTRACT_TOKEN';
 export const UPDATE_WALLET = 'UPDATE_WALLET';
 export const PUT_NFT_SALE_TYPES = 'PUT_SALE_TYPES';
 export const DELETE_COLLECTIONS = 'DELETE_COLLECTIONS';
+export const GET_TRANS_ID = 'GET_TRANS_ID';
 
 
 
@@ -260,6 +261,21 @@ export const getTransactions = () => async dispatch => {
         return pruebatrans
     } catch (error) {
         console.log('error:', error)
+    }
+}
+
+export const getTransactionsForId = (id) => async dispatch => {
+    try {
+        const dataTransactionsForId = await axios.get(`https://sevendevs-backend.herokuapp.com/trans/${id}`)
+        console.log(dataTransactionsForId.data)
+        const transDispatch = await dispatch ({
+            type: GET_TRANS_ID,
+            payload: dataTransactionsForId.data
+        })
+        return transDispatch
+
+    } catch (error) {
+        console.log('error: ', error)
     }
 }
 

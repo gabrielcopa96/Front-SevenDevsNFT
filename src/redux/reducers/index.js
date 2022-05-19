@@ -33,7 +33,8 @@ import {
     FILTER_CONTRACT_TOKEN,
     UPDATE_WALLET,
     PUT_NFT_SALE_TYPES,
-    DELETE_COLLECTIONS
+    DELETE_COLLECTIONS,
+    GET_TRANS_ID
 } from "../actions";
 
 
@@ -56,6 +57,7 @@ const initialState = {
     img: "",
     open: false,
     transactions: [],
+    transactionsid: [],
     contract: [],
     contrato: null
 };
@@ -93,6 +95,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: {...state.user, wallet: action.payload}
+            }
+        case GET_TRANS_ID:
+            return {
+                ...state,
+                transactionsid: action.payload
             }
         case UPDATE_IMAGE_NFT:
             return {
