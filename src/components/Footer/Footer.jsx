@@ -11,7 +11,7 @@ import styled from "styled-components";
 const ContainerFooter = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding-top: 1rem;
   margin-top: auto;
   height: 100%;
@@ -119,7 +119,7 @@ const Footer = () => {
             <Link to={"/howtobuy"}>Como comprar un NFT</Link>
           </p>
         </ContainerInfo>
-        <ContainerSoporte>
+        {/* <ContainerSoporte>
           <div>
             <h3>Soporte</h3>
           </div>
@@ -132,13 +132,13 @@ const Footer = () => {
           <p>
             <a href="#">Preguntas frecuentes</a>
           </p>
-        </ContainerSoporte>
+        </ContainerSoporte> */}
         <ContainerInfoFooter>
           <div>
             <h3>Comunidad</h3>
           </div>
           <div>
-            <a href="https://discord.gg/get6j98T" target="_blank">
+            <a href="https://discord.gg/vMaEXdES" target="_blank">
               <FaDiscord
                 style={{
                   color: "var(--colorInfo)",

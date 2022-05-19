@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteCollections } from "../../../redux/actions";
 import { Link } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 export const MyCollections = (props) => {
   const { id, name, user } = props;
 
@@ -16,18 +18,18 @@ export const MyCollections = (props) => {
 
   console.log(filterEliminated);
 
-  //   const uniCollection = collections.filter((x) => x._id === id);
-
-  //   console.log(uniCollection);
   const handleEliminatedCollection = (idCollection) => {
     if (filterEliminated?.length === 0) {
       dispatch(deleteCollections(idCollection));
       alert("se elimino correctamente");
     }
     if (filterEliminated?.length > 0) {
-      alert(
-        "No puedes eliminar esta collecion por que contiene nfts dentro de ella"
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No puedes eliminar una collection, si contiene nfts",
+        footer: '<a href="">Why do I have this issue?</a>',
+      });
     }
   };
 

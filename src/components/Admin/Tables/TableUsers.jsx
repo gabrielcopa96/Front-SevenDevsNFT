@@ -205,14 +205,14 @@ export const TableUsers = (props) => {
         <td>{x.user_type.name}</td>
         <td>{x.wallet?.length > 0 ? x.wallet : "No cuenta con wallet"}</td>
         <td style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <ContainerButtonEditar>
+          {/* <ContainerButtonEditar>
             <Link to={`/edit/${x.uid}`} style={{ color: "#fff" }}>
               <i className="fas fa-edit"></i>
             </Link>
           </ContainerButtonEditar>
           <ButtonEliminar onClick={() => handleEliminateUser(x.uid)}>
             <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
-          </ButtonEliminar>
+          </ButtonEliminar> */}
         </td>
       </tr>
     );
@@ -258,7 +258,7 @@ export const TableUsers = (props) => {
                       <th>email</th>
                       <th>user type</th>
                       <th>wallet</th>
-                      <th>Actions</th>
+                      {/* <th>Actions</th> */}
                     </tr>
                   </thead>
                   <tbody>{handleRenderTableUser}</tbody>

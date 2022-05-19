@@ -126,11 +126,11 @@ export const TableCategory = (props) => {
         <td> {x.name}</td>
         <td> {x._id}</td>
         <td style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <ContainerButtonEditar>
+          {/* <ContainerButtonEditar>
             <Link to={`/edit/${x._id}`} style={{ color: "#fff" }}>
               <i className="fas fa-edit"></i>
             </Link>
-          </ContainerButtonEditar>
+          </ContainerButtonEditar> */}
         </td>
       </tr>
     );
@@ -229,7 +229,7 @@ export const TableCategory = (props) => {
                     <tr>
                       <th>Id</th>
                       <th>Name</th>
-                      <th>Actions</th>
+                      {/* <th>Actions</th> */}
                     </tr>
                   </thead>
                   <tbody>{handleRenderTableCategory}</tbody>
