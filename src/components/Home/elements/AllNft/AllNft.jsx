@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Loading } from "../../../Loading/Loading.jsx";
-import { getNftQuery, removeNftQuery, searchBarFilter } from "../../../../redux/actions/index";
+import {
+  getNftQuery,
+  removeNftQuery,
+  searchBarFilter,
+} from "../../../../redux/actions/index";
 
 import { CardNft } from "../CardNft/CardNft.jsx";
 import CategoryFilter from "./filters/CategoryFilter.jsx";
@@ -11,7 +15,7 @@ import CurrenciesFilter from "./filters/CurrenciesFilter.jsx";
 import SalesFilter from "./filters/SalesFilter.jsx";
 import FilesTypeFilter from "./filters/FilesTypeFilter.jsx";
 
-import Input from '../../../shared/Input.jsx';
+import Input from "../../../shared/Input.jsx";
 
 const ContainerAll = styled.div`
   width: 100%;
@@ -27,7 +31,7 @@ const ContainerNft = styled.div`
   @media (max-width: 900px) {
     display: grid;
     grid-template-columns: auto auto auto;
-    gap: 0.2rem 6rem!important;
+    gap: 0.2rem 6rem !important;
     margin: 0 auto;
   }
 
@@ -77,7 +81,6 @@ const ContainerLoader = styled.div`
   margin: 0 auto;
 `;
 
-
 const ContainerAllNftTotalMain = styled.div`
   padding-top: 6.25rem;
   color: #fff;
@@ -88,12 +91,10 @@ const ContainerSearch = styled.div`
   color: #fff;
   input {
     background-color: rgba(71, 17, 137, 1);
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     color: #fff;
   }
 `;
-
-
 
 export const AllNft = () => {
   const nftAll = useSelector((state) => state.nfts);
@@ -103,19 +104,19 @@ export const AllNft = () => {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
   const instantCallback = useCallback(dispatch, [dispatch]);
 
   const handleInputSearch = (e) => {
     const value = e.target.value;
-    setSearch(value)
-    if(value === "") {
-      fecthNft()
+    setSearch(value);
+    if (value === "") {
+      fecthNft();
     } else {
-      dispatch(searchBarFilter(search))
+      dispatch(searchBarFilter(search));
     }
-  }
+  };
 
   useEffect(() => {
     instantCallback(getNftQuery(page));
@@ -136,9 +137,16 @@ export const AllNft = () => {
   return (
     <ContainerAllNftTotalMain>
       <ContainerFiltrosMain>
-
         <ContainerSearch>
-          <Input type="text" value={search} onChange={(e) => handleInputSearch(e)} width="80%" height="35px" placeholder="Search..." padding=".3rem"/>
+          <Input
+            type="text"
+            value={search}
+            onChange={(e) => handleInputSearch(e)}
+            width="80%"
+            height="35px"
+            placeholder="Search..."
+            padding=".3rem"
+          />
         </ContainerSearch>
 
         <CurrenciesFilter className={"filters"} />
@@ -155,7 +163,6 @@ export const AllNft = () => {
           next={fecthNft} //2
           hasMore={hasMore}
           style={{ overflow: "hidden" }}
-          // loader={<h3 style={{color: 'var(--secondFontColor)', textAlign: 'center'}}>Loading...</h3>}
           loader={
             <ContainerLoader>
               <div
@@ -175,7 +182,7 @@ export const AllNft = () => {
           }
         >
           <ContainerNft>
-            {nft?.map((x) => (
+            {nft?.map((x, y) => (
               <CardNft
                 image={x.image}
                 name={x.name}
@@ -185,12 +192,12 @@ export const AllNft = () => {
                 currency={x.currencies}
                 imageCurrencies={x.currencies.image}
                 owner={x.details.owner.username}
-                creator={x.details.user_creator.username}
+                creator={x.details.user_creator?.username}
                 salestype={x.sales_types.name}
                 likes={x.likes}
                 token={token}
                 id={x._id}
-                key={x._id}
+                key={y}
               />
             ))}
           </ContainerNft>

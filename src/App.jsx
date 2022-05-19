@@ -124,7 +124,7 @@ function App() {
               element={<CardNftCollection />}
             />
           </Route>
-          <Route exact path={"*"} element={<Error />}/>
+          {/* <Route exact path={"*"} element={<Error />}/> */}
         </Routes>
         <Routes>
           <Route element={<MainLayoutAdmin />}>
@@ -147,6 +147,7 @@ function App() {
               element={<Dashboard />}
             />
           </Route>
+          {/* <Route exact path={"*"} element={<Error />}/> */}
         </Routes>
       </BrowserRouter>
     </div>

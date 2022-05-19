@@ -319,7 +319,8 @@ export const postNft = (tokenuser, item, formData) => async dispatch => {
                 "Content-Type": "multipart/form-data",
             }
         })
-        const obj1 = { ...dataPost.data.nft, image: dataImageNft.url }
+        const obj1 = { ...dataPost.data.nft, image: dataImageNft.data.url }
+        console.log(obj1)
         const responsePost = await dispatch({
             type: CREATE_NFT,
             payload: obj1

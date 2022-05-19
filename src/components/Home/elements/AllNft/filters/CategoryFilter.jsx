@@ -13,20 +13,6 @@ const SelectStyle = styled.select`
   border-radius: 10px;
   height: 55%;
   margin: 1rem;
-
-  /* @media (max-width: 800px) {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    height: 250px;
-    padding: 30px;
-
-    select {
-      width: 100%;
-    }
-  } */
 `;
 
 const CategoryFilter = () => {
@@ -48,9 +34,9 @@ const CategoryFilter = () => {
         <SelectStyle name="" id="" onChange={(e)=>handleChange(e)}>
             <option value="" >Filter by Category</option>
             {
-                categories && categories.map(t=>{
+                categories && categories.map((t,y)=>{
                     return (
-                        <option value={t._id}>{t.name}</option>
+                        <option value={t._id} key={y}>{t.name}</option>
                     )
                 })
             }

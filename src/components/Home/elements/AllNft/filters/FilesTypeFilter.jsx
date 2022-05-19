@@ -50,8 +50,8 @@ const FilesTypeFilter = () => {
     <SelectStyle name="" id="" onChange={(e) => handleChange(e)}>
       <option value="">Filter by File Type</option>
       {file_types &&
-        file_types.map((t) => {
-          return <option value={t._id}>{t.name}</option>;
+        file_types.map((t, y) => {
+          return <option value={t._id} key={y}>{t.name}</option>;
         })}
     </SelectStyle>
   );

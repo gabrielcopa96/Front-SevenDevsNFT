@@ -9,15 +9,16 @@ import { IoIosArrowUp } from "react-icons/io";
 import { BsFillSuitHeartFill } from "react-icons/bs";
 import { getAllNft } from "../../redux/actions";
 import Timer from "./Timer";
-import imgAudio from '../../assets/audio-nft.gif';
-import imgVideo from '../../assets/azuki-nft.gif';
-import {isMetamaskInstalledp, saldoWallet, payPurchase, searchWalletAddress, putNft} from './Metamask';
-import Swal from 'sweetalert2';
-
-
-
-
-
+import imgAudio from "../../assets/audio-nft.gif";
+import imgVideo from "../../assets/azuki-nft.gif";
+import {
+  isMetamaskInstalledp,
+  saldoWallet,
+  payPurchase,
+  searchWalletAddress,
+  putNft,
+} from "./Metamask";
+import Swal from "sweetalert2";
 
 export const Details = () => {
   let navigate = useNavigate();
@@ -33,33 +34,27 @@ export const Details = () => {
   const [timerItems, setTimerItems] = useState({ d: "", h: "", m: "", s: "" });
   const [offers, setOffers] = useState([]);
   const nft = cards.filter((item) => item._id === idNft);
-  const [visibledisabled, setVisibleEnabled] = useState({description:false, details:false });
+  const [visibledisabled, setVisibleEnabled] = useState({
+    description: false,
+    details: false,
+  });
   const [cantLikes, setCantLikes] = useState(nft[0].likes);
   const [errors, setErrors] = useState({ auction: "false" });
   const [account, setAccount] = useState(false);
-  const [owner, setOwner] = useState(
-    {
-      owner: userData.uid
-    });
-  
+  const [owner, setOwner] = useState({
+    owner: userData.uid,
+  });
 
-
-  const [transact, setTransact] = useState(
-    {
-      userId:nft[0].details.owner_id,
+  const [transact, setTransact] = useState({
+    userId: nft[0].details.owner_id,
     nftId: nft[0]._id,
-    currencies:nft[0].currencies._id,
+    currencies: nft[0].currencies._id,
     amount: nft[0].price,
-    transaction_type:"6272dae3d6b583da5e6e5568",
-    sales_types:"62681a95ae667f54d92828c2"
-  }
-  );
-
+    transaction_type: "6272dae3d6b583da5e6e5568",
+    sales_types: "62681a95ae667f54d92828c2",
+  });
 
   console.log(nft[0]);
-  
-  
-   
 
   useEffect(() => {
     console.log("Entrando a UseEffect Auction");
@@ -102,60 +97,51 @@ export const Details = () => {
       axios.defaults.headers.common["Authorization"] =
         localStorage.getItem("token");
       axios
-        .put(`https://sevendevs-backend.herokuapp.com/nft/${nft[0]._id}`, { likes: cantLikes })
+        .put(`https://sevendevs-backend.herokuapp.com/nft/${nft[0]._id}`, {
+          likes: cantLikes,
+        })
         .then((res) => console.log(res.data));
       setLike(!like);
     }
   };
 
-  const handlePayClick=async()=>{
-    
+  const handlePayClick = async () => {
     const acc = await isMetamaskInstalledp();
     console.log(acc);
-    if(acc){
+    if (acc) {
       setAccount(acc);
       const saldo = await saldoWallet();
       const wallet = await searchWalletAddress(nft[0].details.owner._id);
       console.log(userData.uid);
       console.log(nft[0].details.owner._id);
-      if(userData.uid!=nft[0].details.owner._id) {
-      if(saldo>Number(nft[0].price)){
-        const pay = await payPurchase(wallet,transact);
-        console.log(userData.uid);
-        const changeOwner = await putNft(nft[0]._id, owner)
-        console.log(changeOwner)
-        dispatch(getAllNft);
-        navigate('/home')
-      }
-      else{
+      if (userData.uid != nft[0].details.owner._id) {
+        if (saldo > Number(nft[0].price)) {
+          const pay = await payPurchase(wallet, transact);
+          console.log(userData.uid);
+          const changeOwner = await putNft(nft[0]._id, owner);
+          console.log(changeOwner);
+          dispatch(getAllNft);
+          navigate("/home");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Insufficient Funds!!!!",
+          });
+        }
+      } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Insufficient Funds!!!!',
-          
-        })
-        
+          text: "Do not buy this Nft, It is your",
+        });
       }
-    }
-    else{
+    } else {
       Swal.fire({
-        text: "Do not buy this Nft, It is your",  
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Metamask Installed, but not connected!!!",
+      });
     }
-     
-     
-    }
-    else{
-      
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Metamask Installed, but not connected!!!',
-          
-        })
-
-    }
-  }
+  };
 
   const handleVisibleDescripcionClick = () => {
     setVisibleEnabled({
@@ -170,7 +156,7 @@ export const Details = () => {
     });
   };
 
- 
+  console.log(nft[0].collection_nft);
 
   return (
     <DetailsContainer>
@@ -250,12 +236,26 @@ export const Details = () => {
         <ContenedorCollectionDetails>
           <CollectionIcon
             src={
-              nft[0].collection_nft
+              nft[0].collection_nft?.length
+                ? nft[0].collection_nft[0].image
+                : nft[0].hasOwnProperty("collection_nft")
                 ? nft[0].collection_nft.image
                 : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930"
             }
           />
-          {nft[0].hasOwnProperty("collection_nft") && (
+          {nft[0].collection_nft?.length ? (
+            <h3
+              style={{
+                backgroundColor: "#46198fb3",
+                marginLeft: "10px",
+                padding: "2px 5px",
+                border: "none",
+                borderRadius: "5px",
+              }}
+            >
+              {nft[0].collection_nft[0].name}
+            </h3>
+          ) : nft[0].hasOwnProperty("collection_nft") ? (
             <h3
               style={{
                 backgroundColor: "#46198fb3",
@@ -267,7 +267,7 @@ export const Details = () => {
             >
               {nft[0].collection_nft.name}
             </h3>
-          )}
+          ) : null}
         </ContenedorCollectionDetails>
         <ContainerTittleNftDetails>
           <Title>
@@ -279,7 +279,7 @@ export const Details = () => {
                 fontWeight: "700",
                 backgroundColor: "#afaeae",
                 borderRadius: ".25rem",
-                padding: ".2rem .5rem"
+                padding: ".2rem .5rem",
               }}
             >
               {nft[0].category.name}
@@ -437,24 +437,18 @@ export const Details = () => {
 
           {/* </Row> */}
 
-
-        { offers.length>0&&offers.map(el=> (
-         
-        <tr>
-          <td>{el.idUser.username}</td>
-          <td>Offered</td>
-          <td>{el.amount} {el.currency.name}</td>
-          <td>{el.create_date}</td>
-        </tr>
-
-        
-        
-
-      ))}
-       </table>
-     
-          
-          
+          {offers.length > 0 &&
+            offers.map((el) => (
+              <tr>
+                <td>{el.idUser.username}</td>
+                <td>Offered</td>
+                <td>
+                  {el.amount} {el.currency.name}
+                </td>
+                <td>{el.create_date}</td>
+              </tr>
+            ))}
+        </table>
       </ContenedorDerecho>
     </DetailsContainer>
   );
