@@ -8,7 +8,7 @@ import styles from "../admin.module.css";
 
 import imagenvideo from "../../../assets/azuki-nft.gif";
 
-import imagenaudio from "../../../assets/nft-audio.jpg";
+import imagenaudio from "../../../assets/audio-nft.gif";
 
 const ContainerPagination = styled.div`
   margin: 0 auto;
@@ -126,7 +126,7 @@ export const TableNft = (props) => {
         className={currentPage.nft === number ? "active" : null}
         style={{ cursor: "pointer" }}
       >
-        <span>{number}</span>
+        <span onClick={(e) => handleClickPageNumbers(e.target.value)}>{number}</span>
       </ListTable>
     );
   });
@@ -177,14 +177,6 @@ export const TableNft = (props) => {
         <td>{x.details.user_creator.username}</td>
         <td>{x.details.owner.username}</td>
         <td style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <ContainerButtonEditar>
-            <Link to={`/edit/${x._id}`} style={{ color: "#fff" }}>
-              <i className="fas fa-edit"></i>
-            </Link>
-          </ContainerButtonEditar>
-          <ButtonEliminar onClick={() => handelRemoveNft(x._id)}>
-            <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
-          </ButtonEliminar>
         </td>
       </tr>
     );
@@ -192,7 +184,6 @@ export const TableNft = (props) => {
 
   const handlenNext = (e) => {
     e.preventDefault();
-    // const valueName = e.target.name
     setCurrentPage({
       ...currentPage,
       nft: currentPage.nft + 1,
@@ -208,8 +199,6 @@ export const TableNft = (props) => {
     });
   };
 
-  // console.log(currentPage.nft)
-
   const handleDespliegue = () => {
     if (openDrop === false) {
       setOpenDrop(true);
@@ -221,9 +210,6 @@ export const TableNft = (props) => {
 
   return (
     <div className={styles.table}>
-      {/* <div className="enia">
-        <h1>Prueba que se tiene que ver este cambio</h1>
-      </div> */}
       <div className={styles.ContainerTitleTableAll}>
         <h2 style={{ borderBottom: "1px solid #fff" }}>Table NFT</h2>
         <i
@@ -253,7 +239,6 @@ export const TableNft = (props) => {
                       <th>Sales</th>
                       <th>Creator</th>
                       <th>Owner</th>
-                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>{handleRenderTableNft}</tbody>

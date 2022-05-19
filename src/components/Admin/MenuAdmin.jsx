@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import logo from "../../assets/logo.png";
 
-import { setModalOpening } from "../../redux/actions";
+import { setModalOpening, getTokenUser } from "../../redux/actions";
 
 import { BsFillBarChartFill, BsGrid3X3, BsGrid } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 export const MenuAdmin = () => {
   const isOpen = useSelector((state) => state.open);
   const user = useSelector((state) => state.user);
+
+  const jwt = localStorage.getItem("token");
 
   const dispatch = useDispatch();
   const [active, setActive] = useState({
@@ -23,6 +25,7 @@ export const MenuAdmin = () => {
 
   useEffect(() => {
       dispatch(setModalOpening(true));
+      dispatch(getTokenUser(jwt))
   }, [dispatch]);
 
   const handleOpen = () => {
@@ -79,7 +82,7 @@ export const MenuAdmin = () => {
             </li>
             <li>
               <Link
-                to={"admin/menuadmin/tables"}
+                to={"/admin/menuadmin/tables"}
                 style={{ display: "flex" }}
                 className={active.tables === true ? styles.active : null}
                 id="tables"

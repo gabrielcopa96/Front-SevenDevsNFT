@@ -17,13 +17,19 @@ import Swal from "sweetalert2";
 
 import { Favorito } from "./Favorito/Favorito.jsx";
 
+import { MyCollections } from "./MyCollections/MyCollections.jsx";
+
 import "sweetalert2/dist/sweetalert2.css";
 import Input from "../shared/Input.jsx";
 import Button from "../shared/Button.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import authService from "../../services/authService";
-import { removeUser, getFileTypes } from "../../redux/actions/index";
+import {
+  removeUser,
+  getFileTypes,
+  updateWallet,
+} from "../../redux/actions/index";
 import styled from "styled-components";
 
 import axios from "axios";
@@ -97,6 +103,8 @@ export const ViewUser = React.memo(() => {
       });
       console.log("Found an account! Address:", accounts[0]); //numero de cuenta en accounts
       setCurrentAccount(accounts[0]);
+      const objWallet = { wallet: accounts[0] };
+      dispatch(updateWallet(idUser, objWallet));
     } catch (err) {
       console.log(err);
     }
@@ -201,7 +209,7 @@ export const ViewUser = React.memo(() => {
 
   //? <i className="fas fa-edit"></i>
 
-  const { username, image, favorite, collectionNft } = user;
+  const { username, image, favorite, collection_nft } = user;
 
   const pages = [];
 
@@ -341,10 +349,17 @@ export const ViewUser = React.memo(() => {
           </ContainerMisPreferencias>
           <h2 style={{ marginTop: ".8rem" }}>My Collections</h2>
           <ContenedorUltimasVentas>
-            {collectionNft?.length === 0 ? (
+            {collection_nft?.length === 0 ? (
               <h2 style={{ color: "var(--colorInfo)" }}>Hasn't collections</h2>
             ) : (
-              <h2 style={{ color: "var(--colorInfo)" }}>Tiene collections</h2>
+              collection_nft.map((x,y) => (
+                <MyCollections
+                  key={y}
+                  id={x._id}
+                  name={x.name}
+                  user={user}
+                />
+              ))
             )}
           </ContenedorUltimasVentas>
         </div>

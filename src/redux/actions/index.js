@@ -34,6 +34,9 @@ export const SEARCHBAR_FILTER = 'SEARCHBAR_FILTER';
 export const POST_COLLECTIONS = 'POST_COLLECTIONS';
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 export const FILTER_CONTRACT_TOKEN = 'FILTER_CONTRACT_TOKEN';
+export const UPDATE_WALLET = 'UPDATE_WALLET';
+export const PUT_NFT_SALE_TYPES = 'PUT_SALE_TYPES';
+export const DELETE_COLLECTIONS = 'DELETE_COLLECTIONS';
 
 
 
@@ -162,6 +165,23 @@ export const getCategory = () => async dispatch => {
     }
 }
 
+export const updateNftSaleTypes = (tokenuser ,id, item) => async dispatch => {
+    try {
+        const dataTypes = await axios.put(`https://sevendevs-backend.herokuapp.com/nft/${id}`, item, {
+            headers: {
+                Authorization: JSON.parse(tokenuser)
+            }
+        })
+        const finallyDataPutSales = await dispatch({
+            type: PUT_NFT_SALE_TYPES,
+            payload: dataTypes.data.nft
+        })
+        return finallyDataPutSales
+    } catch (error) {
+        console.log('error:', error)
+    }
+}
+
 export const modifCategory = (id, item) => async dispatch => {
     try {
         const dataModifCategory = await axios.put(`https://sevendevs-backend.herokuapp.com/misc/category/${id}`, item)
@@ -285,7 +305,7 @@ export const filterByFileType = (id) => async dispatch => {
 }
 
 export const postNft = (tokenuser, item, formData) => async dispatch => {
-   
+
     try {
         const dataPost = await axios.post(`https://sevendevs-backend.herokuapp.com/nft`, item, {
             headers: {
@@ -318,7 +338,6 @@ export const postCollections = (tokenuser, item, formData) => async dispatch => 
             }
         })
         const uid = dataPostCollections.data.newCollection._id
-        console.log(uid)
         const dataPostImageCollection = await axios.put(`https://sevendevs-backend.herokuapp.com/upload/collection/${uid}`, formData, {
             headers: {
                 Authorization: JSON.parse(tokenuser),
@@ -327,12 +346,38 @@ export const postCollections = (tokenuser, item, formData) => async dispatch => 
         })
         console.log(dataPostImageCollection)
         const objCollection = { ...dataPostCollections.data.newCollection, image: dataPostImageCollection.data.url }
-        console.log(objCollection)
         const responsePostCollection = await dispatch({
             type: POST_COLLECTIONS,
             payload: objCollection
         })
         return responsePostCollection
+    } catch (error) {
+        console.log("error: ", error)
+    }
+}
+
+export const deleteCollections = (id) => async dispatch => {
+    try {
+        const dataDeleteCollections = await axios.delete(`https://sevendevs-backend.herokuapp.com/misc/collection/${id}`)
+        console.log(dataDeleteCollections)
+        const finnallyDeleteCollection = await dispatch({
+            type: DELETE_COLLECTIONS,
+            payload: dataDeleteCollections.data.delCollection
+        })
+        return finnallyDeleteCollection
+    } catch (error) {
+        console.log("error: ", error)
+    }
+}
+
+export const updateWallet = (id, item) => async dispatch => {
+    try {
+        const dataWallet = await axios.put(`https://sevendevs-backend.herokuapp.com/users/${id}`, item)
+        console.log(dataWallet.data.update.wallet)
+        const finallyWallet = await dispatch({
+            type: UPDATE_WALLET,
+            payload: dataWallet.data.update.wallet
+        })
     } catch (error) {
         console.log("error: ", error)
     }
@@ -356,22 +401,6 @@ export const putImagePerfil = (tokenuser, id, formData) => async dispatch => {
         console.log("error: ", error)
     }
 }
-
-// export const putOwner = (tokenuser) => async dispatch => {
-//     try {
-//         const dataOwner = await axios.put(`https://sevendevs-backend.herokuapp.com/nft`, { 
-//             headers: {
-//                Authorization: JSON.parse(tokenuser) 
-//             }
-//         })
-//         const finallyUpdateOwner = await dispatch({
-//             type: UPDATE_OWN,
-//             payload: dataOwner.data.nft
-//         })
-//     } catch (error) { 
-//         console.log("error: ", error)
-//     }
-// }
 
 export const searchBarFilter = (name) => async dispatch => {
     try {

@@ -131,9 +131,6 @@ export const TableCategory = (props) => {
               <i className="fas fa-edit"></i>
             </Link>
           </ContainerButtonEditar>
-          <ButtonEliminar onClick={() => handelRemoveNft(x._id)}>
-            <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
-          </ButtonEliminar>
         </td>
       </tr>
     );
@@ -165,7 +162,6 @@ export const TableCategory = (props) => {
 
   const handlenPrev = (e) => {
     e.preventDefault();
-    // const valueName = e.target.name
     setCurrentPage({
       ...currentPage,
       category: currentPage.category - 1,

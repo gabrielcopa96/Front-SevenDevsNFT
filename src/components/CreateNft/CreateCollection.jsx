@@ -60,6 +60,8 @@ export const CreateCollection = () => {
     });
   };
 
+
+
   const handleSubmitCollection = (e) => {
     e.preventDefault();
     dispatch(postCollections(token, dataCollection, formData));
@@ -67,6 +69,7 @@ export const CreateCollection = () => {
     setDataCollection({
       name: "",
     });
+    navigate("/myprofile/mispublicaciones")
   };
   return (
     <>
@@ -101,7 +104,7 @@ export const CreateCollection = () => {
               title="BACK"
               margin="1.8rem 2rem"
               padding=".2rem 3rem"
-              onClick={() => navigate("/home/createnft")}
+              onClick={() => navigate("/myprofile/mispublicaciones")}
             />
             <Button
               title="CREATE"

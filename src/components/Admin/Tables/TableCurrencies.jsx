@@ -132,9 +132,6 @@ export const TableCurrencies = (props) => {
               <i className="fas fa-edit"></i>
             </Link>
           </ContainerButtonEditar>
-          <ButtonEliminar onClick={() => console.log("se hizo click")}>
-            <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
-          </ButtonEliminar>
         </td>
       </tr>
     );

@@ -131,9 +131,6 @@ export const TableSaleTypes = (props) => {
               <i className="fas fa-edit"></i>
             </Link>
           </ContainerButtonEditar>
-          <ButtonEliminar onClick={() => console.log("en construccion")}>
-            <i className="fas fa-trash-alt" style={{ color: "#fff" }}></i>
-          </ButtonEliminar>
         </td>
       </tr>
     );

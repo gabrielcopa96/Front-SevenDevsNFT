@@ -116,7 +116,7 @@ const Footer = () => {
             </a>
           </p>
           <p>
-            <a href="#">Como comprar un NFT</a>
+            <Link to={"/howtobuy"}>Como comprar un NFT</Link>
           </p>
         </ContainerInfo>
         <ContainerSoporte>

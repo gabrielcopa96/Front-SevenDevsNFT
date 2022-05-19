@@ -9,6 +9,7 @@ import {
   getCurrencies,
   getSalesType,
   getCategory,
+  getAllCollections
 } from "../../redux/actions";
 
 import Input from "../shared/Input.jsx";
@@ -106,6 +107,7 @@ export const CreateNft = () => {
   const currency = useSelector((state) => state.currencies);
   const filesType = useSelector((state) => state.files_type);
   const salesType = useSelector((state) => state.sales_type);
+  const collections = useSelector((state) => state.collections);
   const user = useSelector((state) => state.user);
 
   const idUser = user.uid;
@@ -134,6 +136,7 @@ export const CreateNft = () => {
     instantCallback(getFileTypes());
     instantCallback(getCurrencies());
     instantCallback(getSalesType());
+    instantCallback(getAllCollections());
   }, [instantCallback]);
 
   const [data, setData] = useState({
@@ -148,8 +151,6 @@ export const CreateNft = () => {
     currencies: "",
     files_types: "",
   });
-
-  const [enia, setEnia] = useState("");
 
   const handleInput = (e) => {
     setData({
@@ -167,10 +168,19 @@ export const CreateNft = () => {
     });
   };
 
-  //! acordarse que una de las soluciones puede ser de al setear del otro lado le mandemos el await por lo que la funcion es async
+  const handleSelectCollection = (e) => {
+    if(e.target.value.length > 0) {
+      setData({
+        ...data,
+        collection_nft: e.target.value
+      })
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (send === false) {
+
       dispatch(postNft(token, data, formDateishon));
       setData({
         name: "",
@@ -200,10 +210,6 @@ export const CreateNft = () => {
     <ContainerCreateNft>
       <HeaderCreateNft>
         <h1>Create NFT</h1>
-        <Button
-          title="CREATE COLLECTION"
-          onClick={() => navigate("/home/creationcollection")}
-        />
       </HeaderCreateNft>
       <hr style={{ borderColor: "var(--mainBackGroundButtonColor)" }} />
       <FormCreateNft onSubmit={(e) => handleSubmit(e)}>
@@ -261,6 +267,17 @@ export const CreateNft = () => {
               <SelectType name="sales_types" onChange={(e) => handleSelect(e)}>
                 <option>select option..</option>
                 {salesType?.map((x) => (
+                  <option value={x._id} key={x._id}>
+                    {x.name}
+                  </option>
+                ))}
+              </SelectType>
+            </ContainerGridLabelInput>
+            <ContainerGridLabelInput>
+              <label style={{ fontSize: "1.2rem" }}>Collections</label>
+              <SelectType name="collection_nft" onChange={(e) => handleSelectCollection(e)}>
+                <option>select option..</option>
+                {collections?.map((x) => (
                   <option value={x._id} key={x._id}>
                     {x.name}
                   </option>

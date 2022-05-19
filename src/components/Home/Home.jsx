@@ -10,12 +10,12 @@ const HomeTitle = styled.div`
 `;
 
 function Home() {
+  
   return (
     <>
       <CollectionsCarousel />
       <HomeTitle />
-      <ViewNft />
-     
+      <ViewNft /> 
     </>
   );
 }

@@ -51,7 +51,7 @@ export default function CardNftCollection() {
             borderBottom: "2px solid var(--mainBackGroundButtonColor)",
           }}
         >
-          Colecciones - {name}
+          Collections - {name}
         </h1>
       </ContenedorTitleCollectionsType>
       <ContenedorMainColecciones>
@@ -66,6 +66,7 @@ export default function CardNftCollection() {
               currency={x.currencies}
               imageCurrencies={x.currencies.image}
               owner={x.details.owner.username}
+              creator={x.details.user_creator.username}
               salestype={x.sales_types.name}
               id={x._id}
               key={x._id}
@@ -73,7 +74,7 @@ export default function CardNftCollection() {
           ))
         ) : (
           <div>
-            <h2>No hay NFTs para esta coleccion</h2>
+            <h2 style={{color: 'var(--secondFontColor)'}}>There are no nfts for this collection</h2>
           </div>
         )}
       </ContenedorMainColecciones>

@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteNft } from "../../../redux/actions";
 
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getSalesType, updateNftSaleTypes } from "../../../redux/actions";
+
+import imagenvideo from "../../../assets/azuki-nft.gif";
+import imagenaudio from "../../../assets/nft-audio.jpg";
 
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const ContainerCardsMisPublicaciones = styled.div`
   width: 100%;
@@ -43,9 +49,14 @@ const BtnEliminatedNft = styled.span`
 const BtnActive = styled.span`
   color: #48d848;
   font-weight: 700;
+  cursor: pointer;
 `;
 
-const BtnInactive = styled.span``;
+const BtnInactive = styled.span`
+  color: #e4d722;
+  font-weight: 700;
+  cursor: pointer;
+`;
 
 const BtnNft = styled.span`
   letter-spacing: 1px;
@@ -70,6 +81,8 @@ export const CardsMisPublicaciones = (props) => {
     name,
     sales,
     price,
+    file,
+    salesid,
     description,
   } = props;
 
@@ -78,6 +91,14 @@ export const CardsMisPublicaciones = (props) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const salestypes = useSelector((state) => state.sales_type);
+
+  useEffect(() => {
+    if(salestypes.length === 0) {
+      dispatch(getSalesType())
+    }
+  }, [])
 
   const handleNftNavigate = (idNft) => {
     navigate(`/details/${idNft}`);
@@ -108,13 +129,80 @@ export const CardsMisPublicaciones = (props) => {
     });
   };
 
+  const fixed = salestypes[0]?.name
+  const idFixed = salestypes[0]?._id
+  const auction = salestypes[1]?.name
+
+  const available = salestypes[2]?._id
+  // const idAuction = salestypes[1]?._id
+
+  const handlePhoto = () => {
+    if(file === "Image") {
+      return image
+    }
+    if(file === "Video") {
+      return imagenvideo
+    }
+    if(file === "Audio") {
+      return imagenaudio
+    }
+  }
+
+  // console.log(idFixed)
+
+  const handleActiveNft = async (e) => {
+    // radio
+    /* inputOptions can be an object or Promise */
+    e.preventDefault()
+    const inputOptions = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          "62681a95ae667f54d92828c2": fixed,
+          "62681aa3ae667f54d92828c4": auction,
+        });
+      }, 1000);
+    });
+    const { value: color } = await Swal.fire({
+      title: "Select color",
+      input: "radio",
+      inputOptions: inputOptions,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to choose something!";
+        }
+      },
+    });
+
+    console.log(color)
+    const sale = {
+      sales_types: color,
+    }
+    dispatch(updateNftSaleTypes(token ,id, sale))
+
+    if (color) {
+      
+      console.log('realizaste este dispatch')
+      Swal.fire({ html: `You selected: ${color}` });
+    }
+  };
+
+
+  const handleInactive = (e) => {
+    e.preventDefault();
+    const typesale = {
+      sales_types: available
+    }
+    dispatch(updateNftSaleTypes(token ,id, typesale));
+    console.log('realizaste este dispatch')
+  }
+
   return (
     <ContainerCardsMisPublicaciones>
       <ContainerPublicNft>
         <ContainerDataNft>
           <div style={{ paddingTop: "6px", marginRight: "1rem" }}>
             <img
-              src={image}
+              src={handlePhoto()}
               style={{
                 width: "100px",
                 height: "100px",
@@ -198,7 +286,14 @@ export const CardsMisPublicaciones = (props) => {
             letterSpacing: "1px",
           }}
         >
-          <BtnActive>ACTIVE</BtnActive>
+          {salesid === "62854558690ed4bebbe7aba5" ? (
+            <BtnInactive onClick={(e) => handleActiveNft(e)}>
+              INACTIVE
+            </BtnInactive>
+          ) : (salesid === "62681a95ae667f54d92828c2" || salesid === "62681aa3ae667f54d92828c4") ? (
+            <BtnActive onClick={(e) => handleInactive(e)}>ACTIVE</BtnActive>
+          ) : null
+        }
         </div>
       </ContainerPublicNft>
     </ContainerCardsMisPublicaciones>

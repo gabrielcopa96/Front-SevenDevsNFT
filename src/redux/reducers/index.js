@@ -30,7 +30,10 @@ import {
     SEARCHBAR_FILTER,
     POST_COLLECTIONS,
     GET_TRANSACTIONS,
-    FILTER_CONTRACT_TOKEN
+    FILTER_CONTRACT_TOKEN,
+    UPDATE_WALLET,
+    PUT_NFT_SALE_TYPES,
+    DELETE_COLLECTIONS
 } from "../actions";
 
 
@@ -86,6 +89,11 @@ const rootReducer = (state = initialState, action) => {
                 nftquery: [],
                 hasMore: true
             }
+        case UPDATE_WALLET:
+            return {
+                ...state,
+                user: {...state.user, wallet: action.payload}
+            }
         case UPDATE_IMAGE_NFT:
             return {
                 ...state,
@@ -101,7 +109,6 @@ const rootReducer = (state = initialState, action) => {
                 ...state, transactions: action.payload
             }
         case FILTER_NFT:
-            //  nfts[0].collection_nft.name //collections[0].name
             const nftsAll = state.nfts
 
             const filters = nftsAll.filter(n => n.collection_nft && n.collection_nft.name === action.payload)
@@ -111,6 +118,20 @@ const rootReducer = (state = initialState, action) => {
                 filterNfts: filters
             }
 
+        case PUT_NFT_SALE_TYPES:
+            const obj2 = []
+            state.nfts.forEach(x => {
+                if (x._id === action.payload._id) {
+                    x.sales_types._id = action.payload.sales_types
+                }
+                obj2.push(x)
+            })
+            console.log(action.payload)
+            return {
+                ...state,
+                nfts: obj2,
+                copynft: obj2
+            }
         case FILTER_CONTRACT_TOKEN:
             return {
                 ...state,
@@ -151,7 +172,6 @@ const rootReducer = (state = initialState, action) => {
                 }
                 return [...actFav, miNewNft]
             }
-            console.log(intFav())
             return {
                 ...state,
                 nfts: objFav,
@@ -161,12 +181,25 @@ const rootReducer = (state = initialState, action) => {
             console.log(action.payload)
             return {
                 ...state,
-                ntfs: [...state.nfts, action.payload]
+                nfts: [...state.nfts, action.payload],
+                copynft: [...state.copynft, action.payload]
             }
         case POST_COLLECTIONS:
+            // console.log(action.payload)
+            const mycoll = action.payload
             return {
                 ...state,
-                collections: [...state.collections, action.payload]
+                collections: [...state.collections, action.payload],
+                user: {...state.user, collection_nft: [...state.user.collection_nft, mycoll]}
+            }
+        case DELETE_COLLECTIONS:
+            console.log(action.payload)
+            const filterDeleteCollection = state.collections.filter(x => x._id !== action.payload._id)
+            const filterDeleteUserCollection = state.user.collection_nft.filter(x => x._id !== action.payload._id)
+            return {
+                ...state,
+                collections: filterDeleteCollection,
+                user: {...state.user, collection_nft: filterDeleteUserCollection}
             }
         case CREATE_CATEGORY:
             return {

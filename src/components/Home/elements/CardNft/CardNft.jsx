@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,9 +7,9 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.css";
 import { putLikesNft } from "../../../../redux/actions";
 
-import imagenaudio from "../../../../assets/nft-audio.jpg";
+import imagenaudio from "../../../../assets/audio-nft.gif";
 import imagenvideo from "../../../../assets/azuki-nft.gif";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CardContainerNft = styled.div`
   width: 280px;
@@ -155,7 +155,6 @@ const PriceCard = styled.div`
   }
   &::before {
     content: url(https://rvs-nft-preview-card.netlify.app/images/icon-ethereum.svg);
-    /* background-image: url('https://rvs-nft-preview-card.netlify.app/images/icon-ethereum.svg'); */
     position: absolute;
     top: 50%;
     left: 0;
@@ -199,9 +198,12 @@ export const CardNft = (props) => {
     owner,
     likes,
     token,
+    creator
   } = props;
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   const handlerLikes = () => {
     const acumLikes = {
       likes: 1,
@@ -263,7 +265,12 @@ export const CardNft = (props) => {
           }}
         >
           <ContainerHearth onClick={handlerLikes}>
-            <i className="fa fa-heart" aria-hidden="true"></i>
+            {
+              (user?.favorite?.some(x => x._id === id))
+              ? <i className="fa fa-heart" aria-hidden="true" style={{color: "red"}}></i>
+              : <i className="fa fa-heart" aria-hidden="true"></i>
+            }
+            {/* <i className="fa fa-heart" aria-hidden="true"></i> */}
           </ContainerHearth>
           <span
             style={{
@@ -295,7 +302,7 @@ export const CardNft = (props) => {
         <img src="https://rvs-nft-preview-card.netlify.app/images/image-avatar.png" />
         <p>
           Creation of{" "}
-          <span onClick={() => alert("prueba de fuego")}> {owner} </span>
+          <span onClick={() => alert("prueba de fuego")}> {creator} </span>
         </p>
       </CardFooter>
     </CardContainerNft>

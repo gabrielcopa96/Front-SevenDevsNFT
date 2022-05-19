@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { CardsMisPublicaciones } from "./CardsMisPublicaciones.jsx";
 
 const contractAddress = "0x301e98022EcccA30a656bC090C0342044cb81bC6";
+
 const abi = contract.abi;
 
 const ContainerMisPublicaciones = styled.div`
@@ -48,25 +49,13 @@ export const MisPublicaciones = () => {
     token_id: null,
   });
 
-  // const [details, setDetails] = useState({
-  //   details: {
-  //     owner: null,
-  //     creator: creator,
-  //     contract_address: contract_address,
-  //     token_id: token_id
-  //   }
-  // })
-
-  // setDetails(({
-  //   details: {...details.details, [e.target.name]: ""}
-  // }))
-
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const misNfts = nfts.filter(
-    (x) => x.details.owner.username === user.username
+    x => x?.details !== undefined ? x.details.owner.username === user.username : null
+    // (x) => x.details?.owner?.username === user.username
   );
 
   const mintNftHandler = async () => {
@@ -124,6 +113,10 @@ export const MisPublicaciones = () => {
               onClick={() => navigate(`/myprofile/${uid}`)}
             />
             <Button title="CREATE NFT" onClick={() => mintNftHandler()} />
+            <Button
+              title="CREATE COLLECTION"
+              onClick={() => navigate("/home/creationcollection")}
+            />
           </div>
         </ContainerHeaderPublicaciones>
         <hr
@@ -146,14 +139,16 @@ export const MisPublicaciones = () => {
               image={x.image}
               name={x.name}
               sales={x.sales_types.name}
+              salesid={x.sales_types._id}
+              file={x.files_types.name}
               price={x.price}
               description={x.description}
             />
           ))
         ) : (
-          <h1 style={{ color: "var(--secondFontColor)" }}>
-            Actualmente no cuentas con nft en tu propiedad
-          </h1>
+          <h2 style={{ color: "var(--secondFontColor)", textAlign: "center" }}>
+            You currently do not have nft on your property
+          </h2>
         )}
       </ContainerPublicaciones>
     </ContainerMisPublicaciones>

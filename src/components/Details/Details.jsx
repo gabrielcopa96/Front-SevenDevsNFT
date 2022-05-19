@@ -9,18 +9,21 @@ import { IoIosArrowUp } from "react-icons/io";
 import { BsFillSuitHeartFill } from "react-icons/bs";
 import { getAllNft } from "../../redux/actions";
 import Timer from "./Timer";
-import imgAudio from "../../assets/nft-audio.jpg";
-import imgVideo from "../../assets/azuki-nft.gif";
-import {
-  isMetamaskInstalledp,
-  saldoWallet,
-  payPurchase,
-  searchWalletAddress,
-} from "./Metamask";
+import imgAudio from '../../assets/audio-nft.gif';
+import imgVideo from '../../assets/azuki-nft.gif';
+import {isMetamaskInstalledp, saldoWallet, payPurchase, searchWalletAddress, putNft} from './Metamask';
+import Swal from 'sweetalert2';
+
+
+
+
+
 
 export const Details = () => {
   let navigate = useNavigate();
   const location = useLocation();
+  const userData = useSelector((state) => state.user);
+
   const idNft = location.pathname.split("/")[2];
   const cards = useSelector((state) => state.nfts);
   const dispatch = useDispatch();
@@ -30,16 +33,33 @@ export const Details = () => {
   const [timerItems, setTimerItems] = useState({ d: "", h: "", m: "", s: "" });
   const [offers, setOffers] = useState([]);
   const nft = cards.filter((item) => item._id === idNft);
+  const [visibledisabled, setVisibleEnabled] = useState({description:false, details:false });
   const [cantLikes, setCantLikes] = useState(nft[0].likes);
   const [errors, setErrors] = useState({ auction: "false" });
-  const [visibledisabled, setVisibleEnabled] = useState({
-    description: false,
-    details: false,
-  });
   const [account, setAccount] = useState(false);
+  const [owner, setOwner] = useState(
+    {
+      owner: userData.uid
+    });
+  
 
-  console.log("Nft Id: ", nft[0]._id);
-  console.log("Nft Name: ", nft[0].name);
+
+  const [transact, setTransact] = useState(
+    {
+      userId:nft[0].details.owner_id,
+    nftId: nft[0]._id,
+    currencies:nft[0].currencies._id,
+    amount: nft[0].price,
+    transaction_type:"6272dae3d6b583da5e6e5568",
+    sales_types:"62681a95ae667f54d92828c2"
+  }
+  );
+
+
+  console.log(nft[0]);
+  
+  
+   
 
   useEffect(() => {
     console.log("Entrando a UseEffect Auction");
@@ -49,7 +69,7 @@ export const Details = () => {
       axios.defaults.headers.common["Authorization"] =
         localStorage.getItem("token");
       axios
-        .get(`http://localhost:4000/offer/${idNft}`)
+        .get(`https://sevendevs-backend.herokuapp.com/offer/${idNft}`)
 
         .then((res) => {
           console.log(res.data);
@@ -82,11 +102,60 @@ export const Details = () => {
       axios.defaults.headers.common["Authorization"] =
         localStorage.getItem("token");
       axios
-        .put(`http://localhost:4000/nft/${nft[0]._id}`, { likes: cantLikes })
+        .put(`https://sevendevs-backend.herokuapp.com/nft/${nft[0]._id}`, { likes: cantLikes })
         .then((res) => console.log(res.data));
       setLike(!like);
     }
   };
+
+  const handlePayClick=async()=>{
+    
+    const acc = await isMetamaskInstalledp();
+    console.log(acc);
+    if(acc){
+      setAccount(acc);
+      const saldo = await saldoWallet();
+      const wallet = await searchWalletAddress(nft[0].details.owner._id);
+      console.log(userData.uid);
+      console.log(nft[0].details.owner._id);
+      if(userData.uid!=nft[0].details.owner._id) {
+      if(saldo>Number(nft[0].price)){
+        const pay = await payPurchase(wallet,transact);
+        console.log(userData.uid);
+        const changeOwner = await putNft(nft[0]._id, owner)
+        console.log(changeOwner)
+        dispatch(getAllNft);
+        navigate('/home')
+      }
+      else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Insufficient Funds!!!!',
+          
+        })
+        
+      }
+    }
+    else{
+      Swal.fire({
+        text: "Do not buy this Nft, It is your",  
+      })
+    }
+     
+     
+    }
+    else{
+      
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Metamask Installed, but not connected!!!',
+          
+        })
+
+    }
+  }
 
   const handleVisibleDescripcionClick = () => {
     setVisibleEnabled({
@@ -101,22 +170,7 @@ export const Details = () => {
     });
   };
 
-  const handlePayClick = async () => {
-    const acc = await isMetamaskInstalledp();
-    if (acc) {
-      setAccount(acc);
-      const saldo = await saldoWallet();
-      const wallet = await searchWalletAddress(nft[0].details.owner._id);
-
-      if (saldo > Number(nft[0].price)) {
-        console.log(nft[0].details.user_creator);
-        const pay = await payPurchase(nft[0].price, wallet);
-        navigate("/home");
-      } else {
-        alert("Recursos Insuficientes");
-      }
-    }
-  };
+ 
 
   return (
     <DetailsContainer>
@@ -347,6 +401,13 @@ export const Details = () => {
           </RowContador>
         </ContainerContadorAndPrice>
 
+        {/*<Row style={{ gap: "15%", marginTop:'10px' }}>
+        {nft[0].sales_types.name==="Fixed Price"&&<Button1 title="Buy Now" height="45px" width="350px" onClick={handlePayClick}></Button1>
+        }
+         
+          {nft[0].sales_types.name==="Live Auction"&&<Button1 title="Make Offer" height="45px" width="350px"></Button1>
+            }
+        </Row>*/}
         <ContainerBtnPay>
           <Button1
             title="Buy Now"
@@ -376,18 +437,24 @@ export const Details = () => {
 
           {/* </Row> */}
 
-          {offers.length > 0 &&
-            offers.map((el) => (
-              <tr>
-                <td>{el.idUser.username}</td>
-                <td>Offered</td>
-                <td>
-                  {el.amount} {el.currency.name}
-                </td>
-                <td>{el.create_date}</td>
-              </tr>
-            ))}
-        </table>
+
+        { offers.length>0&&offers.map(el=> (
+         
+        <tr>
+          <td>{el.idUser.username}</td>
+          <td>Offered</td>
+          <td>{el.amount} {el.currency.name}</td>
+          <td>{el.create_date}</td>
+        </tr>
+
+        
+        
+
+      ))}
+       </table>
+     
+          
+          
       </ContenedorDerecho>
     </DetailsContainer>
   );
@@ -543,7 +610,10 @@ const StyledButton = styled.button`
   text-align: center;
   font-size: 1rem;
   outline: none;
+  /* background: ${(props) => props.color || "#23136e"}; */
   background: ${(props) => props.color || "var(--mainBackGroundButtonColor)"};
+  /* border: 1px solid ${(props) => props.color || "#23136e"}; */
+  /* background: ${(props) => props.color || "#6d6a799f"}; */
   width: ${(props) => props.width || "60px"};
   height: ${(props) => props.height || "40px"};
   line-height: 30px;

@@ -84,8 +84,7 @@ export const ListaPreferencias = styled.ul`
 export const ContenedorUltimasVentas = styled.div`
   background-color: #46198f53;
   border-radius: 0.6rem;
-  height: 300px;
-  line-height: 230px;
+  /* height: 300px; */
   text-align: center;
   width: 92%;
   padding: 1.5rem;

@@ -51,11 +51,11 @@ export default function LineChartSold() {
     
     const dispatch = useDispatch()
 
-    const instantCallback = useCallback(dispatch, [dispatch]);
+    // const instantCallback = useCallback(dispatch, [dispatch]);
 
     useEffect(() => {
-        instantCallback(getTransactions())
-    }, [instantCallback])
+        dispatch(getTransactions())
+    }, [])
 
     console.log(transactions)
     const uniqueMonths = [...new Set(transactions?.map(t => new Date(t.create_date).getMonth()))]
@@ -78,9 +78,12 @@ export default function LineChartSold() {
         } 
     })
     
-    const quantitySoldMarch = (quantityPerSaleMarch.length > 0) && quantityPerSaleMarch.reduce(function(a, b) { return a + b})
-    const quantitySoldApril = (quantityPerSaleApril.length > 0) && quantityPerSaleApril.reduce(function(a, b) { return a + b})
-    const quantitySoldMay = (quantityPerSaleMay.length > 0) && quantityPerSaleMay.reduce(function(a, b) { return a + b})
+    const quantitySoldMarch = (quantityPerSaleMarch?.length > 0) && quantityPerSaleMarch.reduce(function(a, b) { return a + b})
+    // const quantitySoldMarch = quantityPerSaleMarch?.reduce(function(a, b) { return a + b})
+    const quantitySoldApril = (quantityPerSaleApril?.length > 0) && quantityPerSaleApril.reduce(function(a, b) { return a + b})
+    // const quantitySoldApril = quantityPerSaleApril?.reduce(function(a, b) { return a + b})
+    const quantitySoldMay = (quantityPerSaleMay?.length > 0) && quantityPerSaleMay.reduce(function(a, b) { return a + b})
+    // const quantitySoldMay = quantityPerSaleMay?.reduce(function(a, b) { return a + b})
     
     const totalsPerMonth = [quantitySoldMarch,quantitySoldApril,quantitySoldMay]
     console.log(totalsPerMonth)

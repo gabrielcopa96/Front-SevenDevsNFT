@@ -185,6 +185,7 @@ export const AllNft = () => {
                 currency={x.currencies}
                 imageCurrencies={x.currencies.image}
                 owner={x.details.owner.username}
+                creator={x.details.user_creator.username}
                 salestype={x.sales_types.name}
                 likes={x.likes}
                 token={token}
